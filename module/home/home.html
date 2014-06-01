@@ -1,0 +1,139 @@
+<div class="home">
+	<div style="position: relative">
+
+
+	<div class="ukbb-content">
+		<div class="imgs">
+			<img style="top:0; opacity: 0 ; position: absolute"
+				 id="imgRadar">
+		</div>
+		<div class="info-panel">
+			<table cellpadding="0" cellspacing="0"
+				   style="bottom: 0;width: 100%; height: 70px;  border-spacing: 0px;"
+				   border="0">
+				<tr>
+					<td rowspan="3" width=150 align='center' style="font-size: 20px; color: white">
+						<span style="width: 40px" id="hh">HH</span><span style="width: 40px"
+																		 id="mi"> MI</span><span
+							style="width: 40px" id="ss"> SS</span>
+					</td>
+					<td width=120 style="" height=22>
+						Киев
+					</td>
+					<td id="DistKiev">
+						...
+					</td>
+					<td rowspan="2" width=100 id="loadImg"><p style="font-size: 14px; letter-spacing: 2px;">
+						Найдено </p>
+
+						<p style="font-size: 12px">изображений</p></td>
+					<td rowspan="2" align='center' id="scan" width=50>0</td>
+					<td rowspan="3" align='center' width=143>
+						<p class="button" id="buttonScan" onclick="main.init();">
+							Scan
+						</p>
+
+						<p class="button-blocked" id="buttonPlay"
+						   onclick="if(main.arrSrc)main.initPlay(main.arrSrc.length-1)">
+							Play
+						</p>
+
+					</td>
+				</tr>
+				<tr>
+					<td>Бузовая</td>
+					<td id="DistBuzova">...</td>
+				</tr>
+				<tr>
+					<td>Бородянка</td>
+					<td id="DistBorodanka">...</td>
+					<td style="font-size: 12px"><p>Scan просесс</p></td>
+					<td id="scanProcess" align='center' width=50>...</td>
+				</tr>
+
+			</table>
+		</div>
+	</div>
+	<div class="right-panel">
+		<div class="container-small-image">
+			<div class="panel panel-default my">
+				<div class="panel-body my">
+					Инфракрасный спектр
+				</div>
+			</div>
+			<div class="small-images ir">
+				<img>
+
+                <div class="progress-loader">
+                    <div class="m progress progress-striped active">
+                        <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 5%">
+                            <span class="sr-only">45% Complete</span>
+                        </div>
+                    </div>
+                </div>
+
+			</div>
+			<div class="panel-drive ir-panel">
+
+				<div class="glyphicon glyphicon glyphicon-refresh">
+
+				</div>
+				<div class="glyphicon glyphicon-step-backward">
+
+				</div>
+				<div class="glyphicon glyphicon-play">
+
+				</div>
+				<div class="glyphicon glyphicon-pause">
+
+				</div>
+
+
+				<div class="glyphicon glyphicon-step-forward">
+
+				</div>
+
+			</div>
+		</div>
+		<div class="margin20">
+
+		</div>
+		<div class="container-small-image">
+			<div class="panel panel-default my">
+				<div class="panel-body my">
+					Видимый спектр
+				</div>
+			</div>
+			<div class="small-images vi">
+				<img>
+                <div class="progress-loader">
+                    <div class="m progress progress-striped active">
+                        <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 5%">
+                            <span class="sr-only">45% Complete</span>
+                        </div>
+                    </div>
+                </div>
+			</div>
+			<div class="panel-drive vi-panel" >
+				<div class="glyphicon glyphicon glyphicon-refresh">
+
+				</div>
+				<div class="glyphicon glyphicon-step-backward">
+
+				</div>
+				<div class="glyphicon glyphicon-play">
+
+				</div>
+				<div class="glyphicon glyphicon-pause">
+
+				</div>
+
+
+				<div class="glyphicon glyphicon-step-forward">
+
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>

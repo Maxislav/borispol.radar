@@ -1,0 +1,15 @@
+.info{
+	opacity: 0;
+position: absolute;
+	width: 100%;
+}
+.gsInformer{
+	padding: 10px;
+	border: 1px solid #ddd !important;
+	border-radius: 5px;
+	box-shadow: 0 1px 5px rgba(0,0,0,0.6);
+}
+.sinoptik{
+	border-radius: 5px;
+	box-shadow: 0 1px 5px rgba(0,0,0,0.6);
+}
