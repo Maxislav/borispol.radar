@@ -156,3 +156,9 @@ p.button-blocked{
     height: 10px;
 
 }
+.ukbb-content .progress{
+    opacity: 0;
+    margin-bottom: 0 !important;
+    height: 10px;
+    border-radius: 1px !important;
+}

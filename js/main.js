@@ -102,7 +102,10 @@ function Main(){
 			$(s.arrImgUkbb[i]).fadeTo(222,1,function(){
 				m++;
 				if(m==l){
-					play(l-1);
+                    setTimeout(function(){
+                        play(l-1);
+                    },1000)
+
 				}
 			})
 		}
