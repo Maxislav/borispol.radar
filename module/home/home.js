@@ -12,6 +12,7 @@ var home = {
             s.el.fadeTo(222, 1);
             timer.init();
             s.showImg();
+            s.events();
             require([
                 'mouseevent'
             ], function () {
@@ -143,6 +144,15 @@ var home = {
                 el.find('img').fadeTo(222, 1)
             }
         }
+    },
+    events: function(){
+        var s = this;
+        require([
+        'eventsUKBB'
+        ], function(js){
+            new js(s.el)
+        })
+
     }
 
 }

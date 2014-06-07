@@ -15,7 +15,8 @@ require.config({
 		ir: 'js/ir',
 		vi: 'js/vi',
 		stat: 'module/stat/stat',
-		info: 'module/info/info'
+		info: 'module/info/info',
+        eventsUKBB: 'module/home/eventsUKBB'
 	}
 });
 require(
