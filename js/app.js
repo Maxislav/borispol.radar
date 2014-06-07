@@ -97,8 +97,6 @@ var app = {
 					$(this).remove()
 				})
 			}
-
-
 		}
 	}
 }
