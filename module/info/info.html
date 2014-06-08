@@ -1,44 +1,105 @@
 <div class="info">
-	<div style=" width: 100%; text-align: center">
-		<div style="margin-top: 55px">
+    <div style=" width: 100%; text-align: center">
+        <div style="margin-top: 55px">
+
+            <div style="width: 580px; margin: 0 auto">
 
 
-		<!-- Gismeteo informer START -->
-		<link rel="stylesheet" type="text/css" href="http://www.gismeteo.ua/static/css/informer2/gs_informerClient.min.css">
-		<div id="gsInformerID-07870J0lbAo01s" class="gsInformer" style="width:400px;height:225px; display: inline-block">
-			<div class="gsIContent">
-				<div id="cityLink">
-					<a href="http://www.gismeteo.ua/city/daily/4944/" target="_blank">Погода в Киеве</a>
-				</div>
-				<div class="gsLinks">
-					<table>
-						<tr>
-							<td>
-								<div class="leftCol">
-									<a href="http://www.gismeteo.ua" target="_blank">
-										<img alt="Gismeteo" title="Gismeteo" src="http://www.gismeteo.ua/static/images/informer2/logo-mini2.png" align="absmiddle" border="0" />
-										<span>Gismeteo</span>
-									</a>
-								</div>
-								<div class="rightCol">
-									<a href="http://www.gismeteo.ua/city/weekly/4944/" target="_blank">Погода на 2 недели</a>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-		<script src="http://www.gismeteo.ua/ajax/getInformer/?hash=07870J0lbAo01s" type="text/javascript"></script>
-		<!-- Gismeteo informer END -->
+                <div style=" float: left; width: 160px; height: 400px">
+                    <div id="MeteoInformerWrap">
+                        <!--<script type="text/javascript" src="http://meteo.ua/var/informers.js"></script>-->
+                        <script type="text/javascript">
+                            makeMeteoInformer("http://meteo.ua/informer/get.php?cities=34&w=158&lang=ru&rnd=1&or=vert&clr=0&dt=today&style=modern",158,369);
+                        </script></div>
+                </div>
+
+                <!-- Gismeteo informer START -->
+                <link rel="stylesheet" type="text/css"
+                      href="http://www.gismeteo.ua/static/css/informer2/gs_informerClient.min.css">
+                <div id="gsInformerID-07870J0lbAo01s" class="gsInformer"
+                     style="width:400px;height:225px; display: inline-block">
+                    <div class="gsIContent">
+                        <div id="cityLink">
+                            <a href="http://www.gismeteo.ua/city/daily/4944/" target="_blank">Погода в Киеве</a>
+                        </div>
+                        <div class="gsLinks">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="leftCol">
+                                            <a href="http://www.gismeteo.ua" target="_blank">
+                                                <img alt="Gismeteo" title="Gismeteo"
+                                                     src="http://www.gismeteo.ua/static/images/informer2/logo-mini2.png"
+                                                     align="absmiddle" border="0"/>
+                                                <span>Gismeteo</span>
+                                            </a>
+                                        </div>
+                                        <div class="rightCol">
+                                            <a href="http://www.gismeteo.ua/city/weekly/4944/" target="_blank">Погода на
+                                                2 недели</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <script src="http://www.gismeteo.ua/ajax/getInformer/?hash=07870J0lbAo01s"
+                        type="text/javascript"></script>
+                <!-- Gismeteo informer END -->
 
 
-			<div style="margin-top: 20px" >
-				<div class="sinoptik " style="display: inline-block">
-					<div id="SinoptikInformer" style="width:400px;" class="SinoptikInformer type5c1"><div class="siHeader"><div class="siLh"><div class="siMh"><a onmousedown="siClickCount();" href="http://sinoptik.ua/" target="_blank">Погода</a><a onmousedown="siClickCount();" class="siLogo" href="http://sinoptik.ua/" target="_blank"><img src="http://informers.sinoptik.ua/img/t.gif" /></a> <span id="siHeader"></span></div></div></div><div class="siBody"><div class="siCity"><div class="siCityName"><a onmousedown="siClickCount();" href="http://sinoptik.ua/погода-киев" target="_blank">Погода в <span>Киеве</span></a></div><div id="siCont0" class="siBodyContent"><div class="siLeft"><div class="siTerm"></div><div class="siT" id="siT0"></div><div id="weatherIco0"></div></div><div class="siInf"><p>влажность: <span id="vl0"></span></p><p>давление: <span id="dav0"></span></p><p>ветер: <span id="wind0"></span></p></div></div></div><div class="siLinks"><span><a onmousedown="siClickCount();" href="http://sinoptik.ua/погода-одесса" target="_blank">Погода в Одессе</a>&nbsp;</span><span><a onmousedown="siClickCount();" href="http://sinoptik.ua/погода-ужгород" target="_blank">Погода в Ужгороде</a>&nbsp;</span></div></div><div class="siFooter"><div class="siLf"><div class="siMf"></div></div></div></div><script type="text/javascript" charset="UTF-8" src="http://informers.sinoptik.ua/js3.php?title=4&amp;wind=2&amp;cities=303010783&amp;lang=ru"></script>
-				</div>
+                <div style="margin-top: 20px">
+                    <div class="sinoptik " style="display: inline-block">
+                        <div id="SinoptikInformer" style="width:400px;" class="SinoptikInformer type5c1">
+                            <div class="siHeader">
+                                <div class="siLh">
+                                    <div class="siMh"><a onmousedown="siClickCount();" href="http://sinoptik.ua/"
+                                                         target="_blank">Погода</a><a onmousedown="siClickCount();"
+                                                                                      class="siLogo"
+                                                                                      href="http://sinoptik.ua/"
+                                                                                      target="_blank"><img
+                                            src="http://informers.sinoptik.ua/img/t.gif"/></a> <span
+                                            id="siHeader"></span></div>
+                                </div>
+                            </div>
+                            <div class="siBody">
+                                <div class="siCity">
+                                    <div class="siCityName"><a onmousedown="siClickCount();"
+                                                               href="http://sinoptik.ua/погода-киев" target="_blank">Погода
+                                        в <span>Киеве</span></a></div>
+                                    <div id="siCont0" class="siBodyContent">
+                                        <div class="siLeft">
+                                            <div class="siTerm"></div>
+                                            <div class="siT" id="siT0"></div>
+                                            <div id="weatherIco0"></div>
+                                        </div>
+                                        <div class="siInf"><p>влажность: <span id="vl0"></span></p>
 
-			</div>
-	</div>
-	</div>
+                                            <p>давление: <span id="dav0"></span></p>
+
+                                            <p>ветер: <span id="wind0"></span></p></div>
+                                    </div>
+                                </div>
+                                <div class="siLinks"><span><a onmousedown="siClickCount();"
+                                                              href="http://sinoptik.ua/погода-одесса" target="_blank">Погода
+                                    в Одессе</a>&nbsp;</span><span><a onmousedown="siClickCount();"
+                                                                      href="http://sinoptik.ua/погода-ужгород"
+                                                                      target="_blank">Погода в Ужгороде</a>&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="siFooter">
+                                <div class="siLf">
+                                    <div class="siMf"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <script type="text/javascript" charset="UTF-8"
+                                src="http://informers.sinoptik.ua/js3.php?title=4&amp;wind=2&amp;cities=303010783&amp;lang=ru"></script>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
