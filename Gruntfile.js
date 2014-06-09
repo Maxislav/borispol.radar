@@ -41,6 +41,9 @@ module.exports = function (grunt) {
                     ],
                     "module/iredMet/iredMet.css":[
                         "module/iredMet/iredMet.less"
+                    ],
+                    "module/helpme/helpme.css":[
+                        "module/helpme/helpme.less"
                     ]
                 }
             }
@@ -53,7 +56,8 @@ module.exports = function (grunt) {
                     "module/home/home.less",
                     "css/borispol.css",
                     "css/main.less",
-                    "module/iredMet/iredMet.less"
+                    "module/iredMet/iredMet.less",
+                    "module/helpme/helpme.less"
                 ],
                 tasks: ['less'],
                 options: {

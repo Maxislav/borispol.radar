@@ -19,7 +19,8 @@ require.config({
 		stat: 'module/stat/stat',
 		info: 'module/info/info',
         eventsUKBB: 'module/home/eventsUKBB',
-        iredMet: 'module/iredMet/iredMet'
+        iredMet: 'module/iredMet/iredMet',
+        helpme : 'module/helpme/helpme'
 	}
 });
 require(
