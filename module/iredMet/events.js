@@ -33,9 +33,10 @@ define(['dateFormat'],function () {
 
 
 
-
+        var btnPlay;
         var images = null;
         item.on('click', '.glyphicon-play', function () {
+            btnPlay = $(this)
             if($(this).hasClass('active')){
                 return
             }
@@ -53,6 +54,8 @@ define(['dateFormat'],function () {
             img = null;
             images = null;
             loadFirst();
+            btnPlay && btnPlay.removeClass('active')
+
 
         })
 
@@ -72,6 +75,9 @@ define(['dateFormat'],function () {
             }, 2000);
 
             function fadeTo(i){
+                if(!btn.hasClass('active')){
+                    return
+                }
                 images[i].fadeTo(400, 0, function(){
                   if(i>0){
                         fadeTo(i-1)
@@ -90,9 +96,7 @@ define(['dateFormat'],function () {
             for(var i = 0; i < amount; i++){
                 images[i] = new Image();
                 images[i].onload =finish;
-
                 images[i].src = "http://www.metoffice.gov.uk/weather/images/eurir_sat_"+getDate(-i)+".jpg"
-
             }
             function finish(i){
 
