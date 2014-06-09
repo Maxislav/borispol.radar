@@ -32,7 +32,7 @@ var stat = {
 		} else{
 			s.show()
 		}
-		app.navTabs(3);
+		app.navTabs(5);
 	}
 
 

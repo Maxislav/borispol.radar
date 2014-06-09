@@ -6,20 +6,32 @@ var ired = {
 	init: function (html) {
 		var s = this;
 		if (!s.el) {
+            if(!home){
+                require([
+                'home'
+                ], function(){
+                    goNext()
+                })
+            }else{
+                goNext();
+            }
 
-			$('.content').append(html)
-			s.el = $('.content .ired');
-			s.el.fadeTo(222, 1);
-			ired.__proto__ = home;
-			s.show()
-			s.showImg();
+            function goNext(){
+                $('.content').append(html)
+                s.el = $('.content .ired');
+                s.el.fadeTo(222, 1);
+                ired.__proto__ = home;
+                s.show()
+                s.showImg();
 
-			s.elpanel = s.el.find('.panel-drive');
-			s.elpanel.on('click', '.glyphicon-play', function () {
-				s.play();
-			}).on('click', '.glyphicon-refresh', function(){
+                s.elpanel = s.el.find('.panel-drive');
+                s.elpanel.on('click', '.glyphicon-play', function () {
+                    s.play();
+                }).on('click', '.glyphicon-refresh', function(){
 
-				})
+                })
+            }
+
 
 		} else {
 			s.show()

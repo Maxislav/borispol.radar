@@ -1,4 +1,4 @@
-var home = {
+home = {
     el: null,
     imgir_s: null,
     imgvi_s: null,

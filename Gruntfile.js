@@ -38,6 +38,9 @@ module.exports = function (grunt) {
                     ],
                     "module/home/home.css":[
                         "module/home/home.less"
+                    ],
+                    "module/iredMet/iredMet.css":[
+                        "module/iredMet/iredMet.less"
                     ]
                 }
             }
@@ -48,7 +51,9 @@ module.exports = function (grunt) {
                 // Which files to watch (all .less files recursively in the less directory)
                 files: [
                     "module/home/home.less",
-                    "css/main.less"
+                    "css/borispol.css",
+                    "css/main.less",
+                    "module/iredMet/iredMet.less"
                 ],
                 tasks: ['less'],
                 options: {

@@ -37,8 +37,6 @@ define(function(){
            }else{
                main.initPlay(arraySrs.length);
            }
-
-
         });
 
         function setSrc(){

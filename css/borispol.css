@@ -76,10 +76,11 @@ table{
 
 	border: 1px solid #000;
 	border-radius: 3px;
-	width: 80px;
+/*width: 80px;*/
+
 	color: #35393c;
 	text-shadow: 0 1px 0px #fff, 0 -1px 0px #000;
-	padding: 3px;
+    padding: 8px;
 	box-shadow: 0 2px 7px #000;
 	background: rgb(111, 135, 106); /* Old browsers */
 	background: rgb(225, 255, 255); /* Old browsers */
@@ -97,8 +98,8 @@ table{
 	cursor: pointer;
 
 	border-radius: 3px;
-	width: 80px;
-	padding: 3px;
+
+	padding: 8px;
 	box-shadow: 0 0 1px #000;
 	text-shadow: 0 0 3px #6c6c6c;
 	color: transparent;

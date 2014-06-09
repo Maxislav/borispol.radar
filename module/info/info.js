@@ -6,7 +6,6 @@ var info = {
 	init: function (html) {
 		var s = this;
 		if (!s.el) {
-
             require([
             'http://meteo.ua/var/informers.js'
             ], function(){
@@ -16,12 +15,9 @@ var info = {
                 info.__proto__ = home;
                 s.show()
             })
-
-
-
 		} else {
 			s.show()
 		}
-		app.navTabs(3);
+		app.navTabs(4);
 	}
 }

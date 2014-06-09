@@ -2,11 +2,28 @@ var app = {
 	css:{},
 	init:function () {
 		var s = this;
+        var hash = window.location.hash.replace('#','');
+        $(window).on('hashchange', function() {
+            hash=   window.location.hash.replace('#','');
+            s.loadmodulle(hash)
+        });
+
+		/*
 		$('[module]').click(function (e) {
 			var module = $(this).attr('module');
 			s.loadmodulle(module)
 		})
-		s.loadmodulle('home')
+		s.loadmodulle('home');*/
+        if( window.location.hash.replace('#','') == 'home'){
+            s.loadmodulle ('home')
+        }else{
+            window.location.hash = 'home'
+        }
+
+
+
+      // var hash = window.location.hash.replace('#','');
+
 
 	},
 	loadmodulle: function(module){

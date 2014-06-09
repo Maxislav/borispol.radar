@@ -24,7 +24,7 @@ var visible = {
         } else {
             s.show()
         }
-        app.navTabs(2);
+        app.navTabs(3);
     },
     showImg: function () {
         var s = this;
