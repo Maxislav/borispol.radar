@@ -1,11 +1,9 @@
 var f = parseFloat;
-var home;
 require.config({
 	waitSeconds: 60,
 	baseUrl: '',
 	paths: {
 		jquery: 'lib/jquery/jquery-min',
-        dateFormat: 'lib/jquery/dateFormat',
 		app: 'js/app',
 		home: 'module/home/home',
 		ired: 'module/ired/ired',
@@ -18,17 +16,16 @@ require.config({
 		vi: 'js/vi',
 		stat: 'module/stat/stat',
 		info: 'module/info/info',
-        eventsUKBB: 'module/home/eventsUKBB',
-        iredMet: 'module/iredMet/iredMet',
-        helpme : 'module/helpme/helpme'
+		build: 'build/scripts.min'
 	}
 });
 require(
 	[
-		'jquery',
+		/*'jquery',
 		'app',
 		'timer',
-		'main'
+		'main'*/
+		'build'
 	], function ($) {
 		app.init()
 	})

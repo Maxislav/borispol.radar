@@ -6,13 +6,17 @@ module.exports = function (grunt) {
 
         uglify: {
             options: {
-                sourceMap: true
+                //sourceMap: true
+				mangle: false
             },
             main: {
                 files: {
                     // Результат задачи concat
                     'build/scripts.min.js': [
-                        ""
+                        "lib/jquery/jquery-min.js",
+						'js/app.js',
+						'js/timer.js',
+						'js/main.js'
                     ]
 
                 }
@@ -74,6 +78,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');//
 
     // Задача по умолчанию
-    grunt.registerTask('default', ['less','watch' ]);
+    //grunt.registerTask('default', ['uglify','less','watch' ]);
+	grunt.registerTask('default', ['uglify' ]);
 
 };
