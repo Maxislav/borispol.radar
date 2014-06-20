@@ -1,4 +1,4 @@
-define(['dateFormat'],function () {
+define(function () {
     return function (item) {
         var s = this;
         var gmt = new Date().getTimezoneOffset()/60;

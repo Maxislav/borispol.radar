@@ -16,7 +16,8 @@ module.exports = function (grunt) {
                         "lib/jquery/jquery-min.js",
 						'js/app.js',
 						'js/timer.js',
-						'js/main.js'
+						'js/main.js',
+						'lib/jquery/dateFormat.js'
                     ]
 
                 }
@@ -78,7 +79,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');//
 
     // Задача по умолчанию
-    //grunt.registerTask('default', ['uglify','less','watch' ]);
+    //grunt.registerTask('default', ['less','watch' ]);
 	grunt.registerTask('default', ['uglify' ]);
 
 };

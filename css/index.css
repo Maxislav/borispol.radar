@@ -256,7 +256,7 @@ a:hover {
 .reference {
 	text-align: center;
 
-	background: url("../img/postbg.jpg");
+	/*background: url("../img/postbg.jpg");*/
 
 }
 
@@ -292,5 +292,5 @@ td {
 }
 
 .main {
-	background: url("../img/postbg.jpg");
+	/*background: url("../img/postbg.jpg");*/
 }

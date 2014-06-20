@@ -7,6 +7,7 @@ require.config({
 		app: 'js/app',
 		home: 'module/home/home',
 		ired: 'module/ired/ired',
+		iredMet: 'module/iredMet/iredMet',
 		text: 'lib/requirejs/text',
 		timer: 'js/timer',
 		visible: 'module/visible/visible',
@@ -16,7 +17,9 @@ require.config({
 		vi: 'js/vi',
 		stat: 'module/stat/stat',
 		info: 'module/info/info',
-		build: 'build/scripts.min'
+		build: 'build/scripts.min',
+		eventsUKBB: 'module/home/eventsUKBB',
+		helpme: 'module/helpme/helpme'
 	}
 });
 require(
