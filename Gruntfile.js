@@ -79,7 +79,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');//
 
     // Задача по умолчанию
-    //grunt.registerTask('default', ['less','watch' ]);
-	grunt.registerTask('default', ['uglify' ]);
+    grunt.registerTask('default', ['less','watch' ]);
+	//grunt.registerTask('default', ['uglify' ]);
 
 };

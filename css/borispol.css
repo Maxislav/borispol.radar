@@ -23,7 +23,6 @@ table{
 	width: 100%
 }
 .cell {
-	border: 1px solid #000;
 	height: 100%;
 	width: 100%;
 	display:table-cell;

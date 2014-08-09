@@ -119,6 +119,7 @@ home = {
         var imgvi = new Image();
         imgukbb.s = 'http://meteoinfo.by/radar/UKBB/UKBB_latest.png?v=' + ((Math.random() * 1000).toFixed(0));
 
+
         var imgir_s = 'http://www.sat24.com/image2.ashx?region=eu&ir=true&m=' + ((Math.random() * 1000).toFixed(0));
         s.imgir_s = imgir_s;
 
@@ -141,15 +142,32 @@ home = {
                         src
                     )
                 }
-                el.find('img').fadeTo(222, 1)
+                el.find('img').fadeTo(222, 1);
+
             }
         }
+        s.reload();
     },
-    events: function(){
+    reload: function () {
+        setTimeout(rel, 2000)
+        function rel() {
+            var img = new Image();
+            var src = 'http://meteoinfo.by/radar/UKBB/UKBB_latest.png?v=' + ((Math.random() * 1000).toFixed(0));
+            img.onload = function () {
+                imgRadar.src = src;
+                setTimeout(rel, 60000)
+            }
+            img.src = src;
+
+
+        }
+
+    },
+    events: function () {
         var s = this;
         require([
-        'eventsUKBB'
-        ], function(js){
+            'eventsUKBB'
+        ], function (js) {
             new js(s.el)
         })
 
