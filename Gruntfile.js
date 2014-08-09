@@ -7,17 +7,17 @@ module.exports = function (grunt) {
         uglify: {
             options: {
                 //sourceMap: true
-				mangle: false
+                mangle: false
             },
             main: {
                 files: {
                     // Результат задачи concat
                     'build/scripts.min.js': [
                         "lib/jquery/jquery-min.js",
-						'js/app.js',
-						'js/timer.js',
-						'js/main.js',
-						'lib/jquery/dateFormat.js'
+                        'js/app.js',
+                        'js/timer.js',
+                        'js/main.js',
+                        'lib/jquery/dateFormat.js'
                     ]
 
                 }
@@ -32,23 +32,35 @@ module.exports = function (grunt) {
                     optimization: 2,
                     sourceMap: false
                     /*sourceMap: true,
-                    sourceMapFilename: 'css/css.min.css.map',
-                    sourceMapRootpath: '../'*/
+                     sourceMapFilename: 'css/css.min.css.map',
+                     sourceMapRootpath: '../'*/
                 },
                 files: {
-                    //  "module/dtp/dtp.css": "module/dtp/dtp.less",
-                    "css/css.css": [
-                        "css/borispol.css",
-                        "lib/bootstrap/dist/css/bootstrap.min.css"
-                    ],
-                    "module/home/home.css":[
+                    "module/home/home.css": [
                         "module/home/home.less"
                     ],
-                    "module/iredMet/iredMet.css":[
+                    "module/iredMet/iredMet.css": [
                         "module/iredMet/iredMet.less"
                     ],
-                    "module/helpme/helpme.css":[
+                    "module/helpme/helpme.css": [
                         "module/helpme/helpme.less"
+                    ]
+                }
+            },
+            styleMain: {
+                options: {
+                    compress: true,
+                    yuicompress: true,
+                    optimization: 2,
+                    sourceMap: false
+                    /*sourceMap: true,
+                     sourceMapFilename: 'css/css.min.css.map',
+                     sourceMapRootpath: '../'*/
+                },
+                files: {
+                    "css/css.css": [
+                        "css/borispol.less",
+                        "lib/bootstrap/dist/css/bootstrap.min.css"
                     ]
                 }
             }
@@ -68,6 +80,15 @@ module.exports = function (grunt) {
                 options: {
                     nospawn: true
                 }
+            },
+            styleMain: {
+                files: [
+                    "css/borispol.less",
+                ],
+                tasks: ['less:styleMain'],
+                options: {
+                    nospawn: true
+                }
             }
         }
 
@@ -79,7 +100,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');//
 
     // Задача по умолчанию
-    grunt.registerTask('default', ['less','watch' ]);
-	//grunt.registerTask('default', ['uglify' ]);
+    grunt.registerTask('default', ['less', 'watch' ]);
+    grunt.registerTask('ms', ['less:styleMain', 'watch:styleMain']);
 
 };
