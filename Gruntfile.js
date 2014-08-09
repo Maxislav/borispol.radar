@@ -83,9 +83,22 @@ module.exports = function (grunt) {
             },
             styleMain: {
                 files: [
-                    "css/borispol.less",
+                    "css/borispol.less"
                 ],
                 tasks: ['less:styleMain'],
+                options: {
+                    nospawn: true
+                }
+            },
+            js:{
+                files: [
+                    "lib/jquery/jquery-min.js",
+                    'js/app.js',
+                    'js/timer.js',
+                    'js/main.js',
+                    'lib/jquery/dateFormat.js'
+                ],
+                tasks: ['uglify'],
                 options: {
                     nospawn: true
                 }
@@ -100,7 +113,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');//
 
     // Задача по умолчанию
-    grunt.registerTask('default', ['less', 'watch' ]);
+    grunt.registerTask('default', ['uglify','less', 'watch' ]);
     grunt.registerTask('ms', ['less:styleMain', 'watch:styleMain']);
 
 };

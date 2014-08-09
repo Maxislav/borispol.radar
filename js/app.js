@@ -2,6 +2,7 @@ var app = {
 	css:{},
 	init:function () {
 		var s = this;
+
         var hash = window.location.hash.replace('#','');
         $(window).on('hashchange', function() {
             hash=   window.location.hash.replace('#','');
@@ -20,8 +21,7 @@ var app = {
             window.location.hash = 'home'
         }
 
-
-
+        s.getBrr()
       // var hash = window.location.hash.replace('#','');
 
 
@@ -115,5 +115,33 @@ var app = {
 				})
 			}
 		}
-	}
+
+
+	},
+    getBrr: function(){
+        $.ajax({
+            url: 'Browser.php',
+            success: function(d){
+                brr = d;
+                app.setBg()
+            },
+            error: function(a,b){
+
+            }
+
+        })
+
+    },
+    setBg: function(){
+        if (brr!='Angroid'){
+            var img = new Image();
+            img.onload =setImg;
+            img.src = 'img/bg/01.jpg'
+
+        }
+
+        function setImg(){
+            document.body.style.background = "url('img/bg/01.jpg')"
+        }
+    }
 }
