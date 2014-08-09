@@ -24,11 +24,11 @@ require.config({
 });
 require(
 	[
-		'jquery',
+		/*'jquery',
 		'app',
 		'timer',
-		'main'
-		//'build'
+		'main'*/
+		'build'
 	], function ($) {
 		app.init()
 

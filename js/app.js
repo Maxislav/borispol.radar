@@ -123,6 +123,9 @@ var app = {
             url: 'Browser.php',
             success: function(d){
                 brr = d;
+
+
+
                 app.setBg()
             },
             error: function(a,b){
@@ -133,15 +136,26 @@ var app = {
 
     },
     setBg: function(){
+
+        function getRandomArbitary(min, max)
+        {
+            return Math.random() * (max - min) + min;
+        }
+        var x = Math.floor( getRandomArbitary(1, 9.99))
+
+
         if (brr!='Angroid'){
             var img = new Image();
             img.onload =setImg;
-            img.src = 'img/bg/01.jpg'
+            img.src = 'img/bg/'+x+'.jpg'
 
         }
 
         function setImg(){
-            document.body.style.background = "url('img/bg/01.jpg')"
+            document.body.style.backgroundImage = "url('img/bg/"+x+".jpg')";
+
+            //document.body.style.backgroundSize = '100%';
+
         }
     }
 }
