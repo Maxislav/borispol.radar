@@ -19,7 +19,6 @@ module.exports = function (grunt) {
                         'js/main.js',
                         'lib/jquery/dateFormat.js'
                     ]
-
                 }
             }
         },
@@ -104,7 +103,6 @@ module.exports = function (grunt) {
                 }
             }
         }
-
     });
 
     // Загрузка плагинов, установленных с помощью npm install

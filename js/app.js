@@ -21,7 +21,7 @@ var app = {
             window.location.hash = 'home'
         }
 
-        s.getBrr()
+        //s.getBrr()
       // var hash = window.location.hash.replace('#','');
 
 
