@@ -23,7 +23,6 @@ define(function () {
                          img.fadeTo(222,1)
 
                          item.find('.container-imgs').append(img);
-
                      }
                      img.src = "http://www.metoffice.gov.uk/weather/images/eurir_sat_"+getDate(0)+".jpg"
                  }

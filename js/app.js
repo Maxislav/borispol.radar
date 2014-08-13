@@ -21,7 +21,8 @@ var app = {
             window.location.hash = 'home'
         }
 
-        //s.getBrr()
+        s.getBrr()
+		//alert('d')
       // var hash = window.location.hash.replace('#','');
 
 
@@ -154,7 +155,7 @@ var app = {
         function setImg(){
             document.body.style.backgroundImage = "url('img/bg/"+x+".jpg')";
 
-            //document.body.style.backgroundSize = '100%';
+            document.body.style.backgroundSize = '100% auto';
 
         }
     }
