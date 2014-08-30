@@ -1,4 +1,5 @@
 var f = parseFloat;
+var brr;
 require.config({
 	waitSeconds: 60,
 	baseUrl: '',
