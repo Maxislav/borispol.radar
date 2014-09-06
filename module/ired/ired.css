@@ -47,15 +47,16 @@
 	color: #ddd;
 }
 .ired .m.progress{
-    height: 14px;
-    width: 90%;
+    height: 6px;
+    width: 100%;
     margin: 0 auto;
+    border-radius: 1px;
 
 }
 .ired .progress-loader{
 opacity: 0;
     position: absolute;
-    bottom: 40px;
+    top: -6px;
     height: 10px;
     width: 100%;
 

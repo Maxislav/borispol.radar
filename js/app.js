@@ -142,7 +142,7 @@ var app = {
         var x = Math.floor( getRandomArbitary(1, 9.99))
 		var x = Math.floor( getRandomArbitary(1, 9.99))
 	//d
-		$('.header div[name=brr]').append('<div>'+brr +'</div>')
+		//$('.header div[name=brr]').append('<div>'+brr +'</div>')
         if (brr!='Android'){
             var img = new Image();
             img.onload = setImg;
