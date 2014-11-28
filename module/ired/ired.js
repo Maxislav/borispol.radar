@@ -3,6 +3,9 @@ var ired = {
 	elpanel: null,
 	arrimg: [],
 	state: {},
+    stepBask: 8,
+    baseURI: 'http://www.sat24.com/image2.ashx?region=eu&time=',
+    afterUrl : '&ir=true',
 	init: function (html) {
 		var s = this;
 		if (!s.el) {
@@ -45,17 +48,73 @@ var ired = {
 		imgir.onload = function () {
 			app.mask.hide(s.el.find('.container-imgs-ir'))
 			s.el.find('img').attr('src',
-				home.imgir_s
+                imgir.src
 			).fadeTo(222, 1)
 		}
-		imgir.src = home.imgir_s;
+
+        var date = mathDate.setParams({mi:15, ss: 60})(new Date(),{hh:-2, mi:-5})
+        date = DateFormat.format.date(date, 'yyyyMMddHHmm')
+       // console.log(date)
+		imgir.src = s.baseURI + date+ s.afterUrl
+        console.log(imgir.src)
 	},
+    load: function(success){
+        var s = this;
+        var arr = s.arrimg;
+        var steps = s.stepBask;
+        var k = 0;
+        var offset = 0
+        for (var i = 0; i<steps; i++){
+            var date = mathDate.setParams({mi:15, ss: 60})(new Date(),{hh:-2, mi:-5-(offset+=15)})
+            date = DateFormat.format.date(date, 'yyyyMMddHHmm')
+
+
+            arr[i] = new Image();
+            arr[i].onload = ok
+            arr[i].src = s.baseURI + date+ s.afterUrl
+        }
+
+        function ok(){
+            k++
+            if(k==steps){
+
+                for (var i = 0; i<steps; i++){
+                    s.arrimg[steps-i] = arr[i]
+               //  console.log(arr[i].src)
+                   // s.arrimg[steps-i] = arr[i]
+                }
+                for (var i = 0; i<steps; i++){
+                   // s.arrimg[steps-i] = arr[i]
+                     console.log(s.arrimg[i].src)
+                    // s.arrimg[steps-i] = arr[i]
+                }
+
+                success && success.call(s)
+            }
+        }
+
+    },
+
+
+
 	play: function () {
 
 		var s = this;
-        if(s.state.play){
-            return;
+        if(!s.arrimg.length){
+
+            s.load(s.play)
+            return
         }
+        console.log('ok')
+
+        return
+        //container-imgs-ir
+
+       // s.el.fi
+
+
+
+
 
         s.state.play = true;
 		s.elpanel.find('.glyphicon-play').addClass('active')
@@ -106,7 +165,7 @@ var ired = {
 
 
 	},
-	load: function(success){
+	/*load: function(success){
 		var s = this;
 		require(['ir'],function(){
             var loader = s.el.find('.progress-bar');
@@ -121,7 +180,7 @@ var ired = {
 
 			},loader)
 		})
-	},
+	},*/
 	refresh: function(){
 
 	}

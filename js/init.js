@@ -20,7 +20,9 @@ require.config({
 		info: 'module/info/info',
 		build: 'build/scripts.min',
 		eventsUKBB: 'module/home/eventsUKBB',
-		helpme: 'module/helpme/helpme'
+		helpme: 'module/helpme/helpme',
+        DateFormat: 'lib/jquery/dateFormat',
+        MathDate:'js/MathDate'
 	},
     shim:{
         app:{
@@ -32,12 +34,15 @@ require.config({
 });
 require(
 	[
-		/*'jquery',
+		'jquery',
 		'app',
 		'timer',
-		'main'*/
-        'home',
-		'build'
+		'main',
+        'app',
+        'DateFormat',
+        'MathDate'
+        //'home',
+		//'build'
 	], function ($) {
 		app.init()
 

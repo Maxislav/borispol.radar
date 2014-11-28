@@ -20,7 +20,8 @@ home = {
             })
             var irpanel = $('.ir-panel');
 
-            irpanel.on('click', '.glyphicon-play',
+            irpanel
+                .on('click', '.glyphicon-play',
                 function () {
                     if (!s.irState.play) {
                         s.irState.plat = true;
@@ -29,7 +30,8 @@ home = {
                             ir.play();
                         })
                     }
-                }).on('click', '.glyphicon-step-backward',
+                })
+                .on('click', '.glyphicon-step-backward',
                 function () {
                     $(this).addClass('active')
                     s.irState.back = true;

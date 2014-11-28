@@ -6,8 +6,8 @@ module.exports = function (grunt) {
 
         uglify: {
             options: {
-                sourceMap: true
-                //mangle: false
+                sourceMap: true,
+                mangle: false
             },
             main: {
                 files: {
