@@ -58,8 +58,9 @@ module.exports = function (grunt) {
                 },
                 files: {
                     "css/css.css": [
-                        "css/borispol.less",
-                        "lib/bootstrap/dist/css/bootstrap.min.css"
+                        "lib/bootstrap/dist/css/bootstrap.min.css",
+                        "css/borispol.less"
+
                     ]
                 }
             }

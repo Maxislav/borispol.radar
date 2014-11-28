@@ -54,7 +54,7 @@ var app = {
 		$('.nav.nav-tabs').find('li').eq(n).addClass('active')
 	},
 	mask:{
-		show:function (el) {
+		show:  function (el) {
 			var s = this;
 			if(el){
 				el.append('<div class="mask">' +
@@ -108,8 +108,7 @@ var app = {
 					top:$(window).height() / 2 - 30 + 'px'
 				})
 			}
-
-
+            return el.find('.mask')
 		},
 		hide:function (el) {
 			if(el){
@@ -121,7 +120,11 @@ var app = {
 					$(this).remove()
 				})
 			}
-		}
+		},
+        remove: function(el){
+           el.remove()
+           delete el
+        }
 
 
 	},

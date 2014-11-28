@@ -1,4 +1,4 @@
-var ired = {
+var ModuleController = {
     el: null,
     elpanel: null,
     arrimg: [],

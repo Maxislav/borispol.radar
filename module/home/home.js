@@ -105,7 +105,6 @@ home = {
         })
 
         s.el.css({
-            //position:'inherit',
             visibility: 'visible'
         })
         s.el.fadeTo(222, 1)
