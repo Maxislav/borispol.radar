@@ -21,7 +21,14 @@ require.config({
 		build: 'build/scripts.min',
 		eventsUKBB: 'module/home/eventsUKBB',
 		helpme: 'module/helpme/helpme'
-	}
+	},
+    shim:{
+        app:{
+            deps: [
+                'home'
+            ]
+        }
+    }
 });
 require(
 	[
@@ -29,6 +36,7 @@ require(
 		'app',
 		'timer',
 		'main'*/
+        'home',
 		'build'
 	], function ($) {
 		app.init()

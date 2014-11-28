@@ -9,17 +9,23 @@ var app = {
             s.loadmodulle(hash)
         });
 
+        s.loadmodulle(window.location.hash.replace('#',''))
+
 		/*
 		$('[module]').click(function (e) {
 			var module = $(this).attr('module');
 			s.loadmodulle(module)
 		})
+
+
+
 		s.loadmodulle('home');*/
-        if( window.location.hash.replace('#','') == 'home'){
+
+        /*if( window.location.hash.replace('#','') == 'home'){
             s.loadmodulle ('home')
         }else{
             window.location.hash = 'home'
-        }
+        }*/
 
         s.getBrr()
 		//alert('d')
