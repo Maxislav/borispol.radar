@@ -181,5 +181,47 @@ table{
 	background-image: url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAZABkAAD/7AARRHVja3kAAQAEAAAAHgAA/+4ADkFkb2JlAGTAAAAAAf/bAIQAEAsLCwwLEAwMEBcPDQ8XGxQQEBQbHxcXFxcXHx4XGhoaGhceHiMlJyUjHi8vMzMvL0BAQEBAQEBAQEBAQEBAQAERDw8RExEVEhIVFBEUERQaFBYWFBomGhocGhomMCMeHh4eIzArLicnJy4rNTUwMDU1QEA/QEBAQEBAQEBAQEBA/8AAEQgASwBLAwEiAAIRAQMRAf/EAGYAAQEBAQAAAAAAAAAAAAAAAAEAAgYBAQEAAAAAAAAAAAAAAAAAAAABEAABAgQDBwUAAAAAAAAAAAABAAIxUXESQWGRESHB0eEiMoGhsUJSEQEBAQEAAAAAAAAAAAAAAAAAIUER/9oADAMBAAIRAxEAPwDvWtbaNwgMFOa207hA4Ka5to3iAxU5zbTvEDirepOGxshohzW7ICIwzTe2Y1Q5zdkREY5pSGxshogtbtbuEZZFN7ZjVBc3a3eIzyKUhsbIaItbcNwgcKJvbMaoubcN4gcaJSGxshoqxshoq9sxqq9sxqlImeIoFP8AE0KGuFojAYFTnC0xgcCmmNrLoeo+VXDPQoc4bMYjAzQbWXRbXgVXDPQoLhtbGMjIoNrP2FDwVcM9Ci4XCMDgckG0IuGehVcM9CoqZ4igU/xNChpNo7TAS5qcTae0wMuaupjay6HqPlVx/J9uaHE7PExEp1QbWXRbXgVXH8n25oJO1vaY5SOaDaz9hQ8FXH8n25o2m4dpgZZZoNoRcfyfbmrafyfbmoqZ4igU/wATQobdaNwgMeinXWncIHHorqY2suh6j5V3SGvRDrtkBEY50QbWXRbXgVd0hr0QbtrdwjPI5INrP2FDwV3SGvRHdcNwgcaZIraEd0hr0V3yGvRQTPEUCn+JoVM8RQKf4mhV1MaWXQ9R8pQ6HqPlRWll0W14FKDFteBQaWfsKHglH3FDwQaQpSD/2Q==);
 }
 .progress-bar{
-  background-color: #FC0031 !important;
+
+
+  width: 5%;
+  text-align: right;
+  position: relative;
+}
+.progress-loader{
+  opacity: 0;
+  position: absolute;
+  top: -6px;
+  height: 10px;
+  width: 100%;
+}
+
+.progress-striped .progress-bar{
+  background: #f0f9ff; /* Old browsers */
+  background: -moz-linear-gradient(left,  #f0f9ff 0%, #cbebff 47%, #35acfc 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#f0f9ff), color-stop(47%,#cbebff), color-stop(100%,#35acfc)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left,  #f0f9ff 0%,#cbebff 47%,#35acfc 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left,  #f0f9ff 0%,#cbebff 47%,#35acfc 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left,  #f0f9ff 0%,#cbebff 47%,#35acfc 100%); /* IE10+ */
+  background: linear-gradient(to right,  #f0f9ff 0%,#cbebff 47%,#35acfc 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f9ff', endColorstr='#35acfc',GradientType=1 ); /* IE6-9 */
+}
+.progress.active .progress-bar{
+  -webkit-animation: none
+}
+.loading-flare{
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  //background: #008000;
+  //float: right;
+  position: absolute;
+  right: -15px;
+  top: -12px;
+  background: url("../img/flare.png") no-repeat center;
+  background-size: 100%;
+
+}
+.progress{
+  overflow: inherit;
+
 }

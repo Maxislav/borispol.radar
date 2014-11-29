@@ -1,5 +1,6 @@
 var app = {
 	css:{},
+    currentMoule: null,
 	init:function () {
 		var s = this;
 
@@ -9,33 +10,16 @@ var app = {
             s.loadmodulle(hash)
         });
 
-
-       // s.loadmodulle(window.location.hash.replace('#',''))
-
-		/*
-		$('[module]').click(function (e) {
-			var module = $(this).attr('module');
-			s.loadmodulle(module)
-		})
-
-
-
-		s.loadmodulle('home');*/
-
         if(window.location.hash.replace('#','')){
             s.loadmodulle(window.location.hash.replace('#',''))
         }else{
             window.location.hash = 'home'
         }
-
         s.getBrr()
-		//alert('d')
-      // var hash = window.location.hash.replace('#','');
-
-
 	},
 	loadmodulle: function(module){
 		var s = this;
+        s.currentMoule && s.currentMoule.hide()
 		require([
 			module,
 			'text' + '!' + module + '.html',
@@ -47,9 +31,11 @@ var app = {
 				$('head').append('<style>'+css+'</style>')
 				s.css[module]= true;
 			}
-			window[module].init(html)
+            s.currentMoule = window[module]
+            s.currentMoule &&  s.currentMoule.show(html)
+            app.navTabs(s.currentMoule.navTabs)
 		})
-	} ,
+	},
 	navTabs: function(n){
 		$('.nav.nav-tabs').find('li').removeClass('active')
 		$('.nav.nav-tabs').find('li').eq(n).addClass('active')

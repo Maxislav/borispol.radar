@@ -24,19 +24,21 @@ require.config({
 		helpme: 'module/helpme/helpme',
         DateFormat: 'lib/jquery/dateFormat',
         MathDate:'js/MathDate',
-        moduleController: 'js/moduleController'
+        moduleController: 'js/moduleController',
+        informers: 'http://meteo.ua/var/informers'
 	},
     shim:{
-        app:{
+        info:{
             deps: [
-                'home'
-            ]
-        },
-        moduleController:{
-            deps: [
-                'home'
+                'informers'
             ]
         }
+        /*moduleController:{
+            deps: [
+                'home'
+            ]
+        }*/
+
     }
 });
 require(
@@ -49,6 +51,7 @@ require(
         'DateFormat',
         'MathDate',
         'moduleController'
+        //'home'
         //'home',
 		//'build'
 	], function ($) {

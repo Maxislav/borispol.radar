@@ -4,111 +4,99 @@ home = {
     imgvi_s: null,
     irState: {},
     viState: {},
-    init: function (html) {
+    navTabs: 0,
+    init: function (html, success) {
         var s = this;
-        if (!s.el) {
-            $('.content').append(html);
-            s.el = $('.content .home');
-            s.el.fadeTo(222, 1);
-            timer.init();
-            s.showImg();
-            s.events();
-            require([
-                'mouseevent'
-            ], function () {
-                mousEvent();
-            })
-            var irpanel = $('.ir-panel');
+        s.el = $(document.createElement('div')).html(html).css({
+            opacity: 0
+        })
+        $('.content').append(s.el);
+       // s.el = $('.content .home');
+       // s.el.fadeTo(222, 1);
+        timer.init();
+        s.showImg();
+        s.events();
+        require([
+            'mouseevent'
+        ], function () {
+            mousEvent();
+        })
+        var irpanel = $('.ir-panel');
 
-            irpanel
-                .on('click', '.glyphicon-play',
-                function () {
-                    if (!s.irState.play) {
-                        s.irState.plat = true;
-                        $(this).addClass('active');
-                        require(['ir'], function (r) {
-                            ir.play();
-                        })
-                    }
-                })
-                .on('click', '.glyphicon-step-backward',
-                function () {
-                    $(this).addClass('active')
-                    s.irState.back = true;
-                    require(['ir'], function (r) {
-                        ir.back();
-                    })
-                }).on('click', '.glyphicon-step-forward',function () {
-                    $(this).addClass('active')
-                    s.irState.forward = true;
-                    require(['ir'], function (r) {
-                        ir.forward();
-                    })
-                }).on('click', '.glyphicon-refresh', function () {
-
+        irpanel
+            .on('click', '.glyphicon-play',
+            function () {
+                if (!s.irState.play) {
+                    s.irState.plat = true;
                     $(this).addClass('active');
-                    app.mask.show($('.small-images.ir'))
-                    require(['ir'], function () {
-                        ir.refresh();
+                    require(['ir'], function (r) {
+                        ir.play();
                     })
-                })
-
-            var vipanel = $('.vi-panel');
-
-            vipanel.on('click', '.glyphicon-play',
-                function () {
-                    if (!s.irState.play) {
-                        s.viState.plat = true;
-                        $(this).addClass('active');
-                        require(['vi'], function (r) {
-                            vi.play();
-                        })
-                    }
-                }).on('click', '.glyphicon-step-backward',
-                function () {
-                    $(this).addClass('active')
-                    s.viState.back = true;
-                    require(['vi'], function (r) {
-                        vi.back();
-                    })
-                }).on('click', '.glyphicon-step-forward',function () {
-                    $(this).addClass('active')
-                    s.viState.forward = true;
-                    require(['vi'], function (r) {
-                        vi.forward();
-                    })
-                }).on('click', '.glyphicon-refresh', function () {
-
-                    $(this).addClass('active');
-                    app.mask.show($('.small-images.vi'))
-                    require(['vi'], function () {
-                        vi.refresh();
-                    })
-                })
-
-        } else {
-            s.show()
-        }
-        app.navTabs(0);
-    },
-    show: function () {
-        var s = this;
-        $('.content').children('div').not(s.el).css({
-            //position:'inherit',
-            left: 0 + 'px',
-            top: 0 + 'px'
-        })
-        $('.content').children('div').not(s.el).fadeTo(222, 0, function () {
-            $(this).css({
-                visibility: 'hidden'
+                }
             })
-        })
+            .on('click', '.glyphicon-step-backward',
+            function () {
+                $(this).addClass('active')
+                s.irState.back = true;
+                require(['ir'], function (r) {
+                    ir.back();
+                })
+            }).on('click', '.glyphicon-step-forward', function () {
+                $(this).addClass('active')
+                s.irState.forward = true;
+                require(['ir'], function (r) {
+                    ir.forward();
+                })
+            }).on('click', '.glyphicon-refresh', function () {
 
-        s.el.css({
-            visibility: 'visible'
-        })
-        s.el.fadeTo(222, 1)
+                $(this).addClass('active');
+                app.mask.show($('.small-images.ir'))
+                require(['ir'], function () {
+                    ir.refresh();
+                })
+            })
+
+        var vipanel = $('.vi-panel');
+
+        vipanel
+            .on('click', '.glyphicon-play',
+            function () {
+                if (!s.irState.play) {
+                    s.viState.plat = true;
+                    $(this).addClass('active');
+                    require(['vi'], function (r) {
+                        vi.play();
+                    })
+                }
+            })
+            .on('click', '.glyphicon-step-backward',
+            function () {
+                $(this).addClass('active')
+                s.viState.back = true;
+                require(['vi'], function (r) {
+                    vi.back();
+                })
+            })
+            .on('click', '.glyphicon-step-forward', function () {
+                $(this).addClass('active')
+                s.viState.forward = true;
+                require(['vi'], function (r) {
+                    vi.forward();
+                })
+            })
+            .on('click', '.glyphicon-refresh', function () {
+
+                $(this).addClass('active');
+                app.mask.show($('.small-images.vi'))
+                require(['vi'], function () {
+                    vi.refresh();
+                })
+            })
+        success && success.call(s)
+
+        //  app.navTabs(0);
     },
+
     showImg: function () {
         var s = this;
         app.mask.show($(s.el.find('.ukbb-content .imgs')));
@@ -147,6 +135,7 @@ home = {
 
             }
         }
+
         s.reload();
     },
     reload: function () {
@@ -159,10 +148,7 @@ home = {
                 setTimeout(rel, 60000)
             }
             img.src = src;
-
-
         }
-
     },
     events: function () {
         var s = this;
@@ -175,3 +161,4 @@ home = {
     }
 
 }
+home.__proto__ = ModuleController

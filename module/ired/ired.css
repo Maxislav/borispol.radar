@@ -1,7 +1,4 @@
-.ired{
-	opacity: 0;
 
-}
 
 .ired img{
 	height: 100%;
@@ -24,7 +21,6 @@
 	left: 0;
 	top: 0;
 }
-
 .ired .panel-drive{
 	position: absolute;
 	bottom: 0;
@@ -54,10 +50,8 @@
 
 }
 .ired .progress-loader{
-opacity: 0;
     position: absolute;
     top: -6px;
     height: 10px;
     width: 100%;
-
 }

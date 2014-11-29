@@ -6,11 +6,9 @@ var visible = {
     steps: 9,
     arrimg: [],
     imgir: null,
-    init: function(html){
-        var s = this
-        s.__proto__ = ModuleController;
-        s.initModule(html)
-    },
+    moduleName: 'visible',
+    navTabs: 2,
+    el: null,
     getDate: function(){
         var date = mathDate.setParams({mi: 15, ss: 60})(new Date(), {hh: -2, mi: -5})
         date = DateFormat.format.date(date, 'yyyyMMddHHmm')
@@ -22,3 +20,4 @@ var visible = {
         return date
     }
 }
+visible.__proto__ = ModuleController

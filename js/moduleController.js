@@ -8,6 +8,7 @@ var ModuleController = {
     btnRefresh: null,
     btnStepBask: null,
     btnStepForward: null,
+    moduleName: 'ired',
     baseURI: 'http://www.sat24.com/image2.ashx?region=eu&time=',
     active: false,
     afterUrl: '&ir=true',
@@ -15,61 +16,47 @@ var ModuleController = {
     container: null,
     imgir: null,
     progressLoader: null,
-    progressBar:null,
+    progressBar: null,
     navTabs: 1,
     offset: 15,
-    initModule: function (html) {
+    init: function (html, success) {
         var s = this;
-        if (!s.el) {
-            if (!home) {
-                require([
-                    'home'
-                ], function () {
-                    goNext()
-                })
-            } else {
-                goNext();
-            }
-            function goNext() {
-                $('.content').append(html)
-                s.el = $('.content .ired');
-                s.el.fadeTo(222, 1);
-                s.btnPlay = s.el.find('.glyphicon.glyphicon-play');
-                s.btnRefresh = s.el.find('.glyphicon.glyphicon-refresh');
-                s.btnStepBask = s.el.find('.glyphicon.glyphicon-step-backward');
-                s.btnStepForward = s.el.find('.glyphicon.glyphicon-step-forward');
-                s.progressLoader = s.el.find('.progress-loader');
-                s.progressBar  = s.el.find('.progress-bar');
-               // s.__proto__ = home;
-                s.show()
-                s.showImg();
-                s.elpanel = s.el.find('.panel-drive');
-                s.elpanel
-                    .on('click', '.glyphicon-play', function () {
-                        if (s.active) return
-                        s.play();
-                        s.active = true;
-                    })
-                    .on('click', '.glyphicon-refresh', function () {
-                        s.refresh()
-                    })
-                    .on('click','.glyphicon.glyphicon-step-backward' , function(){
-                        if(s.btnStepBask.active) return
-                        s.btnStepBask.addClass('active')
-                        s.btnStepBask.active = true
-                        s.stepBack()
-                    })
-                    .on('click','.glyphicon.glyphicon-step-forward' , function(){
-                        if(s.btnStepForward.active) return
-                        s.btnStepForward.addClass('active')
-                        s.btnStepForward.active = true
-                        s.stepForward()
-                    })
-            }
-        } else {
-            s.show()
-        }
-        app.navTabs(s.navTabs);
+        //$('.content').append(html)
+        s.el = $(document.createElement('div')).html(html).css({
+            opacity: 0
+        })
+        $(document).find('.content').append(s.el)
+        s.btnPlay = s.el.find('.glyphicon.glyphicon-play');
+        s.btnRefresh = s.el.find('.glyphicon.glyphicon-refresh');
+        s.btnStepBask = s.el.find('.glyphicon.glyphicon-step-backward');
+        s.btnStepForward = s.el.find('.glyphicon.glyphicon-step-forward');
+        s.progressLoader = s.el.find('.progress-loader');
+        s.progressBar = s.el.find('.progress-bar');
+        s.elpanel = s.el.find('.panel-drive');
+        s.elpanel
+            .on('click', '.glyphicon-play', function () {
+                if (s.active) return
+                s.play();
+                s.active = true;
+            })
+            .on('click', '.glyphicon-refresh', function () {
+                s.refresh()
+            })
+            .on('click', '.glyphicon.glyphicon-step-backward', function () {
+                if (s.btnStepBask.active) return
+                s.btnStepBask.addClass('active')
+                s.btnStepBask.active = true
+                s.stepBack()
+            })
+            .on('click', '.glyphicon.glyphicon-step-forward', function () {
+                if (s.btnStepForward.active) return
+                s.btnStepForward.addClass('active')
+                s.btnStepForward.active = true
+                s.stepForward()
+            })
+        s.showImg();
+        success && success.call(s)
+
     },
     showImg: function () {
         var s = this;
@@ -94,12 +81,10 @@ var ModuleController = {
         var steps = s.steps;
         var k = 0;
         var offset = 0;
-        s.progressLoader.fadeTo(222,1)
+        s.progressLoader.fadeTo(222, 1)
         for (var i = 0; i < steps; i++) {
-            offset+= s.offset
+            offset += s.offset
             var date = s.getStepDate(offset)
-
-            console.log(date)
             arr[i] = new Image();
             arr[i].onload = ok
             arr[i].src = s.baseURI + date + s.afterUrl
@@ -108,7 +93,7 @@ var ModuleController = {
         function ok() {
             k++
             s.progressBar.css({
-                width: Math.ceil(k*100/steps)+'%'
+                width: Math.ceil(k * 100 / steps) + '%'
             })
             if (k == steps) {
                 var _arr = []
@@ -127,8 +112,8 @@ var ModuleController = {
                     s.container.append(s.arrimg[i])
                     $(s.arrimg[i]).css({'opacity': 1})
                 }
-                s.clip = steps-1;
-                s.progressLoader.fadeTo(222,0)
+                s.clip = steps - 1;
+                s.progressLoader.fadeTo(222, 0)
                 success && success.call(s)
             }
         }
@@ -154,7 +139,6 @@ var ModuleController = {
                 setTimeout(play, 500)
             }
         }
-
         function play() {
             $(arrimg[k]).fadeTo(200, 0.2, function () {
                 s.clip = k;
@@ -197,50 +181,70 @@ var ModuleController = {
             s.showImg();
         }, 300)
     },
-    stepBack: function(){
+    stepBack: function () {
         var s = this;
-        if(!s.arrimg.length){
+        if (!s.arrimg.length) {
             s.load(s.stepBack)
             return
         }
-        if(s.clip && 0<s.clip){
-            $(s.arrimg[s.clip]).fadeTo(222,0, function(){
+        if (s.clip && 0 < s.clip) {
+            $(s.arrimg[s.clip]).fadeTo(222, 0, function () {
                 s.clip--
                 s.btnStepBask.active = false
                 s.btnStepBask.removeClass('active')
             })
-        }else{
+        } else {
             s.btnStepBask.active = false
             s.btnStepBask.removeClass('active')
         }
     },
-    stepForward: function(){
+    stepForward: function () {
         var s = this;
-        if(!s.arrimg.length){
+        if (!s.arrimg.length) {
             s.load(s.stepForward)
             return
         }
-        if(s.clip<s.steps-1){
+        if (s.clip < s.steps - 1) {
             s.clip++
-            $(s.arrimg[s.clip]).fadeTo(222,1, function(){
+            $(s.arrimg[s.clip]).fadeTo(222, 1, function () {
 
                 s.btnStepForward.active = false
                 s.btnStepForward.removeClass('active')
             })
-        }else{
+        } else {
             s.btnStepForward.active = false
             s.btnStepForward.removeClass('active')
         }
     },
-    getDate: function(){
+    getDate: function () {
         var date = mathDate.setParams({mi: 15, ss: 60})(new Date(), {hh: -2, mi: -5})
         date = DateFormat.format.date(date, 'yyyyMMddHHmm')
         return date
     },
-    getStepDate: function(offset){
+    getStepDate: function (offset) {
         var date = mathDate.setParams({mi: 15, ss: 60})(new Date(), {hh: -2, mi: -2 - (offset)})
         date = DateFormat.format.date(date, 'yyyyMMddHHmm')
         return date
     },
-    show: home.show
+    show: function (html) {
+        var s = this;
+        if (!s.el) {
+            s.init.call(s,html, s.show)
+            return
+        }
+
+        s.el.css({
+            display: 'block'
+        })
+        s.el.fadeTo(222, 1)
+    },
+    hide: function () {
+        var s = this
+        s.el.fadeTo(222, 0, function () {
+            s.el.css({
+                display: 'none'
+            })
+        })
+    }
 }
+//ModuleController.__proto__ = home
