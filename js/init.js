@@ -25,7 +25,8 @@ require.config({
         DateFormat: 'lib/jquery/dateFormat',
         MathDate:'js/MathDate',
         moduleController: 'js/moduleController',
-        informers: 'http://meteo.ua/var/informers'
+        informers: 'http://meteo.ua/var/informers',
+        pendulum:'js/pendulum'
 	},
     shim:{
         info:{
@@ -46,6 +47,7 @@ require(
         'MathDate',
         'moduleController'*/
         //'home',
+        'pendulum',
 		'build'
 	], function ($) {
 		app.init()

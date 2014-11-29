@@ -16,7 +16,13 @@ var app = {
             window.location.hash = 'home'
         }
         $('.m-container').draggable({ handle: ".header" })
+        new gg().play();
         s.getBrr()
+
+        new gg().play();
+        new gg().play();
+        new gg().play();
+        new gg().play();
 	},
 	loadmodulle: function(module){
 		var s = this;
