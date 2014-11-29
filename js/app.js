@@ -168,9 +168,9 @@ var app = {
                 if(difTime<100){
                     img = new Image()
                     img.onload = setImg
-                    img.srs = url
+                    img.src = url
                 }
-
+                    console.log(difTime)
             }
 
 
