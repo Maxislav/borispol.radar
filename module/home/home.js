@@ -13,7 +13,7 @@ home = {
         $('.content').append(s.el);
        // s.el = $('.content .home');
        // s.el.fadeTo(222, 1);
-       // timer.init();
+        timer.init();
         s.showImg();
         s.events();
         require([
