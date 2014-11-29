@@ -17,7 +17,8 @@ var ModuleController = {
     progressLoader: null,
     progressBar:null,
     navTabs: 1,
-    init: function (html) {
+    offset: 15,
+    initModule: function (html) {
         var s = this;
         if (!s.el) {
             if (!home) {
@@ -39,7 +40,7 @@ var ModuleController = {
                 s.btnStepForward = s.el.find('.glyphicon.glyphicon-step-forward');
                 s.progressLoader = s.el.find('.progress-loader');
                 s.progressBar  = s.el.find('.progress-bar');
-                ired.__proto__ = home;
+               // s.__proto__ = home;
                 s.show()
                 s.showImg();
                 s.elpanel = s.el.find('.panel-drive');
@@ -95,8 +96,8 @@ var ModuleController = {
         var offset = 0;
         s.progressLoader.fadeTo(222,1)
         for (var i = 0; i < steps; i++) {
-            var date = mathDate.setParams({mi: 15, ss: 60})(new Date(), {hh: -2, mi: -2 - (offset += 15)})
-            date = DateFormat.format.date(date, 'yyyyMMddHHmm')
+            offset+= s.offset
+            var date = s.getStepDate(offset)
 
             console.log(date)
             arr[i] = new Image();
@@ -236,4 +237,10 @@ var ModuleController = {
         date = DateFormat.format.date(date, 'yyyyMMddHHmm')
         return date
     },
+    getStepDate: function(offset){
+        var date = mathDate.setParams({mi: 15, ss: 60})(new Date(), {hh: -2, mi: -2 - (offset)})
+        date = DateFormat.format.date(date, 'yyyyMMddHHmm')
+        return date
+    },
+    show: home.show
 }

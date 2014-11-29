@@ -22,10 +22,16 @@ require.config({
 		eventsUKBB: 'module/home/eventsUKBB',
 		helpme: 'module/helpme/helpme',
         DateFormat: 'lib/jquery/dateFormat',
-        MathDate:'js/MathDate'
+        MathDate:'js/MathDate',
+        moduleController: 'js/moduleController'
 	},
     shim:{
         app:{
+            deps: [
+                'home'
+            ]
+        },
+        moduleController:{
             deps: [
                 'home'
             ]
@@ -40,7 +46,8 @@ require(
 		'main',
         'app',
         'DateFormat',
-        'MathDate'
+        'MathDate',
+        'moduleController'
         //'home',
 		//'build'
 	], function ($) {

@@ -1,14 +1,14 @@
-.visible{
+.ired{
     opacity: 0;
 
 }
 
-.visible img{
+.ired img{
     height: 100%;
     width: 100%;
     opacity: 0;
 }
-.visible .container-imgs-vi{
+.ired .container-imgs-ir{
     height: 560px;
     width: 100%;
     box-shadow:  0 2px 5px rgba(0,0,0,0.5);
@@ -17,24 +17,22 @@
     position: absolute;
     top: 0;
     left: 0;
-    background: url("img/postbg.jpg");
+    /*background: url("img/postbg.jpg");*/
 }
-.visible .container-imgs-vi img{
+.ired .container-imgs-ir img{
     position: absolute;
     left: 0;
     top: 0;
 }
 
-.visible .panel-drive{
+.ired .panel-drive{
     position: absolute;
     bottom: 0;
-
     width: 100%;
-
     text-align: center;
     padding: 5px;
 }
-.visible .panel-drive div{
+.ired .panel-drive div{
     font-size: 20px;
     background-color: #ffffff;
     border-radius: 5px;
@@ -44,20 +42,21 @@
     margin: 0 3px;
     box-shadow: 0 0 5px rgba(255,255,255,0.5);
 }
-.visible .panel-drive div:active{
+.ired .panel-drive div:active{
     box-shadow: none;
     color: #ddd;
 }
-.visible .m.progress{
-    height: 14px;
-    width: 90%;
+.ired .m.progress{
+    height: 6px;
+    width: 100%;
     margin: 0 auto;
+    border-radius: 1px;
 
 }
-.visible .progress-loader{
+.ired .progress-loader{
     opacity: 0;
     position: absolute;
-    bottom: 40px;
+    top: -6px;
     height: 10px;
     width: 100%;
 
