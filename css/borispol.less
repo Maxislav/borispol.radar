@@ -228,6 +228,56 @@ table{
   width: 20px;
   height: 20px;
   position: absolute;
-  background: red;
+  background: url("../img/snow2.gif") no-repeat center;
+  background-size: 100%;
   top:0;
+  -webkit-animation-name: spin;
+  -webkit-animation-duration: 6000ms;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-name: spin;
+  -moz-animation-duration: 6000ms;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: linear;
+  -ms-animation-name: spin;
+  -ms-animation-duration: 6000ms;
+  -ms-animation-iteration-count: infinite;
+  -ms-animation-timing-function: linear;
+
+  animation-name: spin;
+  animation-duration: 6000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  &.s1{
+    background: url("../img/snow1.gif") no-repeat center;
+  }
+  &.s2{
+    background: url("../img/snow2.gif") no-repeat center;
+  }
+  &.s3{
+    background: url("../img/snow3.gif") no-repeat center;
+  }
+}
+
+
+
+@-ms-keyframes spin {
+  from { -ms-transform: rotate(0deg); }
+  to { -ms-transform: rotate(360deg); }
+}
+@-moz-keyframes spin {
+  from { -moz-transform: rotate(0deg); }
+  to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  from { -webkit-transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+    transform:rotate(360deg);
+  }
 }
