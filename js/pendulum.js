@@ -1,4 +1,4 @@
-function gg(){
+var gg = function(){
     var s = this
 
     var x = 0;
@@ -9,12 +9,26 @@ function gg(){
     var a = 50;
     var _x = 0;
     var sx = 100;
+    var speedy = 1;
     var y = 0;
+    var timeout = 0
     function init(d, success){
         console.log(s)
         s.d = d
-        s.el = $(document.createElement('div')).attr('class', 'snow')
+        s.el = $(document.createElement('div')).attr('class', 'snow').css({
+            opacity:0
+        })
         $('body').append(s.el)
+        sx = getRandomArbitary(-100, $(window).width()-100)
+        y = getRandomArbitary(0, -($(window).height()))
+        timeout = getRandomArbitary(0, 10000)
+
+        var n = getRandomArbitary(0.5,3)
+        speedy = getRandomArbitary(20,40)
+
+        n = Math.round(n)
+        s.el.addClass('s'+n)
+
         success && success.call(s)
     }
     this.play = function(d){
@@ -22,10 +36,13 @@ function gg(){
             init(d, s.play);
             return
         }
-        sx = getRandomArbitary(-100, $(window).width()-100)
-        y = getRandomArbitary(0, -($(window).height()))
-        delta()
-        deltaY()
+
+        setTimeout(function(){
+            s.el.fadeTo(1000,1)
+            delta()
+            deltaY()
+        },timeout)
+
     }
 
     function getRandomArbitary(min, max){
@@ -40,7 +57,7 @@ function gg(){
 
 
         }
-        setTimeout(deltaY, 40)
+        setTimeout(deltaY, speedy)
     }
 
     function delta(){
@@ -88,7 +105,7 @@ function gg(){
 
 
 
-    return this
+   // return this
 }
 
    /* s.playrr = function (d) {
