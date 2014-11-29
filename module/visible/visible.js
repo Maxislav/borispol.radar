@@ -3,12 +3,12 @@ var visible = {
     baseURI: 'http://www.sat24.com/image2.ashx?region=eu&time=',
     afterUrl: '&ir=false',
     offset: 5,
-    steps: 10,
+    steps: 9,
     arrimg: [],
     imgir: null,
     init: function(html){
         var s = this
-        s.__proto__ = ModuleController
+        s.__proto__ = ModuleController;
         s.initModule(html)
     },
     getDate: function(){

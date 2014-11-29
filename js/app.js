@@ -149,19 +149,19 @@ var app = {
         {
             return Math.random() * (max - min) + min;
         }
-        var x = Math.floor( getRandomArbitary(1, 9.99))
+
 		var x = Math.floor( getRandomArbitary(1, 9.99))
-	//d
-		//$('.header div[name=brr]').append('<div>'+brr +'</div>')
+
+        var url =  'img/bg/'+x+'.jpg?b='+new Date().getSeconds()
         if (brr!='Android'){
             var img = new Image();
             img.onload = setImg;
-            img.src = 'img/bg/'+x+'.jpg'
+            img.src = url
 
         }
 
         function setImg(){
-            document.body.style.backgroundImage = "url('img/bg/"+x+".jpg')";
+            document.body.style.backgroundImage = "url("+url+")";
             document.body.style.backgroundSize = '100% auto';
 
         }
