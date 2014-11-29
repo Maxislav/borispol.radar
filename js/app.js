@@ -15,6 +15,7 @@ var app = {
         }else{
             window.location.hash = 'home'
         }
+        $('.m-container').draggable({ handle: ".header" })
         s.getBrr()
 	},
 	loadmodulle: function(module){

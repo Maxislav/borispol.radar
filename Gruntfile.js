@@ -15,6 +15,7 @@ module.exports = function (grunt) {
                     files: {
                         'build/scripts.min.js': [
                             "lib/jquery/jquery-min.js",
+                            "lib/jquery/jquery-ui-1.11.2.custom/jquery-ui.min.js",
                             'js/app.js',
                             'js/timer.js',
                             'js/main.js',
@@ -32,6 +33,7 @@ module.exports = function (grunt) {
                 files: {
                     'build/scripts.min.js': [
                         "lib/jquery/jquery-min.js",
+                        "lib/jquery/jquery-ui-1.11.2.custom/jquery-ui.min.js",
                         'js/app.js',
                         'js/timer.js',
                         'js/main.js',
