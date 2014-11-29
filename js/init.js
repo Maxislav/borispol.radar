@@ -3,7 +3,7 @@ var brr;
 require.config({
 	waitSeconds: 60,
 	baseUrl: '',
-    urlArgs: "bust=2014.11.29-15:41:23",
+    urlArgs: "bust=2014.11.29-17:6:11",
 	paths: {
 		jquery: 'lib/jquery/jquery-min',
 		app: 'js/app',
@@ -33,27 +33,20 @@ require.config({
                 'informers'
             ]
         }
-        /*moduleController:{
-            deps: [
-                'home'
-            ]
-        }*/
-
     }
 });
 require(
 	[
-		'jquery',
+		/*'jquery',
 		'app',
 		'timer',
 		'main',
         'app',
         'DateFormat',
         'MathDate',
-        'moduleController'
-        //'home'
+        'moduleController'*/
         //'home',
-		//'build'
+		'build'
 	], function ($) {
 		app.init()
 

@@ -5,22 +5,43 @@ module.exports = function (grunt) {
         // Склеиваем
 
         uglify: {
-            options: {
-                sourceMap: true,
-                mangle: false
-            },
-            main: {
+
+
+                dev: {
+                    options: {
+                       sourceMap: true,
+                        mangle: false
+                    },
+                    files: {
+                        'build/scripts.min.js': [
+                            "lib/jquery/jquery-min.js",
+                            'js/app.js',
+                            'js/timer.js',
+                            'js/main.js',
+                            'lib/jquery/dateFormat.js',
+                            'js/moduleController.js',
+                            'js/MathDate.js'
+                        ]
+                    }
+                },
+            prod: {
+                options: {
+                   // sourceMap: true,
+                    mangle: true
+                },
                 files: {
-                    // Результат задачи concat
                     'build/scripts.min.js': [
                         "lib/jquery/jquery-min.js",
                         'js/app.js',
                         'js/timer.js',
                         'js/main.js',
-                        'lib/jquery/dateFormat.js'
+                        'lib/jquery/dateFormat.js',
+                        'js/moduleController.js',
+                        'js/MathDate.js'
                     ]
                 }
             }
+
         },
 
         less: {
@@ -125,9 +146,11 @@ module.exports = function (grunt) {
                     'js/app.js',
                     'js/timer.js',
                     'js/main.js',
-                    'lib/jquery/dateFormat.js'
+                  'lib/jquery/dateFormat.js',
+                    'js/moduleController.js',
+                    'js/MathDate.js'
                 ],
-                tasks: ['uglify'],
+                tasks: ['uglify:dev'],
                 options: {
                     nospawn: true
                 }
@@ -148,7 +171,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-string-replace');
 
     // Задача по умолчанию
-    grunt.registerTask('default', ['uglify','less', 'watch' ]);
-    grunt.registerTask('prod', ['string-replace']);
+    grunt.registerTask('default', ['uglify:dev','less', 'watch' ]);
+    grunt.registerTask('prod', ['uglify:prod','less','string-replace']);
+    //grunt.registerTask('test', ['uglify']);
 
 };
