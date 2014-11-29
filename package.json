@@ -1,10 +1,13 @@
 {
-    "name": "meteo",
-    "version": "0.0.0",
-    "description" : "meteo radar",
-    "dependencies":{
-        "grunt-contrib-less": "0.9.0",
-        "grunt-contrib-watch":"",
-        "grunt-contrib-uglify":""
-    }
+  "name": "meteo",
+  "version": "0.0.0",
+  "description": "meteo radar",
+  "dependencies": {
+    "grunt-contrib-less": "0.9.0",
+    "grunt-contrib-watch": "",
+    "grunt-contrib-uglify": ""
+  },
+  "devDependencies": {
+    "grunt-string-replace": "~1.0.0"
+  }
 }

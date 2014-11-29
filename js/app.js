@@ -153,12 +153,27 @@ var app = {
 		var x = Math.floor( getRandomArbitary(1, 9.99))
 
         var url =  'img/bg/'+x+'.jpg?b='+new Date().getSeconds()
-        if (brr!='Android'){
-            var img = new Image();
-            img.onload = setImg;
-            img.src = url
+        var img;
+        var beforeTime = new Date().getTime()
+        var afterTime
+        var difTime
 
-        }
+        var loaderImg = new Image()
+
+        loaderImg.onload = speadLoading
+        loaderImg.src = 'img/loader.png?b='+new Date().getTime()
+            function speadLoading(){
+                afterTime = new Date().getTime()
+                difTime = afterTime-beforeTime
+                if(difTime<100){
+                    img = new Image()
+                    img.onload = setImg
+                    img.srs = url
+                }
+
+            }
+
+
 
         function setImg(){
             document.body.style.backgroundImage = "url("+url+")";

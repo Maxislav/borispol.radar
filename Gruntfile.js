@@ -65,6 +65,35 @@ module.exports = function (grunt) {
                 }
             }
         },
+        'string-replace':{
+            index: {
+                files: {
+                    'index.html': 'index.html'
+
+                },
+                options: {
+                    replacements: [ {
+                        pattern: /js\/init.js\?v=[^"]+/,
+                        replacement: function(){
+                          return 'js/init.js?v='+dateProd()
+                        }
+                    }]
+                }
+            },
+            app: {
+                files: {
+                    'js/init.js': 'js/init.js'
+                },
+                options: {
+                    replacements: [ {
+                        pattern: /bust=[^"]+/,
+                        replacement: function(){
+                            return 'bust='+dateProd()
+                        }
+                    }]
+                }
+            }
+        },
 
         watch: {
             styles: {
@@ -106,13 +135,20 @@ module.exports = function (grunt) {
         }
     });
 
+    function dateProd(){
+        var d = new Date()
+        return d.getFullYear()+'.'+ (d.getMonth()+1)+'.'+ d.getDate()+'-'+
+             d.getHours()+':'+ d.getMinutes()+':'+ d.getSeconds();
+    }
+
     // Загрузка плагинов, установленных с помощью npm install
     grunt.loadNpmTasks('grunt-contrib-uglify');//
     grunt.loadNpmTasks('grunt-contrib-less');//
     grunt.loadNpmTasks('grunt-contrib-watch');//
+    grunt.loadNpmTasks('grunt-string-replace');
 
     // Задача по умолчанию
     grunt.registerTask('default', ['uglify','less', 'watch' ]);
-    grunt.registerTask('ms', ['less:styleMain', 'watch:styleMain']);
+    grunt.registerTask('prod', ['string-replace']);
 
 };
