@@ -18,6 +18,6 @@ var info = {
 		} else {
 			s.show()
 		}
-		app.navTabs(4);
+		app.navTabs(3);
 	}
 }

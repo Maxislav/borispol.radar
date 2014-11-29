@@ -3,6 +3,9 @@ var visible = {
     baseURI: 'http://www.sat24.com/image2.ashx?region=eu&time=',
     afterUrl: '&ir=false',
     offset: 5,
+    steps: 10,
+    arrimg: [],
+    imgir: null,
     init: function(html){
         var s = this
         s.__proto__ = ModuleController

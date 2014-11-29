@@ -11,6 +11,6 @@ helpme={
             s.events();
         }
         this.show();
-        app.navTabs(5);
+        app.navTabs(4);
     }
 }

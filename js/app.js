@@ -9,7 +9,8 @@ var app = {
             s.loadmodulle(hash)
         });
 
-        s.loadmodulle(window.location.hash.replace('#',''))
+
+       // s.loadmodulle(window.location.hash.replace('#',''))
 
 		/*
 		$('[module]').click(function (e) {
@@ -21,11 +22,11 @@ var app = {
 
 		s.loadmodulle('home');*/
 
-        /*if( window.location.hash.replace('#','') == 'home'){
-            s.loadmodulle ('home')
+        if(window.location.hash.replace('#','')){
+            s.loadmodulle(window.location.hash.replace('#',''))
         }else{
             window.location.hash = 'home'
-        }*/
+        }
 
         s.getBrr()
 		//alert('d')
