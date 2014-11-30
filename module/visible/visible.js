@@ -7,7 +7,7 @@ var visible = {
     arrimg: [],
     imgir: null,
     moduleName: 'visible',
-    navTabs: 2,
+    navTabs: 3,
     el: null,
     getDate: function(){
         var date = mathDate.setParams({mi: 15, ss: 60})(new Date(), {hh: -2, mi: -5})
