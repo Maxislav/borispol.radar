@@ -161,7 +161,7 @@ var app = {
             function speadLoading(){
                 afterTime = new Date().getTime()
                 difTime = afterTime-beforeTime
-                if(difTime<400){
+                if(difTime<800){
                     img = new Image()
                     img.onload = setImg
                     img.src = url
