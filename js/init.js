@@ -3,7 +3,7 @@ var brr;
 require.config({
 	waitSeconds: 60,
 	baseUrl: '',
-    urlArgs: "bust=2014.11.30-17:52:58",
+    urlArgs: "bust=2014.11.30-22:42:9",
 	paths: {
 		jquery: 'lib/jquery/jquery-min',
 		app: 'js/app',
@@ -27,8 +27,9 @@ require.config({
         moduleController: 'js/moduleController',
         informers: 'http://meteo.ua/var/informers',
         pendulum:'js/pendulum',
-        three: 'module/three/three',
-        threejs: 'lib/three/three.min'
+        rain: 'module/rain/rain'
+       // three: 'module/three/three',
+        //threejs: 'lib/three/three.min'
 
 	},
     shim:{
@@ -51,7 +52,7 @@ require(
         'moduleController'*/
         //'home',
         'pendulum',
-        'threejs',
+       // 'threejs',
 		'build'
 	], function ($) {
 		app.init()

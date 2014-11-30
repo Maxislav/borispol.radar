@@ -21,7 +21,6 @@ var ModuleController = {
     offset: 15,
     init: function (html, success) {
         var s = this;
-        //$('.content').append(html)
         s.el = $(document.createElement('div')).html(html).css({
             opacity: 0
         })
@@ -86,7 +85,7 @@ var ModuleController = {
             offset += s.offset
             var date = s.getStepDate(offset)
             arr[i] = new Image();
-            arr[i].onload = ok
+            arr[i].onload = ok;
             arr[i].src = s.baseURI + date + s.afterUrl
         }
 
@@ -97,7 +96,6 @@ var ModuleController = {
             })
             if (k == steps) {
                 var _arr = []
-
                 for (var i = 0; i < steps; i++) {
                     _arr.push(arr[i])
                 }
@@ -106,7 +104,6 @@ var ModuleController = {
                     s.arrimg[steps - i - 1] = _arr[i]
                 }
                 $(s.imgir).remove()
-
                 for (var i = 0; i < steps; i++) {
                     console.log(s.arrimg[i].src)
                     s.container.append(s.arrimg[i])

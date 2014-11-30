@@ -14,14 +14,20 @@ var three = {
         var s= this;
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(45 , window.innerWidth / window.innerHeight , 0.1, 1000);
-        var renderer = new THREE.WebGLRenderer();
-        renderer.setClearColorHex(0xEEEEEE);
+        var renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setClearColor(0xEEEEEE);
       //   renderer.setSize(735, 420);
         var axes = new THREE.AxisHelper( 20 );
         scene.add(axes);
-        var spotLight = new THREE.SpotLight( 0xffffff );
-        spotLight.position.set( -40, 60, -10 );
-        scene.add(spotLight );
+        var light = new THREE.SpotLight( 0xffffff );
+        light.position.set( -40, 60, -10 );
+
+        light.shadowDarkness = 0.1;
+
+        light.shadowCameraNear = 6;
+        light.shadowCameraFar = 13;
+
+        scene.add(light );
       //  var planeGeometry = new THREE.PlaneGeometry(60,20,1,1);
       //  var planeMaterial = new THREE.MeshBasicMaterial({color: 0xcccccc});
       //  var plane = new THREE.Mesh(planeGeometry,planeMaterial);
@@ -43,8 +49,10 @@ var three = {
                 color: 0x7777ff, wireframe: true
             });*/
 
-        var sphereMaterial = new THREE.MeshLambertMaterial(
-            {color: 0x7777ff});
+        var sphereMaterial = new THREE.MeshPhongMaterial({
+                color: 0x7777ff
+                //alphaMap: 000000
+            });
         var sphere = new THREE.Mesh(sphereGeometry,sphereMaterial);
         sphere.position.x = 20;
         sphere.position.y = 4;
@@ -65,6 +73,7 @@ var three = {
         container.appendChild( renderer.domElement );
 
         //$("#WebGL-output").append(renderer.domElement);
+
         renderer.render(scene, camera);
     }
 

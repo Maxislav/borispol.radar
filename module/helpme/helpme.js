@@ -1,4 +1,4 @@
 helpme={
-    navTabs: 4
+    navTabs: 5
 }
 helpme.__proto__ = ModuleController

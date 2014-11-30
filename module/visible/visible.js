@@ -1,5 +1,5 @@
 var visible = {
-    navTabs: 2,
+    navTabs: 3,
     baseURI: 'http://www.sat24.com/image2.ashx?region=eu&time=',
     afterUrl: '&ir=false',
     offset: 5,
