@@ -26,7 +26,10 @@ require.config({
         MathDate:'js/MathDate',
         moduleController: 'js/moduleController',
         informers: 'http://meteo.ua/var/informers',
-        pendulum:'js/pendulum'
+        pendulum:'js/pendulum',
+        three: 'module/three/three',
+        threejs: 'lib/three/three.min'
+
 	},
     shim:{
         info:{
@@ -48,6 +51,7 @@ require(
         'moduleController'*/
         //'home',
         'pendulum',
+        'threejs',
 		'build'
 	], function ($) {
 		app.init()
