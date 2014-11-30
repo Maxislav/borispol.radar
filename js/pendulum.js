@@ -11,7 +11,8 @@ var gg = function(){
     var sx = 100;
     var speedy = 1;
     var y = 0;
-    var timeout = 0
+    var timeout = 0;
+    this.animate = false;
     function init(d, success){
         console.log(s)
         s.d = d
@@ -22,15 +23,35 @@ var gg = function(){
         sx = getRandomArbitary(-100, $(window).width()-100)
         y = getRandomArbitary(0, -($(window).height()))
         timeout = getRandomArbitary(0, 10000)
-
         var n = getRandomArbitary(0.5,3)
         speedy = getRandomArbitary(20,40)
-
         n = Math.round(n)
         s.el.addClass('s'+n)
-
+        s.animate = true;
+        evetns()
         success && success.call(s)
     }
+
+    function evetns(){
+        s.el.click(function(){
+            s.animate = false
+            close()
+        })
+    }
+    function close(){
+        var elBoom = $(document.createElement('div')).attr('class', 'boom')
+        s.el.append(elBoom)
+        elBoom.fadeTo(100, 1, function(){
+            //s.el.remove()
+            s.el.fadeTo(400,0, function(){
+                s.el.remove ()
+            })
+
+            new gg().play()
+        })
+
+    }
+
     this.play = function(d){
         if(!s.el){
             init(d, s.play);
@@ -49,18 +70,18 @@ var gg = function(){
         return Math.random() * (max - min) + min;
     }
     function deltaY(){
-        y+=1
+        if(!s.animate) return;
+        y+=1;
         s.el.css('top', y)
         if($(window).height()+30<y){
-
             y = -30;
-
-
         }
+
         setTimeout(deltaY, speedy)
     }
 
     function delta(){
+        if(!s.animate) return;
         t +=0.040
         x = sx + a*Math.pow(t, 2)/2
         s.el.css('left', x)
@@ -75,6 +96,7 @@ var gg = function(){
     }
 
     function deltaMinus(){
+        if(!s.animate) return;
         t2 +=0.040
         x = _x + v*t2 - (a*(Math.pow(t2,2))/2)
         s.el.css('left', x)
@@ -89,6 +111,7 @@ var gg = function(){
     }
 
     function deltaPlus(){
+        if(!s.animate) return;
         t2 +=0.040
         x = _x - v*t2 + (a*(Math.pow(t2,2))/2)
         s.el.css('left', x)
