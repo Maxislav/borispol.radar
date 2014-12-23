@@ -21,7 +21,7 @@ var app = {
         var a = []
         for(var i = 0; i<10; i++){
 
-            a[i] = new gg();
+            a[i] = new snow();
             a[i].play()
         }
         s.getBrr()
