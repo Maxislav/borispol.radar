@@ -7,27 +7,27 @@ module.exports = function (grunt) {
         uglify: {
 
 
-                dev: {
-                    options: {
-                       sourceMap: true,
-                        mangle: false
-                    },
-                    files: {
-                        'build/scripts.min.js': [
-                            "lib/jquery/jquery-min.js",
-                            "lib/jquery/jquery-ui-1.11.2.custom/jquery-ui.min.js",
-                            'js/app.js',
-                            'js/timer.js',
-                            'js/main.js',
-                            'lib/jquery/dateFormat.js',
-                            'js/moduleController.js',
-                            'js/MathDate.js'
-                        ]
-                    }
+            dev: {
+                options: {
+                    sourceMap: true,
+                    mangle: false
                 },
+                files: {
+                    'build/scripts.min.js': [
+                        "lib/jquery/jquery-min.js",
+                        "lib/jquery/jquery-ui-1.11.2.custom/jquery-ui.min.js",
+                        'js/app.js',
+                        'js/timer.js',
+                        'js/main.js',
+                        'lib/jquery/dateFormat.js',
+                        'js/moduleController.js',
+                        'js/MathDate.js'
+                    ]
+                }
+            },
             prod: {
                 options: {
-                   // sourceMap: true,
+                    // sourceMap: true,
                     mangle: true
                 },
                 files: {
@@ -88,19 +88,27 @@ module.exports = function (grunt) {
                 }
             }
         },
-        'string-replace':{
+        'string-replace': {
             index: {
                 files: {
                     'index.html': 'index.html'
-
                 },
                 options: {
-                    replacements: [ {
-                        pattern: /js\/init.js\?v=[^"]+/,
-                        replacement: function(){
-                          return 'js/init.js?v='+dateProd()
+                    replacements: [
+                        {
+                            pattern: /js\/init.js\?v=[^"]+/,
+                            replacement: function () {
+                                return 'js/init.js?v=' + dateProd()
+                            }
+                        },
+                        {
+                            pattern: /name\=\"release\"\>[^\<]+/,
+                            replacement: function () {
+                                return 'name="release">' + dateProd()
+                            }
                         }
-                    }]
+
+                    ]
                 }
             },
             app: {
@@ -108,12 +116,14 @@ module.exports = function (grunt) {
                     'js/init.js': 'js/init.js'
                 },
                 options: {
-                    replacements: [ {
-                        pattern: /bust=[^"]+/,
-                        replacement: function(){
-                            return 'bust='+dateProd()
+                    replacements: [
+                        {
+                            pattern: /bust=[^"]+/,
+                            replacement: function () {
+                                return 'bust=' + dateProd()
+                            }
                         }
-                    }]
+                    ]
                 }
             }
         },
@@ -142,13 +152,13 @@ module.exports = function (grunt) {
                     nospawn: true
                 }
             },
-            js:{
+            js: {
                 files: [
                     "lib/jquery/jquery-min.js",
                     'js/app.js',
                     'js/timer.js',
                     'js/main.js',
-                  'lib/jquery/dateFormat.js',
+                    'lib/jquery/dateFormat.js',
                     'js/moduleController.js',
                     'js/MathDate.js'
                 ],
@@ -160,10 +170,10 @@ module.exports = function (grunt) {
         }
     });
 
-    function dateProd(){
+    function dateProd() {
         var d = new Date()
-        return d.getFullYear()+'.'+ (d.getMonth()+1)+'.'+ d.getDate()+'-'+
-             d.getHours()+':'+ d.getMinutes()+':'+ d.getSeconds();
+        return d.getFullYear() + '.' + (d.getMonth() + 1) + '.' + d.getDate() + '-' +
+            d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
     }
 
     // Загрузка плагинов, установленных с помощью npm install
@@ -173,8 +183,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-string-replace');
 
     // Задача по умолчанию
-    grunt.registerTask('default', ['uglify:dev','less', 'watch' ]);
-    grunt.registerTask('prod', ['uglify:prod','less','string-replace']);
+    grunt.registerTask('default', ['uglify:dev', 'less', 'watch' ]);
+    grunt.registerTask('prod', ['uglify:prod', 'less', 'string-replace']);
     //grunt.registerTask('test', ['uglify']);
 
 };
