@@ -16,14 +16,8 @@ var app = {
             window.location.hash = 'home'
         }
         $('.m-container').draggable({ handle: ".header" })
-       // new gg().play();
 
-        var a = []
-        for(var i = 0; i<10; i++){
-
-            a[i] = new snow();
-            a[i].play()
-        }
+        snow(10)
         s.getBrr()
 
 	},
