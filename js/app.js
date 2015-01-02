@@ -17,8 +17,8 @@ var app = {
         }
         $('.m-container').draggable({ handle: ".header" })
 
-        snow(10)
-        s.getBrr()
+        snow(4);
+        s.getBrr();
 
 	},
 	loadmodulle: function(module){
