@@ -3,12 +3,13 @@ var brr;
 require.config({
 	waitSeconds: 60,
 	baseUrl: '',
-    urlArgs: "bust=2014.12.28-12:53:44",
+    urlArgs: "bust=2015.1.2-10:45:17",
 	paths: {
 		jquery: 'lib/jquery/jquery-min',
 		app: 'js/app',
 		home: 'module/home/home',
 		ired: 'module/ired/ired',
+		ired24: 'module/ired24/ired24',
         meteosat: 'module/meteosat/meteosat',
 		iredMet: 'module/iredMet/iredMet',
 		text: 'lib/requirejs/text',

@@ -1,5 +1,5 @@
 var meteosat = {
-    navTabs: 4,
+    navTabs: 5,
     baseURI: 'http://meteo.gov.ua/sputnik_map/Sputn-',
     afterUrl: '.jpg',
     offset: 1,

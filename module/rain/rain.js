@@ -1,5 +1,5 @@
 var rain = {
-    navTabs: 2,
+    navTabs: 3,
     baseURI: 'http://www.sat24.com/image2.ashx?region=eu&time=',
     baseURIRain: 'http://www.sat24.com/image2.ashx?type=co&f=eu&time=',
     arrRain: [],

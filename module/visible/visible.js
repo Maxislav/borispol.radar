@@ -1,5 +1,5 @@
 var visible = {
-    navTabs: 3,
+    navTabs: 4,
     baseURI: 'http://www.sat24.com/image2.ashx?region=eu&time=',
     afterUrl: '&ir=false',
     offset: 5,
@@ -7,7 +7,6 @@ var visible = {
     arrimg: [],
     imgir: null,
     moduleName: 'visible',
-    navTabs: 3,
     el: null,
     getDate: function(){
         var date = mathDate.setParams({mi: 15, ss: 60})(new Date(), {hh: -2, mi: -5})
