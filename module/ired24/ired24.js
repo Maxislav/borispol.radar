@@ -2,7 +2,7 @@ var ired24 = {
     baseURI: 'http://borispol.hol.es/img/sat/',
     afterUrl: '.gif',
     offset: 60,
-    steps: 17,
+    steps: 19,
     arrimg: [],
     imgir: null,
     moduleName: 'visible',
