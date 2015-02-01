@@ -17,7 +17,7 @@ var app = {
         }
         $('.m-container').draggable({ handle: ".header" })
 
-        snow(4);
+       // snow(4);
         s.getBrr();
 
 	},
