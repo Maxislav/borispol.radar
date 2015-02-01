@@ -156,7 +156,23 @@ home = {
             'eventsUKBB'
         ], function (js) {
             new js(s.el)
-        })
+        });
+
+        s.el
+            .on('click','.work-no .button.green', function(){
+                //alert('..В разработке');
+
+                $.ajax({
+                    url: 'php/workno.php',
+                    success: function(d){
+                        console.log(d)
+                    }
+                })
+            })
+            .on('click','.work-no .button.red', function(){
+                alert('..В разработке');
+            })
+
 
     }
 
