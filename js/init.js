@@ -3,7 +3,7 @@ var brr;
 require.config({
 	waitSeconds: 60,
 	baseUrl: '',
-    urlArgs: "bust=2015.2.1-14:0:37",
+    urlArgs: "bust=2015.3.1-12:35:15",
 	paths: {
 		jquery: 'lib/jquery/jquery-min',
 		app: 'js/app',

@@ -158,7 +158,7 @@ home = {
             new js(s.el)
         });
 
-        s.el
+        /*s.el
             .on('click','.work-no .button.green', function(){
                 //alert('..В разработке');
 
@@ -172,7 +172,7 @@ home = {
             .on('click','.work-no .button.red', function(){
                 alert('..В разработке');
             })
-
+*/
 
     }
 
