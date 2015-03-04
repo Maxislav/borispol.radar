@@ -95,7 +95,7 @@ var ModuleController = {
         }
 
         function err(url){
-            console.log('Error load: '+url)
+            console.log('%c Error load: '+url, 'background: rgba(0,0,0,0.2); color: #FF0000')
             ok()
         }
         function ok() {
@@ -114,7 +114,7 @@ var ModuleController = {
                 }
                 $(s.imgir).remove()
                 for (var i = 0; i < steps; i++) {
-                    console.log(s.arrimg[i].src)
+                  //  console.log(s.arrimg[i].src)
                     s.container.append(s.arrimg[i])
                     $(s.arrimg[i]).css({'opacity': 1})
                 }
