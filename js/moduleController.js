@@ -83,17 +83,26 @@ var ModuleController = {
         s.progressLoader.fadeTo(222, 1)
         for (var i = 0; i < steps; i++) {
             offset += s.offset
-            var date = s.getStepDate(offset)
+            var date = s.getStepDate(offset);
+            var url = s.baseURI + date + s.afterUrl;
             arr[i] = new Image();
             arr[i].onload = ok;
-            arr[i].src = s.baseURI + date + s.afterUrl
+
+            arr[i].onerror = function(){
+                err(url);
+            }
+            arr[i].src = url
         }
 
+        function err(url){
+            console.log('Error load: '+url)
+            ok()
+        }
         function ok() {
-            k++
+            k++;
             s.progressBar.css({
                 width: Math.ceil(k * 100 / steps) + '%'
-            })
+            });
             if (k == steps) {
                 var _arr = []
                 for (var i = 0; i < steps; i++) {

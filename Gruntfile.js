@@ -1,5 +1,6 @@
 module.exports = function (grunt) {
 
+    var dateFormat = require('./dateFormat');
     // Задачи
     grunt.initConfig({
         // Склеиваем
@@ -98,7 +99,7 @@ module.exports = function (grunt) {
                         {
                             pattern: /js\/init.js\?v=[^"]+/,
                             replacement: function () {
-                                return 'js/init.js?v=' + dateProd()
+                                return 'js/init.js?v=' + dateProd('-')
                             }
                         },
                         {
@@ -120,7 +121,7 @@ module.exports = function (grunt) {
                         {
                             pattern: /bust=[^"]+/,
                             replacement: function () {
-                                return 'bust=' + dateProd()
+                                return 'bust=' + dateProd('-')
                             }
                         }
                     ]
@@ -170,11 +171,18 @@ module.exports = function (grunt) {
         }
     });
 
-    function dateProd() {
+    function dateProd(string) {
+        string = string||' '
+        var date = dateFormat.format.date( new Date(), 'dd.MM.yyyy'+string+'HH:mm:ss')
+        return date;
+    }
+
+
+   /* function dateProd() {
         var d = new Date()
         return d.getFullYear() + '.' + (d.getMonth() + 1) + '.' + d.getDate() + '-' +
             d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
-    }
+    }*/
 
     // Загрузка плагинов, установленных с помощью npm install
     grunt.loadNpmTasks('grunt-contrib-uglify');//
