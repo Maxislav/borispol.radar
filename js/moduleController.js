@@ -88,15 +88,15 @@ var ModuleController = {
             arr[i] = new Image();
             arr[i].onload = ok;
 
-            arr[i].onerror = function(){
-                err(url);
+            arr[i].onerror = function(e){
+                err(e,url);
             }
             arr[i].src = url
         }
 
-        function err(url){
-            console.log('%c Error load: '+url, 'background: rgba(0,0,0,0.2); color: #FF0000')
-            ok()
+        function err(e,url){
+            console.log('%c Error load: '+ e.type+': '+url, 'background: rgba(0,0,0,0.2); color: #FF0000')
+            ok();
         }
         function ok() {
             k++;
