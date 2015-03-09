@@ -23,8 +23,8 @@ var ModuleController = {
         var s = this;
         s.el = $(document.createElement('div')).html(html).css({
             opacity: 0
-        })
-        $(document).find('.content').append(s.el)
+        });
+        $(document).find('.content').append(s.el);
         s.btnPlay = s.el.find('.glyphicon.glyphicon-play');
         s.btnRefresh = s.el.find('.glyphicon.glyphicon-refresh');
         s.btnStepBask = s.el.find('.glyphicon.glyphicon-step-backward');
@@ -52,9 +52,11 @@ var ModuleController = {
                 s.btnStepForward.addClass('active')
                 s.btnStepForward.active = true
                 s.stepForward()
-            })
+            });
         s.showImg();
-        success && success.call(s)
+        s._init && s._init();
+
+        success && success.call(s);
 
     },
     showImg: function () {

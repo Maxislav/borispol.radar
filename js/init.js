@@ -5,7 +5,7 @@ require.config({
 	baseUrl: '',
     urlArgs: "bust=04.03.2015-15:16:08",
 	paths: {
-		jquery: 'lib/jquery/jquery-min',
+		jquery: 'lib/jquery/jquery-1.11.2.min',
 		app: 'js/app',
 		home: 'module/home/home',
 		ired: 'module/ired/ired',
@@ -29,7 +29,9 @@ require.config({
         moduleController: 'js/moduleController',
         informers: 'http://meteo.ua/var/informers',
         snow:'js/snow',
-        rain: 'module/rain/rain'
+        rain: 'module/rain/rain',
+        download: 'module/download/download',
+        fineUploader:'lib/jquery/all.fine-uploader-5.1.3.min'
        // three: 'module/three/three',
         //threejs: 'lib/three/three.min'
 
@@ -39,6 +41,16 @@ require.config({
             deps: [
                 'informers'
             ]
+        },
+        fineUploader:{
+            deps:[
+                'jquery'
+            ]
+        },
+        download:{
+          deps:[
+              'fineUploader'
+          ]
         }
     }
 });
