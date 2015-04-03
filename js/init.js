@@ -3,9 +3,9 @@ var brr;
 require.config({
 	waitSeconds: 60,
 	baseUrl: '',
-    urlArgs: "bust=04.03.2015-15:16:08",
+    urlArgs: "bust=04.04.2015-01:16:22",
 	paths: {
-		jquery: 'lib/jquery/jquery-1.11.2.min',
+		jquery: 'lib/jquery/jquery-min',
 		app: 'js/app',
 		home: 'module/home/home',
 		ired: 'module/ired/ired',
@@ -30,8 +30,7 @@ require.config({
         informers: 'http://meteo.ua/var/informers',
         snow:'js/snow',
         rain: 'module/rain/rain',
-        download: 'module/download/download',
-        fineUploader:'lib/jquery/all.fine-uploader-5.1.3.min'
+        dopa: 'module/dopa/dopa'
        // three: 'module/three/three',
         //threejs: 'lib/three/three.min'
 
@@ -41,16 +40,6 @@ require.config({
             deps: [
                 'informers'
             ]
-        },
-        fineUploader:{
-            deps:[
-                'jquery'
-            ]
-        },
-        download:{
-          deps:[
-              'fineUploader'
-          ]
         }
     }
 });
