@@ -3,7 +3,7 @@ var brr;
 require.config({
 	waitSeconds: 60,
 	baseUrl: '',
-    urlArgs: "bust=04.03.2015-15:16:08",
+    urlArgs: "bust=04.04.2015-01:16:22",
 	paths: {
 		jquery: 'lib/jquery/jquery-min',
 		app: 'js/app',
@@ -29,7 +29,8 @@ require.config({
         moduleController: 'js/moduleController',
         informers: 'http://meteo.ua/var/informers',
         snow:'js/snow',
-        rain: 'module/rain/rain'
+        rain: 'module/rain/rain',
+        dopa: 'module/dopa/dopa'
        // three: 'module/three/three',
         //threejs: 'lib/three/three.min'
 

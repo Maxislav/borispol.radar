@@ -67,6 +67,9 @@ module.exports = function (grunt) {
                     ],
                     "module/helpme/helpme.css": [
                         "module/helpme/helpme.less"
+                    ],
+                    "module/dopa/dopa.css": [
+                        "module/dopa/dopa.less"
                     ]
                 }
             },
@@ -137,7 +140,8 @@ module.exports = function (grunt) {
                     "css/borispol.css",
                     "css/main.less",
                     "module/iredMet/iredMet.less",
-                    "module/helpme/helpme.less"
+                    "module/helpme/helpme.less",
+                    "module/dopa/dopa.less"
                 ],
                 tasks: ['less'],
                 options: {
