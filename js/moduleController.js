@@ -243,11 +243,16 @@ var ModuleController = {
 
         s.el.css({
             display: 'block'
-        })
+        });
         s.el.fadeTo(222, 1)
     },
     hide: function () {
-        var s = this
+        var s = this;
+       /* s.el.css({
+            position: 'absolute',
+            top: 0,
+            left: 0
+        })*/
         s.el.fadeTo(222, 0, function () {
             s.el.css({
                 display: 'none'
