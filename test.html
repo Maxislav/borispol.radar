@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<script>
+
+    (function foo(a){
+        console.log(a++)
+    }(10));
+    //foo(9);
+
+    function myClass(k){
+        this.a = k;
+        this.foo = function(){
+            console.log(this.a)
+        }
+    }
+    var MyClassA = new myClass(7);
+    var MyClassB = new myClass(8);
+
+    MyClassA.a = 5;
+    MyClassB.foo.call(MyClassA, 9);
+    MyClassB.foo(9);
+
+    var Obj = {
+        a: 5,
+        foo: function(){
+            console.log(this.a)
+            this.foo = function(){
+                console.log(this.a)
+            }
+        },
+        b: {
+            foo: function(){
+                console.log(this.a)
+            }
+        }
+    };
+
+    window.a= 11;
+    var MyClassC = new Obj.foo();
+    MyClassC.__proto__ = Obj;
+    MyClassC.foo();
+    Obj.foo.call(this)
+
+
+</script>
+
+<body>
+
+</body>
+
+
+</html>
