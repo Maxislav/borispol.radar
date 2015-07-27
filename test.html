@@ -28,13 +28,16 @@
     var Obj = {
         a: 5,
         foo: function(){
-            console.log(this.a)
+            this.__proto__ = this.b
             this.foo = function(){
                 console.log(this.a)
-            }
+            };
+            return this
         },
         b: {
-            foo: function(){
+            k: 1,
+            foon: function(){
+                var MyClassD =  Obj.b.foon
                 console.log(this.a)
             }
         }
@@ -42,9 +45,12 @@
 
     window.a= 11;
     var MyClassC = new Obj.foo();
-    MyClassC.__proto__ = Obj;
+     MyClassC;
+   /* var MyClassC = new Obj.foo();
+    //MyClassC.__proto__ = Obj.b;
     MyClassC.foo();
-    Obj.foo.call(this)
+
+    Obj.b.foon()*/
 
 
 </script>
