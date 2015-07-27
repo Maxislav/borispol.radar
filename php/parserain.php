@@ -1,8 +1,44 @@
 <?php
 date_default_timezone_set("UTC");
 
-echo (date("Y/m/d-H:i")).'<br/>';
-$url = 'http://www.sat24.com/image2.ashx?region=eu&time=201411291945&ir=true';
+//echo (date("Y/m/d-H:i")).'<br/>';
+$url = 'http://meteoinfo.by/radar/UKBB/UKBB_latest.png';
+//$content = file_get_contents(urlencode($url));
+$image = file_get_contents($url) or die('Could read create file: ' . $path);
+$size = getimagesize($url);
+list($width, $height, $type, $attr) = $size;
+
+
+
+$im = imagecreatefrompng($url);
+$rgb = imagecolorat($im, 10, 15);
+
+$colors = imagecolorsforindex($im, $rgb);
+
+echo $colors["red"];
+//var_dump($colors);
+
+
+
+
+if($image) {
+
+    $im = new Imagick();
+
+    $im->readImageBlob($image);
+    $size = getimagesize($im);
+    echo  $size;
+
+
+}
+
+$x = 1;
+$y = 1;
+$pixel = $image->getImagePixelColor($x, $y);
+
+$colors = $pixel->getColor();
+
+echo  $colors;
 
 $path ='../img/sat/'. date("YmdH").'00.gif';
 
