@@ -159,6 +159,9 @@ function getIntensity($color){
         case "FF7982":
         case "FF828E":
         case "FF4942":
+        case "FF8C9B":
+        case "EE8391":
+        case "DD7986":
             return 9;
         case "FF3F35":
         case "FF5C5B":
@@ -223,10 +226,13 @@ foreach($arrayResult as $key=> $val){
   //  echo json_encode($val).'<br>';
 }
 
-echo json_encode($unicom).'<br>';
-foreach($unicom as $key=> $val){
+//todo раскоментировать
+echo json_encode($unicom);
+
+//todo закоментировать
+/*foreach($unicom as $key=> $val){
     echo "<div style='background: #$val[color]; width: 140px; margin-bottom:2px'>$val[intensity] $val[dist]</div>"."";
-}
+}*/
 
 
 
