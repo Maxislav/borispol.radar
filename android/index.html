@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        table {
+            border-spacing: 1px
+        }
+    </style>
+</head>
+<body>
+<table>
+    <tr id="trSprite">
+
+    </tr>
+</table>
+
+
+</body>
+<script>
+    var elTr = document.getElementById('trSprite');
+
+    for (var i = 0; i < 10; i++) {
+        var elTd = document.createElement('td');
+
+        var divSprite = document.createElement('div');
+        divSprite.style.height = '100px';
+        divSprite.style.width = '80px';
+        divSprite.style.border = '1px solid red';
+        elTd.appendChild(divSprite);
+        elTr.appendChild(elTd)
+
+    }
+
+
+    var app ={
+        tryEnter: function ( path, success ) {
+            var xhr = this.getXmlHttp();
+            var login, pass;
+            if ( this.el ) {
+                login = this.el.login.value;
+                pass = this.el.pass.value;
+            }
+
+            xhr.open( "POST", path, true );
+            xhr.setRequestHeader( "Content-Type", "application/x-www-form-urlencoded" );
+            xhr.onreadystatechange = function () {
+                xhr.responseText;
+                if ( xhr.readyState == 4 && xhr.status == 200 ) {
+                    success && success( xhr );
+
+                } else if ( xhr.readyState == 4 && xhr.status == 404 ) {
+
+                } else if ( xhr.readyState == 4 && xhr.status == 500 ) {
+
+                }
+                //s.goReq = false;
+            };
+            if ( login !== undefined && pass !== undefined ) {
+                xhr.send( 'login=' + login + '&password=' + pass );
+            }
+
+            return false;
+        },
+        getXmlHttp: function () {
+            var xmlhttp;
+            try {
+                xmlhttp = new ActiveXObject( "Msxml2.XMLHTTP" );
+            } catch ( e ) {
+                try {
+                    xmlhttp = new ActiveXObject( "Microsoft.XMLHTTP" );
+                } catch ( E ) {
+                    xmlhttp = false;
+                }
+            }
+            if ( !xmlhttp && typeof XMLHttpRequest != 'undefined' ) {
+                xmlhttp = new XMLHttpRequest();
+            }
+            return xmlhttp;
+        }
+    }
+
+
+
+
+</script>
+
+
+</html>
