@@ -6,17 +6,26 @@ $date = new DateTime();
 
 $date->setTimezone(new DateTimeZone('Europe/Kiev'));
 
-$dateStr = $date->format('Y-m-d_H-i-s');
+$dateStr = $date->format('Y-m-d');
 $appName = "";
 
 $fileName ='log/'.$dateStr.'.txt';
-$file = fopen($fileName,'w') or die('Could not create report file: ' . $fileName);
-chmod($fileName, 0777);
-fclose($file);
-$file = fopen($fileName,'w') or die('Could not create report file: ' . $fileName);
-fwrite($file, $reportLine);
+if(file_exists($fileName)){
+ // echo "exist";
+}else{
+    $file = fopen($fileName,'w') or die('Could not create report file: ' . $fileName);
+    chmod($fileName, 0777);
+    fclose($file);
+}
+
+
+$file = fopen($fileName,'a') or die('Could not create report file: ' . $fileName);
+$time ="\r\n"."<div class='line'><h4 style='margin: 5px 2px 2px 2px;'>". $date->format('H:i:s')."</h4>";
+fwrite($file, $time);
 if (${'_'.$_SERVER['REQUEST_METHOD']}) {
     $kv = array();
+    $prefix = "\r\n<div style='margin: 2px; color: #ff6600'>";
+    $reportLine = $prefix;
     foreach (${'_'.$_SERVER['REQUEST_METHOD']} as $key => $value) {
         $str     =$value;
         $order   = array("\r\n", "\n", "\r");
@@ -25,12 +34,17 @@ if (${'_'.$_SERVER['REQUEST_METHOD']}) {
 
         $kv[] = "$key=$value";
         ///echo "$key=$value";
-        $reportLine ="<h4 style='margin-bottom: 0px; color: #ff6600'>". "$key"."</h4>";
-        $reportLine = $reportLine.$newstr;
-        fwrite($file, $reportLine);
+        $reportLine =$reportLine."  ". "$key".":"."$newstr";
+        //$reportLine = $reportLine.$newstr;
+
         // echo "$key=$value";
     }
+    $sufix = "</div>";
+    $reportLine = $reportLine.$sufix;
+    fwrite($file, $reportLine);
+
 }
+fwrite($file, "\r\n</div>");
 fclose($file);
 
 
