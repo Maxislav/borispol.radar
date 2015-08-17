@@ -8,7 +8,7 @@ var ired24 = {
     moduleName: 'visible',
     navTabs: 2,
     el: null,
-    gmt: -3,
+    gmt: new Date().getTimezoneOffset()/60,
     getDate: function(){
 
         var date = mathDate.setParams({mi: 60, ss: 60})(new Date(), {hh: this.gmt, mi: -5})
