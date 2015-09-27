@@ -1,3 +1,50 @@
-.forecast{
-  width: 100%;
+#forecastHead{
+  .container-list{
+    position: absolute;
+    left: 0;
+    height: 96px;
+    margin-top: 0;
+    top: 0;
+    text-align: center;
+    width: 100%;
+    font-weight: normal;
+    //background: rgba(255,255,255,0.8);
+    .item-forecast{
+    display: inline-block;
+      width: 50px;
+      color: #27282b;
+     height: 100%;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid #a0a1de;
+      margin: 1px;
+      border-radius: 2px;
+      -webkit-transition: all 0.1s;
+      -moz-transition: all 0.1s;
+      -o-transition: all 0.1s;
+      transition: all 0.1s ;
+      &:hover{
+        -ms-transform: scale(1.1,1.1); /* IE 9 */
+        -webkit-transform: scale(1.1,1.1); /* Safari */
+        transform: scale(1.1,1.1);
+        box-shadow: 0 0 2px rgba(0,0,0,0.1);
+      }
+      .date{
+        font-size: 11px;
+      }
+      .img-son{
+        width: 46px;
+        height: 46px;
+        margin: 0 auto;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .temp{
+        font-size: 12px;
+      }
+    }
+  }
+
+
 }

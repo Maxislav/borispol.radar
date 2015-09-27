@@ -26,13 +26,18 @@ var app = {
     },
 
     loadForecast: function () {
+        var s = this;
         (function a(module) {
             require([
                 module,
                 'text' + '!' + module + '.html',
                 'text' + '!' + module + '.css'
             ], function (m, html, css) {
-                m(html)
+                if (!s.css[module]) {
+                    $('head').append('<style>' + css + '</style>')
+                    s.css[module] = true;
+                }
+                m(html);
               //console.log(m);
             })
         }('forecast'))
