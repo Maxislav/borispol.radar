@@ -30,7 +30,8 @@ require.config({
         informers: 'http://meteo.ua/var/informers',
         snow:'js/snow',
         rain: 'module/rain/rain',
-        dopa: 'module/dopa/dopa'
+        dopa: 'module/dopa/dopa',
+        forecast: 'module/forecast/forecast'
        // three: 'module/three/three',
         //threejs: 'lib/three/three.min'
 
@@ -41,6 +42,12 @@ require.config({
                 'informers'
             ]
         }
+       /* app:{
+            deps: [
+                'jquery'
+            ]
+        }*/
+
     }
 });
 require(
@@ -52,12 +59,16 @@ require(
         'app',
         'DateFormat',
         'MathDate',
-        'moduleController'*/
+        'moduleController',
+*/
+
+        'build'
         //'home',
-        'snow',
+        //'snow',
        // 'threejs',
-		'build'
+
+
 	], function ($) {
 		app.init()
 
-	})
+	});

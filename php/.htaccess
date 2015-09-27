@@ -26,3 +26,15 @@ post_max_size = "250M"
 php_value memory_limit 30M
  php_value post_max_size 100M
  php_value upload_max_filesize 30M
+
+ php_value error_reporting E_ALL
+ php_value display_errors Off
+ php_value display_startup_errors Off
+ php_value log_errors On
+ php_value log_errors_max_len 1024
+ php_value ignore_repeated_errors Off
+ php_value ignore_repeated_source Off
+ php_value report_memleaks On
+ php_value track_errors Off
+ php_value html_errors Off
+ php_value error_log "error.log"

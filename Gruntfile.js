@@ -70,6 +70,9 @@ module.exports = function (grunt) {
                     ],
                     "module/dopa/dopa.css": [
                         "module/dopa/dopa.less"
+                    ],
+                    "module/forecast/forecast.css": [
+                        "module/forecast/forecast.less"
                     ]
                 }
             },
@@ -141,7 +144,8 @@ module.exports = function (grunt) {
                     "css/main.less",
                     "module/iredMet/iredMet.less",
                     "module/helpme/helpme.less",
-                    "module/dopa/dopa.less"
+                    "module/dopa/dopa.less",
+                    "module/forecast/forecast.less"
                 ],
                 tasks: ['less'],
                 options: {
