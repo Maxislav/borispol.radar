@@ -7,28 +7,45 @@ define(function (require, exports, module) {
     function greateItems(){
         var el = $(document.createElement('div'))
         el.attr('class', 'container-list');
-        elContainer.append(el)
-        for(var i = 0 ; i<19; i++){
-            var ico = list[i].weather[0].icon;
-           var elDay = $(strElday);
+        elContainer.append(el);
+        var elDay;
 
-            var hh = '' +  DateFormat.format.date(new Date(list[i].dt*1000), 'HH');
-            var color = getColorHour(hh);
+        var dateDay;
 
-            elDay.css('background', hexToRgba(color));
-            el.append(elDay);
-            var date = DateFormat.format.date(new Date(list[i].dt*1000), 'MM.dd HH:mm')
-            elDay.find('.date').html(date);
-
-            var elIcon = elDay.find('.img-son');
-
-            var img = new Image();
-            img.src ='img/icon/i'+ico+'.png'
-            elIcon.append(img);
-            var t = parseInt(list[i].main.temp);
-            elDay.find('.temp').html((0<t ?'+':'-') + t+'&deg;C');
+        function fillday(elDay, elHour){
+            elDay.append(elHour)
 
         }
+
+
+        for(var i = 0 ; i<19; i++){
+
+           // elDay = elDay || $(document.createElement('div'));
+
+         //   dateDay =  DateFormat.format.date(new Date(list[i].dt*1000), 'HH');
+
+
+            var ico = list[i].weather[0].icon;
+            var elHour = $(strElday);
+            var hh = '' +  DateFormat.format.date(new Date(list[i].dt*1000), 'HH');
+            var color = getColorHour(hh);
+            elHour.css('background', hexToRgba(color));
+            //el.append(elHour);
+
+
+            var date = DateFormat.format.date(new Date(list[i].dt*1000), 'MM.dd HH:mm');
+            elHour.find('.date').html(date);
+            var elIcon = elHour.find('.img-son');
+
+            var img = new Image();
+            img.src ='img/icon/i'+ico+'.png';
+            elIcon.append(img);
+            var t = parseInt(list[i].main.temp);
+            elHour.find('.temp').html((0<t ?'+':'-') + t+'&deg;C');
+
+        }
+
+
     }
 
     /**
