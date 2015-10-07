@@ -12,17 +12,23 @@ define(function (require, exports, module) {
 
         var dateDay;
 
-        function fillday(elDay, elHour){
-            elDay.append(elHour)
+        function fillday(_elDay, elHour, flag){
+            _elDay.append(elHour)
+
+            if(flag){
+                el.append(_elDay)
+            }
 
         }
 
 
         for(var i = 0 ; i<19; i++){
 
+
            // elDay = elDay || $(document.createElement('div'));
 
-         //   dateDay =  DateFormat.format.date(new Date(list[i].dt*1000), 'HH');
+
+
 
 
             var ico = list[i].weather[0].icon;
@@ -33,7 +39,8 @@ define(function (require, exports, module) {
             //el.append(elHour);
 
 
-            var date = DateFormat.format.date(new Date(list[i].dt*1000), 'MM.dd HH:mm');
+          //  var date = DateFormat.format.date(new Date(list[i].dt*1000), 'MM.dd HH:mm');
+            var date = DateFormat.format.date(new Date(list[i].dt*1000), 'HH:mm');
             elHour.find('.date').html(date);
             var elIcon = elHour.find('.img-son');
 
@@ -41,7 +48,17 @@ define(function (require, exports, module) {
             img.src ='img/icon/i'+ico+'.png';
             elIcon.append(img);
             var t = parseInt(list[i].main.temp);
-            elHour.find('.temp').html((0<t ?'+':'-') + t+'&deg;C');
+            elHour.find('.temp').html((0<t ?'+':'') + t+'&deg;C');
+
+            if(dateDay !=  DateFormat.format.date(new Date(list[i].dt*1000), 'dd')){
+                dateDay =  DateFormat.format.date(new Date(list[i].dt*1000), 'dd');
+                elDay = $(document.createElement('div'));
+                elDay.attr('class', 'day-of-month');
+                elDay.append('<div class="date-month-title">'+DateFormat.format.date(new Date(list[i].dt*1000), 'E dd')+'</div>')
+                fillday(elDay,elHour, true)
+            }else{
+                fillday(elDay,elHour, false)
+            }
 
         }
 
