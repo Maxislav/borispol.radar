@@ -15,9 +15,20 @@ var snow = function(n){
         this.animate = false;
         function init(d, success){
             s.d = d;
-            s.el = $(document.createElement('div')).attr('class', 'snow').css({
-                opacity:0
-            });
+            s.el = $(document.createElement('div'));
+            var nMonth = new Date().getMonth();
+            if(7<nMonth && nMonth<=10){
+                s.el.attr('class', 'autumn-list').css({
+                    opacity:0
+                });
+            }
+            if(10<nMonth && nMonth<=3){
+                s.el.attr('class', 'snow').css({
+                    opacity:0
+                });
+            }
+
+
             $('body').append(s.el);
             sx = getRandomArbitary(0, $(window).width()-420);
             y = getRandomArbitary(0, -($(window).height()));
@@ -70,7 +81,7 @@ var snow = function(n){
             if(!s.animate) return;
             y+=1;
             s.el.css('top', y);
-            if($(window).height()-50<y){
+            if($(window).height()-80<y){
                 s.el.fadeTo(222,0, function(){
                     y = -30;
                     s.el.fadeTo(222,1)

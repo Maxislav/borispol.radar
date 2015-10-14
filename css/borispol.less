@@ -303,6 +303,39 @@ table {
     background-size: 100%;
   }
 }
+.autumn-list{
+  &:extend(.snow);
+  background-size: 100%;
+  &.s1 {
+    background: url("../img/list1.png") no-repeat center;
+    background-size: 80%;
+    width: 35px;
+    height: 35px;
+    animation-duration: 12000ms;
+  }
+  &.s2 {
+    background: url("../img/list2.png") no-repeat center;
+    background-size: 100%;
+    width: 30px;
+    height: 30px;
+  }
+  &.s3 {
+    background: url("../img/list2.png") no-repeat center;
+    background-size: 100%;
+    width: 30px;
+    height: 30px;
+  }
+  .boom {
+    opacity: 0;
+    width: 400%;
+    height: 400%;
+    left: -175%;
+    top: -137%;
+    position: absolute;
+    background: url("../img/flare_sun.png") no-repeat center;
+    background-size: 100%;
+  }
+}
 
 @-ms-keyframes spin {
   from {
