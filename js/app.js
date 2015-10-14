@@ -17,7 +17,10 @@ var app = {
         }
         $('.m-container').draggable({handle: ".header"})
 
-        // snow(4);
+
+        require(['snow'], function(){
+            snow(4);
+        });
 
 
         s.loadForecast();
