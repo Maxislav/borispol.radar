@@ -4,6 +4,27 @@ define(function (require, exports, module) {
     var elContainer = $('#forecastHead');
     var list;
     var strElday;
+
+    var arrayHours = [];
+
+
+    function loadUi(callback){
+        require([
+            'jqueryUi',
+            'text' + '!' + 'lib/jquery/jquery-ui-1.11.1/jquery-ui.min.css'
+        ], function(a , css){
+            //$(document).tooltip()
+            if (!app.css['ui']) {
+                $('head').append('<style>' + css + '</style>');
+                app.css['ui'] = true;
+            }
+            callback && callback();
+        });
+
+    }
+
+
+   // $( document ).tooltip();
     function greateItems(){
         var el = $(document.createElement('div'))
         el.attr('class', 'container-list');
@@ -13,7 +34,7 @@ define(function (require, exports, module) {
         var dateDay;
 
         function fillday(_elDay, elHour, flag){
-            _elDay.append(elHour)
+            _elDay.append(elHour);
 
             if(flag){
                 el.append(_elDay)
@@ -24,22 +45,22 @@ define(function (require, exports, module) {
 
         for(var i = 0 ; i<19; i++){
 
-
-           // elDay = elDay || $(document.createElement('div'));
-
-
-
-
-
             var ico = list[i].weather[0].icon;
             var elHour = $(strElday);
             var hh = '' +  DateFormat.format.date(new Date(list[i].dt*1000), 'HH');
             var color = getColorHour(hh);
             elHour.css('background', hexToRgba(color));
-            //el.append(elHour);
+            //console.log(list[i]);
+            arrayHours.push(elHour);
 
+            var title = 'Clear';
+            if(list[i].rain && list[i].rain['3h']){
+                title = 'Rain 3h: ' +list[i].rain['3h']+"mm";
+            }
 
-          //  var date = DateFormat.format.date(new Date(list[i].dt*1000), 'MM.dd HH:mm');
+            elHour.attr('title',title);
+          //  hover(elHour);
+
             var date = DateFormat.format.date(new Date(list[i].dt*1000), 'HH:mm');
             elHour.find('.date').html(date);
             var elIcon = elHour.find('.img-son');
@@ -61,6 +82,7 @@ define(function (require, exports, module) {
             }
 
         }
+        hover();
 
 
     }
@@ -86,7 +108,36 @@ define(function (require, exports, module) {
             hh18: '#2b0057ff',
             hh21: '#430057ff'
         }
+    };
+
+    var startHover = false;
+    function hover(){
+
+
+
+       /* loadUi(function(){
+            $(el).tooltip()
+        });*/
+        if(!startHover){
+            elContainer.on('mouseenter', function(){
+               // console.log(this)
+                elContainer.off('mouseenter');
+
+
+                    loadUi(function(){
+                        var  i = arrayHours.length;
+                        while(0<i--) {
+                            $(arrayHours[i]).tooltip({
+                                tooltipClass: "tooltip-styling"
+                            });
+                        }
+                    });
+
+                startHover = true
+            })
+        }
     }
+
     function hexToRgba(hex) {
         var bigint, r, g, b, a;
         //Remove # character

@@ -3,9 +3,9 @@ var brr;
 require.config({
 	waitSeconds: 60,
 	baseUrl: '',
-    urlArgs: "bust=14.10.2015-22:04:40",
+    urlArgs: "bust=18.10.2015-01:12:28",
 	paths: {
-		jquery: 'lib/jquery/jquery-min',
+		jquery: 'lib/jquery/jquery-1.11.1.min',
 		app: 'js/app',
 		home: 'module/home/home',
 		ired: 'module/ired/ired',
@@ -31,7 +31,8 @@ require.config({
         snow:'js/snow',
         rain: 'module/rain/rain',
         dopa: 'module/dopa/dopa',
-        forecast: 'module/forecast/forecast'
+        forecast: 'module/forecast/forecast',
+		jqueryUi: 'lib/jquery/jquery-ui-1.11.1/jquery-ui.min'
        // three: 'module/three/three',
         //threejs: 'lib/three/three.min'
 
@@ -41,7 +42,12 @@ require.config({
             deps: [
                 'informers'
             ]
-        }
+        },
+		jqueryUi:{
+			deps:[
+				'jquery'
+			]
+		}
        /* app:{
             deps: [
                 'jquery'
