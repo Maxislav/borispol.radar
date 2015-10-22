@@ -41,6 +41,39 @@ define(function (require, exports, module) {
             }
 
         }
+        function fillDrip(elHour, _3h){
+            var container = elHour.find('.drip-container');
+
+            container.css('textAlign', 'left');
+            container.css('padding', '0 5px');
+            container.css('marginTop', '-5px');
+            _3h = parseFloat(_3h);
+
+            var n = _3h*10;
+            n = Math.ceil(n);
+
+            function createDrip(empty){
+                var elDrip = new Image();
+                if(!empty){
+                    elDrip.src = 'img/drip.png';
+                }else{
+                    elDrip.style.visibility = 'hidden'
+                }
+
+                elDrip.setAttribute('class', empty? 'empty-drip' : 'one-drip');
+                elDrip.style.display = 'inline-block';
+
+                container.append(elDrip)
+            }
+
+            for(var i = 0 ; i< n; i++){
+                createDrip()
+            }
+            if(n==0){
+                createDrip(true)
+            }
+
+        }
 
 
         for(var i = 0 ; i<19; i++){
@@ -56,9 +89,14 @@ define(function (require, exports, module) {
             var title = 'Clear';
             if(list[i].rain && list[i].rain['3h']){
                 title = 'Rain 3h: ' +list[i].rain['3h']+"mm";
+                fillDrip(elHour, list[i].rain['3h'] )
+            }else{
+                fillDrip(elHour, 0 )
             }
 
             elHour.attr('title',title);
+
+
           //  hover(elHour);
 
             var date = DateFormat.format.date(new Date(list[i].dt*1000), 'HH:mm');
