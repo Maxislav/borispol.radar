@@ -44,9 +44,9 @@ define(function (require, exports, module) {
         function fillDrip(elHour, _3h){
             var container = elHour.find('.drip-container');
 
-           // container.css('textAlign', 'left');
-            container.css('padding', '0 5px');
-            container.css('marginTop', '-5px');
+            container.css('textAlign', 'left');
+           // container.css('padding', '0 5px');
+           // container.css('marginTop', '-5px');
             _3h = parseFloat(_3h);
 
             var n = _3h*10;
