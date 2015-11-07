@@ -3,7 +3,7 @@ var brr;
 require.config({
 	waitSeconds: 60,
 	baseUrl: '',
-    urlArgs: "bust=06.11.2015-20:55:28",
+    urlArgs: "bust=07.11.2015-18:18:10",
 	paths: {
 		jquery: 'lib/jquery/jquery-1.11.1.min',
 		app: 'js/app',
@@ -32,9 +32,9 @@ require.config({
         rain: 'module/rain/rain',
         dopa: 'module/dopa/dopa',
         forecast: 'module/forecast/forecast',
-		jqueryUi: 'lib/jquery/jquery-ui-1.11.1/jquery-ui.min'
-       // three: 'module/three/three',
-        //threejs: 'lib/three/three.min'
+		jqueryUi: 'lib/jquery/jquery-ui-1.11.1/jquery-ui.min',
+        three: 'module/three/three',
+        threejs: 'lib/three/three.min'
 
 	},
     shim:{
@@ -46,6 +46,11 @@ require.config({
 		jqueryUi:{
 			deps:[
 				'jquery'
+			]
+		},
+		three: {
+			deps:[
+				'threejs'
 			]
 		}
        /* app:{
