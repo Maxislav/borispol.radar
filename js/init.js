@@ -59,7 +59,7 @@ require.config({
         dopa: 'module/dopa/dopa',
         forecast: 'module/forecast/forecast',
 		jqueryUi: 'lib/jquery/jquery-ui-1.11.1/jquery-ui.min',
-        three: 'module/three/three',
+        earth: 'module/earth/earth',
         threejs: 'lib/three/three.min'
 
 	},
@@ -74,7 +74,7 @@ require.config({
 				'jquery'
 			]
 		},
-		three: {
+        earth: {
 			deps:[
 				'threejs'
 			]

@@ -1,7 +1,7 @@
 /**
  * Created by Администратор on 11/7/15.
  */
-var three = {
+var earth = {
     navTabs: 8,
     angle: 90,
     cameraPosition:{
@@ -13,9 +13,13 @@ var three = {
         var s = this;
         s.el = $(document.createElement('div')).html(html).css({
             opacity: 0,
-            overflow: 'hidden'
+            overflow: 'hidden',
+            position: 'relative'
         });
         $('.content').append(s.el);
+
+        s.el.append('<div style="position: absolute;left: 5px; top: 5px; color: white">В разработке</div>')
+
         s.render();
         success && success.call(s);
     },
@@ -65,13 +69,13 @@ var three = {
             map: THREE.ImageUtils.loadTexture('img/three/earth.png', {}, render),
             bumpMap: THREE.ImageUtils.loadTexture('img/three/earth_bump.png', {}, render),
             specularMap : THREE.ImageUtils.loadTexture('img/three/earth-specular.gif', {}, render),
-            //emissiveMap: THREE.ImageUtils.loadTexture('img/three/earth.png', {}, render),
+            emissiveMap : THREE.ImageUtils.loadTexture('img/three/earth_night.jpg', {}, render),
             //  normalMap: THREE.ImageUtils.loadTexture('img/three/earth_night.jpg', {}, render),
-            //emissive: "#000",
+            emissive: "#FFF",
              //shading: 10,
 
 
-            //specular    : "#f2e8b9",
+            specular    : "#f2e8b9",
             shininess: 50,
             bumpScale:0.1
         } );
@@ -163,7 +167,7 @@ var three = {
             dx = e.pageX -px;
             dDeg = dx/40;
             deg -=dDeg;
-            console.log(deg);
+           // console.log(deg);
             //  camera.position.x+=deg;
             setCameraPosition(deg);
 
@@ -189,4 +193,4 @@ var three = {
 
 
 };
-three.__proto__ = ModuleController;
+earth.__proto__ = ModuleController;
