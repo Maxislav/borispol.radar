@@ -3,7 +3,7 @@ var brr;
 
 Number.prototype.degToRad = function(){
     var deg = this;
-  console.log(this);
+  //console.log(this);
     return Math.PI * deg/ 180
 
 };
