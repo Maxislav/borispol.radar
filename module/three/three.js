@@ -1,5 +1,6 @@
 var three = {
     navTabs: 8,
+    angle: 90,
     init: function(html, success){
         var s = this;
         s.el = $(document.createElement('div')).html(html).css({
@@ -19,12 +20,13 @@ var three = {
       //   renderer.setSize(735, 420);
         var axes = new THREE.AxisHelper( 20 );
        //todo оси для визуализации при разработке
-       // scene.add(axes);
+        scene.add(axes);
 
         var light = new THREE.SpotLight( "#fff" );
-        light.position.set( -40, 0, 40 );
+        light.position.set( 1000, 0, 0 );
+        light.intensity = 1.4;
 
-        light.castShadow = true;
+      //  light.castShadow = true;
         //light.shadowDarkness = 0.1;
        /* light.shadowBias = 1;
         light.exponent = 0.01;
@@ -48,6 +50,9 @@ var three = {
         var sphereMaterial = new THREE.MeshPhongMaterial({
             map: THREE.ImageUtils.loadTexture('img/three/earth.jpg', {}, render),
             bumpMap: THREE.ImageUtils.loadTexture('img/three/earth_bump.jpg', {}, render),
+            specularMap : THREE.ImageUtils.loadTexture('img/three/earth-specular.gif', {}, render),
+            specular    : "#f2e8b9",
+            shininess: 50,
             bumpScale:0.1
         } );
 
@@ -61,6 +66,7 @@ var three = {
             //renderer.render(scene, camera);
             sphere.updateMatrix();
         },5000);
+        sphere.rotation.set(0, (s.angle+ s.getRotationAngle()).degToRad(), 0);
 
         scene.add(sphere);
 
@@ -83,27 +89,43 @@ var three = {
         //$("#WebGL-output").append(renderer.domElement);
 
        // renderer.render(scene, camera);
+
         function render(){
             renderer.render(scene, camera);
         }
+       // s.animate(render, sphere)
+        s.getRotationAngle()
 
-        s.rotate(render, sphere)
     },
-    rotate: function(render, sphere){
+    animate: function(render, sphere){
         var angle = 0;
 
         function rotate(){
             setTimeout(function(){
-                angle+=0.001;
-                sphere.rotation.set(0,angle, 0)
+                angle+=1;
+                sphere.rotation.set(0,angle.degToRad(), 0);
+                console.log(angle);
                 render();
                 rotate()
-            },20)
+            },100)
         }
 
         rotate();
+    },
+    getRotationAngle: function(){
+        var s = this;
+        var d = new Date().toGmt();
+        console.log(d);
+        console.log(d.secondsFromStartDay());
 
+        var secondsFromStartDay = d.secondsFromStartDay();
+
+        var angle = 360*secondsFromStartDay/86400;
+        console.log(angle);
+        return angle;
     }
+
+
 
 };
 three.__proto__ = ModuleController;

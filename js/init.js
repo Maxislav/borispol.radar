@@ -1,5 +1,31 @@
 var f = parseFloat;
 var brr;
+
+Number.prototype.degToRad = function(){
+    var deg = this;
+  console.log(this);
+    return Math.PI * deg/ 180
+
+};
+Date.prototype.toGmt = function(){
+    var d = this;
+    var offset = new Date().getTimezoneOffset();
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes()+offset, d.getSeconds(), d.getMilliseconds());
+};
+
+/**
+ * Секунды с начала дня
+ * @returns {number}
+ */
+Date.prototype.secondsFromStartDay = function(){
+    var d = this;
+    var hh, mi, ss, ms;
+    hh = d.getHours();
+    mi = d.getMinutes();
+    ss = d.getSeconds();
+    return ss+(mi*60)+(hh*3600);
+};
+
 require.config({
 	waitSeconds: 60,
 	baseUrl: '',
