@@ -45,9 +45,13 @@ var three = {
        // sphereGeometry.rotation.y =
 
 
-        var sphereMaterial = new THREE.MeshPhongMaterial( );
+        var sphereMaterial = new THREE.MeshPhongMaterial({
+            map: THREE.ImageUtils.loadTexture('img/three/earth.jpg', {}, render),
+            bumpMap: THREE.ImageUtils.loadTexture('img/three/earth_bump.jpg', {}, render),
+            bumpScale:0.1
+        } );
 
-        sphereMaterial.map = THREE.ImageUtils.loadTexture('img/three/earth.jpg', {}, render);
+       // sphereMaterial.map = THREE.ImageUtils.loadTexture('img/three/earth.jpg', {}, render);
         var sphere = new THREE.Mesh(sphereGeometry,sphereMaterial);
         sphere.position.x = 0;
         sphere.position.y = 0;
