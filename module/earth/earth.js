@@ -18,6 +18,7 @@ var earth = {
             position: 'relative'
         });
         $('.content').append(s.el);
+	
 
         s.el.append('<div style="position: absolute;left: 5px; top: 5px; color: white">В разработке</div>')
 
@@ -25,7 +26,9 @@ var earth = {
         success && success.call(s);
     },
     render: function(){
+	
         var s= this;
+	//var mask = app.mask.show(s.el);
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(12 , 960/560 , 0.1, 1000);
         var renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -62,10 +65,7 @@ light.shadowMapWidth= 5;
 
         var sphereGeometry = new THREE.SphereGeometry(4,20,20);
 
-        sphereGeometry
-
-        // sphereGeometry.rotation.y =
-
+ 
 
         var sphereMaterial = new THREE.MeshPhongMaterial({
             map: THREE.ImageUtils.loadTexture('img/three/earth.png', {}, render),
@@ -87,9 +87,23 @@ light.shadowMapWidth= 5;
         sphere.position.x = 0;
         sphere.position.y = 0;
         sphere.position.z = 0;
-       sphere.rotation.set(0, s.getRotationAngle().degToRad(), 0);
+       	sphere.rotation.set(0, s.getRotationAngle().degToRad(), 0);
 
         scene.add(sphere);
+
+	var cloudsGeometry = new THREE.SphereGeometry(4.05,20,20);
+	var cloudsMaterial = new THREE.MeshPhongMaterial({
+		map: THREE.ImageUtils.loadTexture('php/cloudscreator.php', { transparent: true}, function(){  
+			//app.mask.remove(mask);
+			scene.add(cloudsMesh);
+			render()}),
+		transparent: true,
+		antialias: true,
+		opacity: 0.6
+	});
+ 	var cloudsMesh = new THREE.Mesh(cloudsGeometry,cloudsMaterial);
+	cloudsMesh.rotation.set(0, s.getRotationAngle().degToRad(), 0);
+	
 
 
 	s.setCameraPosition(camera);
@@ -109,15 +123,16 @@ light.shadowMapWidth= 5;
             renderer.render(scene, camera);
         }
        
-        s.animate(render, sphere);
+        s.animate(render, sphere, cloudsMesh);
         s.events(render, camera, sphere);
 
     },
-    animate: function(render, sphere){
+    animate: function(render, sphere, cloudsMesh){
         var s = this;
         function rotate(){
             setTimeout(function(){
                 sphere.rotation.set(0, s.getRotationAngle().degToRad(), 0);
+		cloudsMesh.rotation.set(0, s.getRotationAngle().degToRad(), 0);
                 render();
                 rotate()
             },1000)
