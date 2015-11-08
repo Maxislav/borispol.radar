@@ -3,7 +3,8 @@
  */
 var earth = {
     navTabs: 8,
-    angle: 90,
+    angle: 180,
+    deg: 45,
     cameraPosition:{
         x: 0,
         y: 5,
@@ -35,14 +36,15 @@ var earth = {
         // scene.add(axes);
 
         var light = new THREE.SpotLight( "#fff" );
-        light.position.set( 1000, -20, 0 );
+        light.position.set( 1000, -200, 0 );
         light.intensity = 1.4;
-
+ light.exponent = 1000;
+light.shadowMapWidth= 5;
 
         //  light.castShadow = true;
         //light.shadowDarkness = 0.1;
         /* light.shadowBias = 1;
-         light.exponent = 0.01;
+        
 
          light.shadowCameraNear = 6;
          light.shadowCameraFar = 1000;
@@ -68,7 +70,7 @@ var earth = {
         var sphereMaterial = new THREE.MeshPhongMaterial({
             map: THREE.ImageUtils.loadTexture('img/three/earth.png', {}, render),
             bumpMap: THREE.ImageUtils.loadTexture('img/three/earth_bump.png', {}, render),
-            specularMap : THREE.ImageUtils.loadTexture('img/three/earth-specular.gif', {}, render),
+            specularMap : THREE.ImageUtils.loadTexture('img/three/earth-specular.jpg', {}, render),
             emissiveMap : THREE.ImageUtils.loadTexture('img/three/earth_night.jpg', {}, render),
             //  normalMap: THREE.ImageUtils.loadTexture('img/three/earth_night.jpg', {}, render),
             emissive: "#FFF",
@@ -80,45 +82,33 @@ var earth = {
             bumpScale:0.1
         } );
 
-        // sphereMaterial.map = THREE.ImageUtils.loadTexture('img/three/earth.jpg', {}, render);
+
         var sphere = new THREE.Mesh(sphereGeometry,sphereMaterial);
         sphere.position.x = 0;
         sphere.position.y = 0;
         sphere.position.z = 0;
-        setTimeout(function(){
-            sphere.rotation.set(0,Math.PI, 0);
-            //renderer.render(scene, camera);
-            sphere.updateMatrix();
-        },5000);
-        sphere.rotation.set(0, s.getRotationAngle().degToRad(), 0);
+       sphere.rotation.set(0, s.getRotationAngle().degToRad(), 0);
 
         scene.add(sphere);
 
 
-
-        camera.position.x = s.cameraPosition.x; //red axis
-        camera.position.y = s.cameraPosition.y; //green
-        camera.position.z = s.cameraPosition.z; //blue axis
+	s.setCameraPosition(camera);
         camera.lookAt(sphere.position);
 
-        //var container = document.getElementById( 'canvas' );
+ 
         var container = s.el[0].children[0];
-        //document.body.appendChild( container );
-        //s.el.append(container)
+        
 
-        //  renderer = new THREE.WebGLRenderer();
+     
         renderer.setSize( 980, 560 );
         container.appendChild( renderer.domElement );
 
-        //$("#WebGL-output").append(renderer.domElement);
-
-        // renderer.render(scene, camera);
+        
 
         function render(){
             renderer.render(scene, camera);
         }
-        // s.animate(render, sphere)
-        //  s.getRotationAngle()
+       
         s.animate(render, sphere);
         s.events(render, camera, sphere);
 
@@ -146,32 +136,35 @@ var earth = {
         //  console.log(angle);
         return s.angle + angle;
     },
-    events: function(render, camera, sphere){
-        var s = this;
-        var dx, px;
-        var dDeg, deg = 0;
+    setCameraPosition: function(camera){
 
-        function setCameraPosition(deg){
-            s.cameraPosition.z = Math.cos(deg.degToRad())*40;
+		var s = this;
+		var deg = s.deg;
+		s.cameraPosition.z = Math.cos(deg.degToRad())*40;
             s.cameraPosition.x = Math.sin(deg.degToRad())*40;
 
             camera.position.x = s.cameraPosition.x; //red axis
             camera.position.y = s.cameraPosition.y; //green
             camera.position.z = s.cameraPosition.z; //blue axis
 
-        }
+    },
+	
+    events: function(render, camera, sphere){
+        var s = this;
+        var dx, px;
+        var dDeg;
+
+       
+
 
 
         function mouseMove(e){
-            //x+=px-e.pageX;
+            
             dx = e.pageX -px;
             dDeg = dx/40;
-            deg -=dDeg;
-           // console.log(deg);
-            //  camera.position.x+=deg;
-            setCameraPosition(deg);
-
-
+            s.deg -=dDeg;
+            s.setCameraPosition(camera);
+           
 
             camera.lookAt(sphere.position);
             render()
@@ -188,9 +181,5 @@ var earth = {
             })
 
     }
-
-
-
-
 };
 earth.__proto__ = ModuleController;
