@@ -29,7 +29,7 @@ Date.prototype.secondsFromStartDay = function(){
 require.config({
 	waitSeconds: 60,
 	baseUrl: '',
-    urlArgs: "bust=07.11.2015-18:18:10",
+    urlArgs: "bust=09.11.2015-00:41:20",
 	paths: {
 		jquery: 'lib/jquery/jquery-1.11.1.min',
 		app: 'js/app',
@@ -60,7 +60,8 @@ require.config({
         forecast: 'module/forecast/forecast',
 		jqueryUi: 'lib/jquery/jquery-ui-1.11.1/jquery-ui.min',
         earth: 'module/earth/earth',
-        threejs: 'lib/three/three.min'
+        threejs: 'lib/three/three.min',
+        cloudsLoader: 'module/earth/clouds-loader'
 
 	},
     shim:{
@@ -76,7 +77,8 @@ require.config({
 		},
         earth: {
 			deps:[
-				'threejs'
+				'threejs',
+                'cloudsLoader'
 			]
 		}
        /* app:{

@@ -18,9 +18,10 @@ var app = {
         $('.m-container').draggable({handle: ".header"})
 
 
-        require(['snow'], function(){
+        //todo листья снег
+       /* require(['snow'], function(){
             snow(4);
-        });
+        });*/
 
 
         s.loadForecast();
