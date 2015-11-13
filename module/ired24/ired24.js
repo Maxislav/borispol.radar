@@ -6,7 +6,7 @@ var ired24 = {
     arrimg: [],
     imgir: null,
     moduleName: 'visible',
-    navTabs: 2,
+    navTabs: 1,
     el: null,
     gmt: new Date().getTimezoneOffset()/60,
     getDate: function(){

@@ -3,6 +3,6 @@ var info = {
 	elpanel: null,
 	arrimg: [],
 	state: {},
-    navTabs: 6
+    navTabs: 5
 }
 info.__proto__ = ModuleController

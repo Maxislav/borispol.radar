@@ -1,5 +1,5 @@
 var dopa = {
-    navTabs: 8
+    navTabs: 7
    /* getDate: function(){
 
         var date = mathDate.setParams({mi: 60, ss: 60})(new Date(), {hh: this.gmt, mi: -5})

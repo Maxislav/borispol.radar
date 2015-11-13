@@ -7,7 +7,7 @@ var visible = {
     arrimg: [],
     imgir: null,
     moduleName: 'visible',
-    navTabs: 4,
+    navTabs: 3,
     el: null,
     gmt: new Date().getTimezoneOffset()/60,
     getDate: function(){
