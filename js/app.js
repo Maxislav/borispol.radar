@@ -19,9 +19,9 @@ var app = {
 
 
         //todo листья снег
-       /* require(['snow'], function(){
+        require(['snow'], function(){
             snow(4);
-        });*/
+        });
 
 
         s.loadForecast();

@@ -17,13 +17,13 @@ var snow = function(n){
             s.d = d;
             s.el = $(document.createElement('div'));
             var nMonth = new Date().getMonth();
-            if(7<nMonth && nMonth<=10){
-                s.el.attr('class', 'autumn-list').css({
+           
+            if(10<nMonth || nMonth<=3){
+                s.el.attr('class', 'snow').css({
                     opacity:0
                 });
-            }
-            if(10<nMonth && nMonth<=3){
-                s.el.attr('class', 'snow').css({
+            }else{
+                s.el.attr('class', 'autumn-list').css({
                     opacity:0
                 });
             }
