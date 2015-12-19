@@ -29,7 +29,7 @@ Date.prototype.secondsFromStartDay = function(){
 require.config({
 	waitSeconds: 60,
 	baseUrl: '',
-    urlArgs: "bust=13.12.2015-19:09:21",
+    urlArgs: "bust=19.12.2015-19:36:31",
 	paths: {
 		jquery: 'lib/jquery/jquery-1.11.1.min',
 		app: 'js/app',
