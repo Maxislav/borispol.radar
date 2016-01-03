@@ -39,33 +39,34 @@ define(function (require, exports, module) {
             if(flag){
                 el.append(_elDay)
             }
-
         }
-        function fillDrip(elHour, _3h){
+        function fillDrip(elHour, _3h, type){
             var container = elHour.find('.drip-container');
 
             container.css('textAlign', 'left');
-           // container.css('padding', '0 5px');
-           // container.css('marginTop', '-5px');
             _3h = parseFloat(_3h);
 
             var n = _3h*10;
             n = Math.ceil(n);
-
             function createDrip(empty){
                 var elDrip = new Image();
                 if(!empty){
-                    elDrip.src = 'img/drip.png';
+                    elDrip.src = type =='snow' ? 'img/snow.png' : 'img/drip.png';
                 }else{
                     elDrip.style.visibility = 'hidden'
                 }
 
-                elDrip.setAttribute('class', empty? 'empty-drip' : 'one-drip');
+                if(type=='rain'){
+                    elDrip.setAttribute('class', empty ? 'empty-drip' : 'one-drip');
+                }
+                if(type== 'snow'){
+                    elDrip.setAttribute('class', empty ? 'empty-drip' : 'one-snow');
+                }
+
                 elDrip.style.display = 'inline-block';
 
                 container.append(elDrip)
             }
-
             for(var i = 0 ; i< n; i++){
                 createDrip()
             }
@@ -74,6 +75,8 @@ define(function (require, exports, module) {
             }
 
         }
+
+
 
 
         for(var i = 0 ; i<19; i++){
@@ -86,13 +89,28 @@ define(function (require, exports, module) {
             //console.log(list[i]);
             arrayHours.push(elHour);
 
-            var title = 'Clear';
+            var title = '';
+
+            16<i && console.log(list[i]);
+
             if(list[i].rain && list[i].rain['3h']){
-                title = 'Rain 3h: ' +list[i].rain['3h']+"mm";
-                fillDrip(elHour, list[i].rain['3h'] )
-            }else{
-                fillDrip(elHour, 0 )
+                title += 'Rain 3h: ' +list[i].rain['3h']+"mm";
+                fillDrip(elHour, list[i].rain['3h'], 'rain' )
             }
+
+            if(list[i].snow && list[i].snow['3h']){
+                title += ' Snow 3h: ' +list[i].snow['3h']+"mm";
+                fillDrip(elHour, list[i].snow['3h'], 'snow' )
+            }
+
+            if(!list[i].snow && list[i].rain){
+                title = 'Clear'
+            }
+
+
+           /* {
+                fillDrip(elHour, 0 )
+            }*/
 
             elHour.attr('title',title);
 
