@@ -29,9 +29,9 @@ Date.prototype.secondsFromStartDay = function () {
 require.config({
     waitSeconds: 60,
     baseUrl: '',
-    urlArgs: "bust=12.01.2016-17:28:58",
+    urlArgs: "bust=12.01.2016-18:11:27",
     paths: {
-        jquery: 'lib/jquery/jquery-1.11.1.min',
+       // jquery: 'lib/jquery/jquery-1.11.1.min',
         app: 'js/app',
         home: 'module/home/home',
         ired: 'module/ired/ired',
@@ -58,7 +58,7 @@ require.config({
         rain: 'module/rain/rain',
         dopa: 'module/dopa/dopa',
         forecast: 'module/forecast/forecast',
-        jqueryUi: 'lib/jquery/jquery-ui-1.11.1/jquery-ui.min',
+        jqueryUi: 'lib/jquery/jquery-ui-1.11.4.custom/jquery-ui.min',
         earth: 'module/earth/earth',
         threejs: 'lib/three/three.min',
         cloudsLoader: 'module/earth/clouds-loader',
@@ -71,11 +71,11 @@ require.config({
                 'informers'
             ]
         },
-        jqueryUi: {
+       /* jqueryUi: {
             deps: [
                 'jquery'
             ]
-        },
+        },*/
         earth: {
             deps: [
                 'threejs',
@@ -84,7 +84,7 @@ require.config({
         },
         metrika: {
             deps: [
-                'jquery'
+                'build'
             ]
         }
 

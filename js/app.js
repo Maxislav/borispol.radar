@@ -15,8 +15,11 @@ var app = {
         } else {
             window.location.hash = 'home'
         }
-       // $('.m-container').draggable({handle: ".header"})
 
+
+        require(['jqueryUi'], function(){
+           // $('.m-container').draggable({handle: ".header"})
+        });
 
         //todo листья снег
         require(['snow'], function(){
