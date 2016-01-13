@@ -11,7 +11,7 @@ define(function (require, exports, module) {
     function loadUi(callback){
         require([
             'jqueryUi',
-            'text' + '!' + 'lib/jquery/jquery-ui-1.11.1/jquery-ui.min.css'
+            'text' + '!' + 'lib/jquery/jquery-ui-1.11.4.custom/jquery-ui.min.css'
         ], function(a , css){
             //$(document).tooltip()
             if (!app.css['ui']) {
