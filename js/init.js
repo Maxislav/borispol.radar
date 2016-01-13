@@ -71,11 +71,6 @@ require.config({
                 'informers'
             ]
         },
-       /* jqueryUi: {
-            deps: [
-                'jquery'
-            ]
-        },*/
         earth: {
             deps: [
                 'threejs',
@@ -87,8 +82,6 @@ require.config({
                 'build'
             ]
         }
-
-
     }
 });
 require(
