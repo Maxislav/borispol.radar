@@ -83,19 +83,19 @@ var earth = {
          * Планета с текстурами
          * @type {THREE.Mesh}
          */
-        var rEarth = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        rEarth.position.x = 0;
-        rEarth.position.y = 0;
-        rEarth.position.z = 0;
-        rEarth.rotation.set(0, s.getRotationAngle().degToRad(), 0);
-        scene.add(rEarth);
+        var rEarthMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        rEarthMesh.position.x = 0;
+        rEarthMesh.position.y = 0;
+        rEarthMesh.position.z = 0;
+        rEarthMesh.rotation.set(0, s.getRotationAngle().degToRad(), 0);
+        scene.add(rEarthMesh);
 
 
         /**
          * Облака.
          * @type {THREE.SphereGeometry}
          */
-        var cloudsGeometry = new THREE.SphereGeometry(4.05, 20, 20);
+        var cloudsGeometry = new THREE.SphereGeometry(4.05, 32, 32);
         var cloudsMaterial = new THREE.MeshPhongMaterial({
             map: THREE.ImageUtils.loadTexture('php/cloudscreator.php', { }, function () {
                 scene.add(cloudsMesh);
@@ -122,9 +122,16 @@ var earth = {
                 fragmentShader: 'uniform float c; uniform float p; varying vec3 vNormal; void main() { float intensity = pow( c - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) ), p ); gl_FragColor = vec4( 0.7, 0.8, 1.0, 1.0 ) * intensity;}'
             });
         var meshGlow = new THREE.Mesh(cloudsGeometry.clone(), customMaterialAtmosphere);
-        meshGlow.scale.x = meshGlow.scale.y = meshGlow.scale.z = 1.05;
+        meshGlow.scale.x = meshGlow.scale.y = meshGlow.scale.z = 1.08;
         meshGlow.material.side = THREE.BackSide;
         scene.add(meshGlow);
+
+
+
+       /* var map = THREE.ImageUtils.loadTexture( "sprite.png" );
+        var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: true } );
+        var sprite = new THREE.Sprite( material );
+        scene.add( sprite );*/
 
         var spriteMaterial = new THREE.SpriteMaterial(
             {
@@ -132,16 +139,21 @@ var earth = {
                 useScreenCoordinates: false,
                 color: new THREE.Color( 0x5270FB ), transparent: false, blending: THREE.AdditiveBlending
             });
-        var sprite = new THREE.Sprite( meshGlow );
-        sprite.scale.set(20, 20, 1.0);
-        cloudsMesh.add(sprite); // this centers the glow at the mesh
+
+       // var meshGlow = new THREE.Mesh(cloudsGeometry.clone(), customMaterialAtmosphere);
+
+        var sprite = new THREE.Sprite( spriteMaterial );
+        sprite.scale.set(7, 7, 1);
+        //spriteMesh =
+
+        rEarthMesh.add(sprite); // this centers the glow at the mesh
 
 
 
 
         s.deg = s.getRotationAngle() - 230;
         s.setCameraPosition(camera);
-        camera.lookAt(rEarth.position);
+        camera.lookAt(rEarthMesh.position);
 
 
         var container = s.el[0].children[0];
@@ -155,8 +167,8 @@ var earth = {
             renderer.render(scene, camera);
         }
 
-        s.animate(render, rEarth, cloudsMesh);
-        s.events(render, camera, rEarth);
+        s.animate(render, rEarthMesh, cloudsMesh);
+        s.events(render, camera, rEarthMesh);
 
     },
     animate: function (render, sphere, cloudsMesh) {
