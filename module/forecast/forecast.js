@@ -77,8 +77,18 @@ define(function (require, exports, module) {
         }
 
 
+         function isArray(val){
+            if( Object.prototype.toString.call( val ) === '[object Array]' ) {
+                return true
+            }
+             return false
+        };
 
 
+        if(list && isArray(list) && list.length==0){
+            elContainer.append("api.openweathermap.org временно не отвечает на запрос")
+            return
+        }
         for(var i = 0 ; i<19; i++){
 
             var ico = list[i].weather[0].icon;
@@ -103,7 +113,7 @@ define(function (require, exports, module) {
                 fillDrip(elHour, list[i].snow['3h'], 'snow' )
             }
 
-            if(!list[i].snow && list[i].rain){
+            if(!list[i].snow && !list[i].rain){
                 title = 'Clear'
             }
 
@@ -139,8 +149,6 @@ define(function (require, exports, module) {
 
         }
         hover();
-
-
     }
 
     /**
@@ -168,18 +176,9 @@ define(function (require, exports, module) {
 
     var startHover = false;
     function hover(){
-
-
-
-       /* loadUi(function(){
-            $(el).tooltip()
-        });*/
         if(!startHover){
             elContainer.on('mouseenter', function(){
-               // console.log(this)
                 elContainer.off('mouseenter');
-
-
                     loadUi(function(){
                         var  i = arrayHours.length;
                         while(0<i--) {
@@ -188,7 +187,6 @@ define(function (require, exports, module) {
                             });
                         }
                     });
-
                 startHover = true
             })
         }
@@ -271,7 +269,7 @@ define(function (require, exports, module) {
                 console.log(b)
             }
 
-        })
+        });
        /* $.ajax({
 
             url: 'php/forecast.php',
