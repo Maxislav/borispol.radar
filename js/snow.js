@@ -18,7 +18,7 @@ var snow = function(n){
             s.el = $(document.createElement('div'));
             var nMonth = new Date().getMonth();
            
-            if(10<nMonth || nMonth<=3){
+            if(10<nMonth || nMonth<2){
                 s.el.attr('class', 'snow').css({
                     opacity:0
                 });

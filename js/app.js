@@ -22,9 +22,15 @@ var app = {
         });
 
         //todo листья снег
-        require(['snow'], function(){
-            snow(4);
-        });
+
+
+        var nMonth = new Date().getMonth();
+        if(10<nMonth || nMonth<2){
+            require(['snow'], function(){
+                snow(4);
+            });
+        }
+
 
 
         s.loadForecast();
