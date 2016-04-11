@@ -3,8 +3,8 @@ date_default_timezone_set("UTC");
 
 echo (date("Y/m/d-H:i")).'<br/>';
 
-load_ir('../img/sat/', 'http://www.sat24.com/image2.ashx?region=eu&time=201411291945&ir=true');
-load_ir('../img/vis/', 'http://www.sat24.com/image2.ashx?region=eu&time=201411291945&ir=false');
+load_ir('../img/sat/', 'http://www.sat24.com/image2.ashx?region=eu&ir=true');
+load_ir('../img/vis/', 'http://www.sat24.com/image2.ashx?region=eu&&ir=false');
 
 function load_ir($dir, $url){
 
