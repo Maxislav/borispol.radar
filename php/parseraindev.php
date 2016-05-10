@@ -9,38 +9,38 @@ $date->setTimezone(new DateTimeZone('Europe/Kiev'));
 $dateStr = $date->format('Y-m-d');
 $appName = "";
 
-$fileName ='log/'.$dateStr.'.txt';
-if(file_exists($fileName)){
- // echo "exist";
-}else{
-    $file = fopen($fileName,'w') or die('Could not create report file: ' . $fileName);
+$fileName = 'log/' . $dateStr . '.txt';
+if (file_exists($fileName)) {
+    // echo "exist";
+} else {
+    $file = fopen($fileName, 'w') or die('Could not create report file: ' . $fileName);
     chmod($fileName, 0777);
     fclose($file);
 }
 
 
-$file = fopen($fileName,'a') or die('Could not create report file: ' . $fileName);
-$time ="\r\n"."<div class='line'><h4 style='margin: 5px 2px 2px 2px;'>". $date->format('H:i:s')."</h4>";
+$file = fopen($fileName, 'a') or die('Could not create report file: ' . $fileName);
+$time = "\r\n" . "<div class='line'><h4 style='margin: 5px 2px 2px 2px;'>" . $date->format('H:i:s') . "</h4>";
 fwrite($file, $time);
-if (${'_'.$_SERVER['REQUEST_METHOD']}) {
+if (${'_' . $_SERVER['REQUEST_METHOD']}) {
     $kv = array();
     $prefix = "\r\n<div style='margin: 2px; color: #ff6600'>";
     $reportLine = $prefix;
-    foreach (${'_'.$_SERVER['REQUEST_METHOD']} as $key => $value) {
-        $str     =$value;
-        $order   = array("\r\n", "\n", "\r");
+    foreach (${'_' . $_SERVER['REQUEST_METHOD']} as $key => $value) {
+        $str = $value;
+        $order = array("\r\n", "\n", "\r");
         $replace = '<br />';
         $newstr = str_replace($order, $replace, $str);
 
         $kv[] = "$key=$value";
         ///echo "$key=$value";
-        $reportLine =$reportLine."  ". "$key".":"."$newstr";
+        $reportLine = $reportLine . "  " . "$key" . ":" . "$newstr";
         //$reportLine = $reportLine.$newstr;
 
         // echo "$key=$value";
     }
     $sufix = "</div>";
-    $reportLine = $reportLine.$sufix;
+    $reportLine = $reportLine . $sufix;
     fwrite($file, $reportLine);
 
 }
@@ -58,12 +58,8 @@ $size = getimagesize($url);
 list($width, $height, $type, $attr) = $size;
 
 
-
-
-
 $im = imagecreatefrompng($url);
 //$rgb = imagecolorat($im, 10, 15);
-
 
 
 /**
@@ -81,37 +77,67 @@ $R = 65;
 
 $a = 0;
 
-for($a=0; $a<90; $a++){
-    $y = 239 - ($R * sin(deg2rad($a)));
-    $x = 256 - ($R * cos(deg2rad($a)));
-    showDiv($im,$x, $y, $a);
+$arrDegWind = array();
+for ($a = 0; $a < 90; $a++) {
+    $y = 239 - ($R * cos(deg2rad($a)));
+    $x = 256 + ($R * sin(deg2rad($a)));
+    $_a = showDiv($im, $x, $y, $a);
+    if ($_a != null) {
+        array_push($arrDegWind, $_a);
+    }
 }
-for($a=90; 0<$a; $a--){
-    $y = 239 - ($R * sin(deg2rad($a)));
-    $x = 256 + ($R * cos(deg2rad($a)));
-    showDiv($im,$x, $y, $a+90);
-}
-for($a=0; $a<90; $a++){
+
+for ($a = 0; $a < 90; $a++) {
     $y = 239 + ($R * sin(deg2rad($a)));
     $x = 256 + ($R * cos(deg2rad($a)));
-    showDiv($im,$x, $y, $a+180 );
+    $_a = showDiv($im, $x, $y, $a + 90);
+    if ($_a != null) {
+        array_push($arrDegWind, $_a);
+    }
+}
+for ($a = 0; $a < 90; $a++) {
+    $x = 239 - ($R * sin(deg2rad($a)));
+    $y = 256 + ($R * cos(deg2rad($a)));
+    $_a = showDiv($im, $x, $y, $a + 180);
+    if ($_a != null) {
+        array_push($arrDegWind, $_a);
+    }
 }
 
-for($a=90; 0<$a; $a--){
-    $y = 239 + ($R * sin(deg2rad($a)));
+
+for ($a = 0; $a < 90; $a++) {
+    $y = 239 - ($R * sin(deg2rad($a)));
     $x = 256 - ($R * cos(deg2rad($a)));
-    showDiv($im,$x, $y, $a+270 );
+    $_a = showDiv($im, $x, $y, $a + 270);
+    if ($_a != null) {
+        array_push($arrDegWind, $_a);
+    }
+}
+/**
+ * Угол ветра
+ */
+$degWind = null;
+if (0 < count($arrDegWind)) {
+    $degWind = array_sum($arrDegWind) / count($arrDegWind);
 }
 
+//echo json_encode($arrDegWind);
 
-function showDiv($im,$x, $y, $a){
+function showDiv($im, $x, $y, $a)
+{
     $x = intval($x);
     $y = intval($y);
     $rgb = imagecolorat($im, $x, $y);
     $colors = imagecolorsforindex($im, $rgb);
-    $colorHex = "".toHex($colors["red"]).toHex($colors["green"]).toHex($colors["blue"]);
+    $colorHex = "" . toHex($colors["red"]) . toHex($colors["green"]) . toHex($colors["blue"]);
     //todo для разработки = отображение радиуса
-    //  echo "<div style='background: #".$colorHex."'>".$colorHex.",".$a."</div>";
+    //echo "<div style='background: #".$colorHex."'>".$colorHex.",".$a."</div>";
+    if ($colorHex == "000000") {
+        return $a;
+    } else {
+        return null;
+    }
+
 }
 
 
@@ -137,7 +163,6 @@ for($x = 256+$R; 256-$R<$x;$x--){
 //echo $y;
 
 
-
 /**
  * 2.0512 -> 151   0.013584106
  * 1.22674 -> 146  0.008400479
@@ -150,59 +175,100 @@ for($x = 256+$R; 256-$R<$x;$x--){
  *
  *
  * L.marker([52.395610649, 27.574518998]).addTo(map)
-.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+ * .bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
  *  "x"=> 211,
-    "y"=>231
+ * "y"=>231
  */
 
 $lat = 50.44701;
-$lng =30.52002;
-if($_GET["lat"]){
-    $lat =$_GET["lat"];
+$lng = 30.52002;
+if ($_GET["lat"]) {
+    $lat = $_GET["lat"];
 }
-if($_GET["lng"]){
-    $lng =$_GET["lng"];
+if ($_GET["lng"]) {
+    $lng = $_GET["lng"];
 }
 
 $kiev = array(
-    "x"=> ($lng - 27.574518998)/ 0.013584106, // 216
-   // "x"=> (30.52002 - 27.574518998)/ 0.013584106,
-    "y"=>(52.395610649 -$lat) / 0.008400479 //50.4551 + (231*0.008400479) 52.395610649
-   // "y"=>(52.395610649 -50.44701) / 0.008400479
+    "x" => ($lng - 27.574518998) / 0.013584106, // 216
+    // "x"=> (30.52002 - 27.574518998)/ 0.013584106,
+    "y" => (52.395610649 - $lat) / 0.008400479 //50.4551 + (231*0.008400479) 52.395610649
+    // "y"=>(52.395610649 -50.44701) / 0.008400479
 );
-$scaleFactor = 400/468;
+$scaleFactor = 400 / 468;
 
 $arrayDist = array();
 $arrayDistId = array();
-for($x = 10; $x<500; $x++){
-    for($y=10; $y<470; $y++){
+for ($x = 10; $x < 500; $x++) {
+    for ($y = 10; $y < 470; $y++) {
         $rgb = imagecolorat($im, $x, $y);
         $colors = imagecolorsforindex($im, $rgb);
-        $colorHex = "".toHex($colors["red"]).toHex($colors["green"]).toHex($colors["blue"]);
+        $colorHex = "" . toHex($colors["red"]) . toHex($colors["green"]) . toHex($colors["blue"]);
         //echo $colorHex."; ";
-        if($colors["red"]!==$colors["green"] && $colors["red"]!==$colors["blue"]){
-           $distPx = sqrt(pow($x - $kiev["x"], 2) + pow($y - $kiev["y"], 2));
-            $dist = intval($distPx*$scaleFactor);
+        if ($colors["red"] !== $colors["green"] && $colors["red"] !== $colors["blue"]) {
 
-            array_push($arrayDist, array(
-                "color"=>(toHex($colors["red"]).toHex($colors["green"]).toHex($colors["blue"])),
-                "colorRgb"=>$colors["red"]." ".$colors["green"]." ".$colors["blue"],
-                "intensity"=>getIntensity($colorHex),
-                "dist"=>$dist,
-                "xy"=> $x." ".$y
-            ));
+            if($degWind!=null){
+                $a;
+                $degFind = $degWind -180;
+                if($degFind<0){
+                    $degFind = $degFind+360;
+                }
 
-            array_push($arrayDistId, $dist);
+                $dy = abs($y-$kiev["y"]);
+                $dx = abs($x-$kiev["x"]);
+
+                if($kiev["x"]<=$x && $y<=$kiev["y"]){
+                    $a =  rad2deg(atan($dx/$dy));
+                }else if($kiev["x"]<=$x && $kiev["y"]<$y){
+                    $a =  rad2deg(atan($dy/$dx))+90;
+                }else if($x<$kiev["x"] && $kiev["y"]<$y){
+                    $a = rad2deg(atan($dx/$dy))+180;
+                }else if($x<$kiev["x"] && $y<=$kiev["y"]){
+                    $a =  rad2deg(atan($dy/$dx))+270;
+                }
 
 
-          /*  $arrayDist[$dist] = array(
-                //"color"=>$colors["red"]." ".$colors["green"]." ".$colors["blue"],
-                "color"=>(toHex($colors["red"]).toHex($colors["green"]).toHex($colors["blue"])),
-                "colorRgb"=>$colors["red"]." ".$colors["green"]." ".$colors["blue"],
-                "intensity"=>getIntensity($colors["red"], $colors["green"], toHex($colors["blue"])),
-                "dist"=>$dist,
-                "xy"=> $x." ".$y
-            );*/
+                if($degFind-20<$a && $a<$degFind+20){
+                    //echo $a."<br>";
+                    $distPx = sqrt(pow($x - $kiev["x"], 2) + pow($y - $kiev["y"], 2));
+                    $dist = intval($distPx * $scaleFactor);
+                    array_push($arrayDist, array(
+                        "color" => (toHex($colors["red"]) . toHex($colors["green"]) . toHex($colors["blue"])),
+                        "colorRgb" => $colors["red"] . " " . $colors["green"] . " " . $colors["blue"],
+                        "intensity" => getIntensity($colorHex),
+                        "dist" => $dist,
+                        "xy" => $x . " " . $y
+                    ));
+                    array_push($arrayDistId, $dist);
+                }
+
+
+            }else{
+                $distPx = sqrt(pow($x - $kiev["x"], 2) + pow($y - $kiev["y"], 2));
+                $dist = intval($distPx * $scaleFactor);
+                array_push($arrayDist, array(
+                    "color" => (toHex($colors["red"]) . toHex($colors["green"]) . toHex($colors["blue"])),
+                    "colorRgb" => $colors["red"] . " " . $colors["green"] . " " . $colors["blue"],
+                    "intensity" => getIntensity($colorHex),
+                    "dist" => $dist,
+                    "xy" => $x . " " . $y
+                ));
+                array_push($arrayDistId, $dist);
+            }
+
+
+
+
+
+
+            /*  $arrayDist[$dist] = array(
+                  //"color"=>$colors["red"]." ".$colors["green"]." ".$colors["blue"],
+                  "color"=>(toHex($colors["red"]).toHex($colors["green"]).toHex($colors["blue"])),
+                  "colorRgb"=>$colors["red"]." ".$colors["green"]." ".$colors["blue"],
+                  "intensity"=>getIntensity($colors["red"], $colors["green"], toHex($colors["blue"])),
+                  "dist"=>$dist,
+                  "xy"=> $x." ".$y
+              );*/
             //echo "<div style='background: #$colorHex; width: 100px; margin-bottom:2px'>#$colorHex</div>"."";
         }
     }
@@ -219,40 +285,41 @@ $type = array();
 $arrayResult = array();
 
 foreach ($arrayDist as $key => $val) {
-    if($val[color]){
+    if ($val[color]) {
         //echo "<div style='background: #$val[color]; width: 100px; margin-bottom:2px'>#$val[color] $val[dist]</div>"."";
         array_push($sortArr, $val);
     }
 }
 
 $arrayNull = array();
-foreach($sortArr as $key=>$val){
+foreach ($sortArr as $key => $val) {
     //echo "<div style='background: #$val[color]; width: 40px; height: 40px'></div>".'</br>';
-    if(!checkExist($type, $val["color"])){
+    if (!checkExist($type, $val["color"])) {
         array_push($type, $val["color"]);
-        if($val["intensity"]===null){
+        if ($val["intensity"] === null) {
             array_push($arrayNull, $val);
-        }else if($val["intensity"]!=0){
+        } else if ($val["intensity"] != 0) {
             array_push($arrayResult, $val);
         }
     }
 
-   /* echo "$key = ".$val["color"].";" ;
-    if(!$type[$va["color"]]){
-        $type[$va["color"]] = $val;
-    }*/
+    /* echo "$key = ".$val["color"].";" ;
+     if(!$type[$va["color"]]){
+         $type[$va["color"]] = $val;
+     }*/
 }
 
 
-function _getIntensity($r, $g, $b){
+function _getIntensity($r, $g, $b)
+{
 
     return null;
 }
 
 
-
-function getIntensity($color){
-    switch($color){
+function getIntensity($color)
+{
+    switch ($color) {
         case '9CE890':
         case '9BEB8F':
         case '9BEA8F':
@@ -350,9 +417,10 @@ function getIntensity($color){
     }
 }
 
-function checkExist($type, $_val){
-    foreach($type as $key=>$val){
-        if($_val == $val){
+function checkExist($type, $_val)
+{
+    foreach ($type as $key => $val) {
+        if ($_val == $val) {
             return true;
         }
     }
@@ -371,16 +439,21 @@ echo 'ResultOk</br>';*/
 $intensity = array();
 $unicom = array();
 
-foreach($arrayResult as $key=> $val){
+foreach ($arrayResult as $key => $val) {
     //echo "<div style='background: #$val[color]; width: 140px; margin-bottom:2px'>$val[intensity]</div>"."";
-    if(!checkIntensity($intensity, $val[intensity] )){
+    if (!checkIntensity($intensity, $val[intensity])) {
         array_push($unicom, $val);
-        array_push($intensity, $val[intensity] );
+        array_push($intensity, $val[intensity]);
     }
-  //  echo json_encode($val).'<br>';
+    //  echo json_encode($val).'<br>';
 }
 
 //todo раскоментировать
+
+$result = array(
+    "dist" => $unicom,
+    "degree" => $degWind
+);
 echo json_encode($unicom);
 
 //todo закоментировать
@@ -389,16 +462,14 @@ echo json_encode($unicom);
 }*/
 
 
-
-
-
-function checkIntensity($arr, $_val){
-    foreach($arr as $key=> $val){
-        if($_val == $val){
+function checkIntensity($arr, $_val)
+{
+    foreach ($arr as $key => $val) {
+        if ($_val == $val) {
             return true;
         }
     }
-   // array_push($arr, $val);
+    // array_push($arr, $val);
     return false;
 }
 
@@ -415,14 +486,15 @@ foreach($arrayNull as $key=> $val){
 
 //echo json_encode($arrayNull);
 
-function toHex($n) {
+function toHex($n)
+{
     $n = intval($n);
     if (!$n)
         return '00';
 
     $n = max(0, min($n, 255)); // make sure the $n is not bigger than 255 and not less than 0
-    $index1 = (int) ($n - ($n % 16)) / 16;
-    $index2 = (int) $n % 16;
+    $index1 = (int)($n - ($n % 16)) / 16;
+    $index2 = (int)$n % 16;
 
     return substr("0123456789ABCDEF", $index1, 1)
     . substr("0123456789ABCDEF", $index2, 1);
