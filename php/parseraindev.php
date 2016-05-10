@@ -228,7 +228,7 @@ for ($x = 10; $x < 500; $x++) {
                 }
 
 
-                if($degFind-20<$a && $a<$degFind+20){
+                if($degFind-15<$a && $a<$degFind+15){
                     //echo $a."<br>";
                     $distPx = sqrt(pow($x - $kiev["x"], 2) + pow($y - $kiev["y"], 2));
                     $dist = intval($distPx * $scaleFactor);
