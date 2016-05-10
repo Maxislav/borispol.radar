@@ -59,8 +59,84 @@ list($width, $height, $type, $attr) = $size;
 
 
 
+
+
 $im = imagecreatefrompng($url);
 //$rgb = imagecolorat($im, 10, 15);
+
+
+
+/**
+ * Центр  "256, 239"
+ * радиус срелки 65
+ *
+ * уравнение круга
+ * (x – a)2 + (y – b)2 = R2 ;
+ *
+ *
+ *
+ */
+
+$R = 65;
+
+$a = 0;
+
+for($a=0; $a<90; $a++){
+    $y = 239 - ($R * sin(deg2rad($a)));
+    $x = 256 - ($R * cos(deg2rad($a)));
+    showDiv($im,$x, $y, $a);
+}
+for($a=90; 0<$a; $a--){
+    $y = 239 - ($R * sin(deg2rad($a)));
+    $x = 256 + ($R * cos(deg2rad($a)));
+    showDiv($im,$x, $y, $a+90);
+}
+for($a=0; $a<90; $a++){
+    $y = 239 + ($R * sin(deg2rad($a)));
+    $x = 256 + ($R * cos(deg2rad($a)));
+    showDiv($im,$x, $y, $a+180 );
+}
+
+for($a=90; 0<$a; $a--){
+    $y = 239 + ($R * sin(deg2rad($a)));
+    $x = 256 - ($R * cos(deg2rad($a)));
+    showDiv($im,$x, $y, $a+270 );
+}
+
+
+function showDiv($im,$x, $y, $a){
+    $x = intval($x);
+    $y = intval($y);
+    $rgb = imagecolorat($im, $x, $y);
+    $colors = imagecolorsforindex($im, $rgb);
+    $colorHex = "".toHex($colors["red"]).toHex($colors["green"]).toHex($colors["blue"]);
+    //todo для разработки = отображение радиуса
+    //  echo "<div style='background: #".$colorHex."'>".$colorHex.",".$a."</div>";
+}
+
+
+/*
+for($x = 256-$R; $x<=256+$R;$x++){
+    $y = sqrt(pow($R,2)- pow(($x-256),2)) + 239;
+    $rgb = imagecolorat($im, $x, $y);
+    $colors = imagecolorsforindex($im, $rgb);
+    $colorHex = "".toHex($colors["red"]).toHex($colors["green"]).toHex($colors["blue"]);
+    //echo "<div style='background: #".$colorHex."'>".$colorHex."</div>";
+    echo $colors["red"].",".$colors["green"].",".$colors["blue"]."<br>";
+}
+
+for($x = 256+$R; 256-$R<$x;$x--){
+    $y = -sqrt(pow($R,2)- pow(($x-256),2)) + 239;
+    $rgb = imagecolorat($im, $x, $y);
+    $colors = imagecolorsforindex($im, $rgb);
+    $colorHex = "".toHex($colors["red"]).toHex($colors["green"]).toHex($colors["blue"]);
+   // echo "<div style='background: #".$colorHex."'>".$colorHex."</div>";
+    echo $colors["red"].",".$colors["green"].",".$colors["blue"]."<br>";
+}*/
+
+//echo $y;
+
+
 
 /**
  * 2.0512 -> 151   0.013584106
