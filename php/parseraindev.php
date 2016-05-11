@@ -454,7 +454,7 @@ $result = array(
     "dist" => $unicom,
     "degree" => $degWind
 );
-echo json_encode($unicom);
+echo json_encode($result);
 
 //todo закоментировать
 /*foreach($unicom as $key=> $val){
