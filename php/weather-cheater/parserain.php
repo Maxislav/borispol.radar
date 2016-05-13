@@ -1,11 +1,4 @@
 <?php
-/**
- * логирование в текстовый файл
- */
-/*require_once 'file-write.php';
-$fileWriter = new FileWrite(${'_' . $_SERVER['REQUEST_METHOD']});
-$fileWriter ->write();*/
-/** end **/
 
 date_default_timezone_set("UTC");
 
@@ -31,7 +24,9 @@ $im = imagecreatefrompng($url);
  */
 
 $R = 65;
+
 $a = 0;
+
 $arrDegWind = array();
 for ($a = 0; $a < 90; $a++) {
     $y = 239 - ($R * cos(deg2rad($a)));
@@ -209,12 +204,6 @@ for ($x = 10; $x < 500; $x++) {
                 ));
                 array_push($arrayDistId, $dist);
             }
-
-
-
-
-
-
             /*  $arrayDist[$dist] = array(
                   //"color"=>$colors["red"]." ".$colors["green"]." ".$colors["blue"],
                   "color"=>(toHex($colors["red"]).toHex($colors["green"]).toHex($colors["blue"])),
@@ -229,7 +218,6 @@ for ($x = 10; $x < 500; $x++) {
 }
 
 
-//ksort($arrayDist);
 
 array_multisort($arrayDistId, $arrayDist);
 
@@ -262,14 +250,6 @@ foreach ($sortArr as $key => $val) {
          $type[$va["color"]] = $val;
      }*/
 }
-
-
-function _getIntensity($r, $g, $b)
-{
-
-    return null;
-}
-
 
 function getIntensity($color)
 {
@@ -403,11 +383,13 @@ foreach ($arrayResult as $key => $val) {
 }
 
 //todo раскоментировать
-
 $result = array(
     "dist" => $unicom,
-    "degree" => $degWind
+    "degree" => $degWind,
+    "isRainy" => 0<sizeof($arrayDist)
+
 );
+header('Content-Type: application/json');
 echo json_encode($result);
 
 //todo закоментировать
