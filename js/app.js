@@ -18,7 +18,7 @@ var app = {
 
 
         require(['jqueryUi'], function(){
-           // $('.m-container').draggable({handle: ".header"})
+            $('.m-container').draggable({handle: ".header"})
         });
 
         //todo листья снег

@@ -95,7 +95,7 @@ define(function (require, exports, module) {
             var elHour = $(strElday);
             var hh = '' +  DateFormat.format.date(new Date(list[i].dt*1000), 'HH');
             var color = getColorHour(hh);
-            elHour.css('background', hexToRgba(color));
+            elHour.css('background', color);
             //console.log(list[i]);
             arrayHours.push(elHour);
 
@@ -163,14 +163,14 @@ define(function (require, exports, module) {
      */
     var R = {
         color: {
-            hh00: '#6f0057ff',
-            hh03: '#350057ff',
-            hh06: '#2b0057ff',
-            hh09: '#1f0057ff',
-            hh12: '#150057ff',
-            hh15: '#200057ff',
-            hh18: '#2b0057ff',
-            hh21: '#430057ff'
+            hh00: '#99BCFF',
+            hh03: '#CCDDFF',
+            hh06: '#CDF',
+            hh09: '#E6EEFF',
+            hh12: '#E6EEFF',
+            hh15: '#E6EBF5',
+            hh18: '#CCDDFF',
+            hh21: '#B3CDFF'
         }
     };
 
