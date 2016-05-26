@@ -154,7 +154,10 @@ define(function (require, exports, module) {
 
         }
         hover();
-        var myScrollBar = window.tinyscrollbar($("#scrollbar2")[0], {axis: "x"});
+
+        var elScrollBar = $("#scrollbar2")[0];
+        $(elScrollBar).find('.overview').css('width', list.length*52+"px");
+        var myScrollBar = window.tinyscrollbar(elScrollBar, {axis: "x"});
 
     }
 
