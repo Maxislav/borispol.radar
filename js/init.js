@@ -29,9 +29,9 @@ Date.prototype.secondsFromStartDay = function () {
 require.config({
     waitSeconds: 60,
     baseUrl: '',
-    urlArgs: "bust=26.05.2016-12:34:02",
+    urlArgs: "bust=26.05.2016-18:13:00",
     paths: {
-       // jquery: 'lib/jquery/jquery-1.11.1.min',
+        jquery: 'lib/jquery/jquery-1.12.4',
         app: 'js/app',
         home: 'module/home/home',
         ired: 'module/ired/ired',
@@ -62,8 +62,9 @@ require.config({
         earth: 'module/earth/earth',
         threejs: 'lib/three/three.min',
         cloudsLoader: 'module/earth/clouds-loader',
-        metrika: 'module/ymetrika/ymetrika'
-
+        metrika: 'module/ymetrika/ymetrika',
+        tinyscrollbar: 'lib/jquery/tinyscrollbar/tinyscrollbar',
+        tinyscrollbarcss: 'lib/jquery/tinyscrollbar/tyny.css.load'
     },
     shim: {
         info: {
@@ -72,7 +73,7 @@ require.config({
             ]
         },
         home: {
-            deps:[
+            deps: [
                 'main'
             ]
         },
@@ -84,16 +85,47 @@ require.config({
         },
         metrika: {
             deps: [
-                'build'
+                'jquery'
+            ]
+        },
+        forecast: {
+            deps: [
+                'tinyscrollbar'
+            ]
+        },
+        tinyscrollbar: {
+            deps: [
+                'jquery',
+                'tinyscrollbarcss'
+            ]
+        },
+        tinyscrollbarcss: {
+            deps: [
+                'app'
+            ]
+        },
+        app: {
+            deps: [
+                'jquery'
+            ]
+        },
+        jqueryUi: {
+            deps: [
+                'jquery'
+            ]
+        },
+        build: {
+            deps: [
+                'jquery'
             ]
         }
     }
 });
 require(
     [
+        'app',
         'build',
         'metrika'
-
     ], function ($) {
         app.init()
     });

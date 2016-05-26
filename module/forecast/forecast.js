@@ -92,7 +92,7 @@ define(function (require, exports, module) {
             elContainer.append("api.openweathermap.org временно не отвечает на запрос")
             return
         }
-        for(var i = 0 ; i<19; i++){
+        for(var i = 0 ; i<list.length; i++){
 
             var ico = list[i].weather[0].icon;
             var elHour = $(strElday);
@@ -107,8 +107,6 @@ define(function (require, exports, module) {
             arrayHours.push(elHour);
 
             var title = '';
-
-            16<i && console.log(list[i]);
 
             if(list[i].rain && list[i].rain['3h']){
                 title += 'Rain 3h: ' +list[i].rain['3h']+"mm";
@@ -156,6 +154,8 @@ define(function (require, exports, module) {
 
         }
         hover();
+        var myScrollBar = window.tinyscrollbar($("#scrollbar2")[0], {axis: "x"});
+
     }
 
     /**
@@ -234,12 +234,6 @@ define(function (require, exports, module) {
             success: function(d){
                 list = d.list;
                 greateItems();
-                //console.log(d)
-              /*  item.find('.progress-bar').css({
-                    width: '60%'
-                })
-                arraySrs = JSON.parse(d);
-                setSrc();*/
             },
             error: function(a,b,c){
                 console.log(b)

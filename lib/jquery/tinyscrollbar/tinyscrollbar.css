@@ -1,0 +1,89 @@
+/* Some lines are redundant. I just want to make sure its clear what is needed for a single instance. */
+
+
+
+
+
+
+/* scrollbar2 */
+#scrollbar2
+{
+    /*width:251px;*/
+    width:100px;
+    margin:0 0 10px;
+}
+
+#scrollbar2 .viewport
+{
+    /*width:236px;*/
+    width:994px;
+    height:104px;
+    overflow:hidden;
+    position:relative;
+}
+
+#scrollbar2 .overview
+{
+    list-style:none;
+    width:1768px;
+    padding:0;
+    margin:0;
+    position:absolute;
+    left:0;
+    top:0;
+}
+
+#scrollbar2 .overview img
+{
+    float:left;
+}
+
+#scrollbar2 .scrollbar
+{
+    position:relative;
+    /*margin:0 0 5px;*/
+    clear:both;
+    height:2px;
+}
+
+#scrollbar2 .track
+{
+    background: #fafafa;
+    width:100%;
+    height:2px;
+    position:relative;
+}
+
+#scrollbar2 .thumb
+{
+    background: #9fd1ff;
+    height:2px;
+    cursor:pointer;
+    overflow:hidden;
+    position:absolute;
+    left:0;
+    /*top:-5px;*/
+}
+
+#scrollbar2 .thumb .end
+{
+    /*background:transparent url(../images/bg-scrollbar-thumb-x.png) no-repeat 0 50%;*/
+    overflow:hidden;
+    height:2px;
+    width:2px;
+}
+
+#scrollbar2 .disable
+{
+    display:none;
+}
+
+.noSelect
+{
+    user-select:none;
+    -o-user-select:none;
+    -moz-user-select:none;
+    -khtml-user-select:none;
+    -webkit-user-select:none;
+}
+

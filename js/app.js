@@ -37,7 +37,6 @@ var app = {
         s.getBrr();
 
     },
-
     loadForecast: function () {
         var s = this;
         (function a(module) {
