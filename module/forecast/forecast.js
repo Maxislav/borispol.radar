@@ -43,8 +43,11 @@ define(function (require, exports, module) {
         function fillDrip(elHour, _3h, type){
             var container = elHour.find('.drip-container');
 
+
             container.css('textAlign', 'left');
             _3h = parseFloat(_3h);
+
+
 
             var n = _3h*10;
             n = Math.ceil(n);
@@ -95,6 +98,10 @@ define(function (require, exports, module) {
             var elHour = $(strElday);
             var hh = '' +  DateFormat.format.date(new Date(list[i].dt*1000), 'HH');
             var color = getColorHour(hh);
+            var overDripContainer = elHour.find('.over-drip-container');
+            overDripContainer.css('background', 'linear-gradient(to bottom, rgba(255,255,255,0) 50%, '+color+' 100%)');
+            overDripContainer.css('background', '-moz-linear-gradient(top, rgba(255,255,255,0) 50%, '+color+' 100%)');
+
             elHour.css('background', color);
             //console.log(list[i]);
             arrayHours.push(elHour);
@@ -142,7 +149,7 @@ define(function (require, exports, module) {
                 elDay = $(document.createElement('div'));
                 elDay.attr('class', 'day-of-month');
                 elDay.append('<div class="date-month-title">'+DateFormat.format.date(new Date(list[i].dt*1000), 'E dd')+'</div>')
-                fillday(elDay,elHour, true)
+                fillday(elDay, elHour, true)
             }else{
                 fillday(elDay,elHour, false)
             }
@@ -190,37 +197,6 @@ define(function (require, exports, module) {
                 startHover = true
             })
         }
-    }
-
-    function hexToRgba(hex) {
-        var bigint, r, g, b, a;
-        //Remove # character
-        var re = /^#?/;
-        var aRgb = hex.replace(re, '');
-        bigint = parseInt(aRgb, 16);
-
-        //If in #FFF format
-        if (aRgb.length == 3) {
-            r = (bigint >> 4) & 255;
-            g = (bigint >> 2) & 255;
-            b = bigint & 255;
-            return "rgba(" + r + "," + g + "," + b + ",1)";
-        }
-
-        //If in #RRGGBB format
-        if (aRgb.length >= 6) {
-            r = (bigint >> 16) & 255;
-            g = (bigint >> 8) & 255;
-            b = bigint & 255;
-            var rgb = r + "," + g + "," + b;
-
-            //If in #AARRBBGG format
-            if (aRgb.length == 8) {
-                a = ((bigint >> 24) & 255) / 255;
-                return "rgba(" + rgb + "," + a.toFixed(1) + ")";
-            }
-        }
-        return "rgba(" + rgb + ",1)";
     }
 
     function getColorHour(HH){
