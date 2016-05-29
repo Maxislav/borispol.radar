@@ -135,10 +135,10 @@ define(function (require, exports, module) {
             var date = DateFormat.format.date(new Date(list[i].dt*1000), 'HH:mm');
             elHour.find('.date').html(date);
             var elIcon = elHour.find('.img-son');
-
-            var img = new Image();
+            setIconHour(elIcon, 'img/icon/i'+ico+'.png', i)
+            /*var img = new Image();
             img.src ='img/icon/i'+ico+'.png';
-            elIcon.append(img);
+            elIcon.append(img);*/
             var t = parseInt(list[i].main.temp);
             elHour.find('.temp').html((0<t ?'+':'') + t+'&deg;C');
 
@@ -159,6 +159,14 @@ define(function (require, exports, module) {
         $(elScrollBar).find('.overview').css('width', list.length*52+"px");
         var myScrollBar = window.tinyscrollbar(elScrollBar, {axis: "x"});
 
+    }
+
+    function setIconHour(elIcon, src, i){
+        require([
+            'image!'+src
+        ], function(img){
+            elIcon.append(img.cloneNode(true));
+        })
     }
 
     /**

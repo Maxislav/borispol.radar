@@ -29,7 +29,7 @@ Date.prototype.secondsFromStartDay = function () {
 require.config({
     waitSeconds: 60,
     baseUrl: '',
-    urlArgs: "bust=27.05.2016-12:09:35",
+    urlArgs: "bust=29.05.2016-15:33:48",
     paths: {
         jquery: 'lib/jquery/jquery-1.12.4',
         app: 'js/app',
@@ -64,7 +64,8 @@ require.config({
         cloudsLoader: 'module/earth/clouds-loader',
         metrika: 'module/ymetrika/ymetrika',
         tinyscrollbar: 'lib/jquery/tinyscrollbar/tinyscrollbar',
-        tinyscrollbarcss: 'lib/jquery/tinyscrollbar/tyny.css.load'
+        tinyscrollbarcss: 'lib/jquery/tinyscrollbar/tyny.css.load',
+        image: 'lib/requirejs/image'
     },
     shim: {
         info: {
@@ -91,6 +92,7 @@ require.config({
         forecast: {
             deps: [
                 'tinyscrollbar'
+
             ]
         },
         tinyscrollbar: {
