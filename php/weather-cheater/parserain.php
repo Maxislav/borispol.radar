@@ -148,6 +148,23 @@ $scaleFactor = 400 / 468;
 
 $arrayDist = array();
 $arrayDistId = array();
+
+
+function isRainyFoo($im){
+    for ($x = 10; $x < 500; $x++) {
+        for ($y = 10; $y < 470; $y++) {
+            $rgb = imagecolorat($im, $x, $y);
+            $colors = imagecolorsforindex($im, $rgb);
+            if ($colors["red"] !== $colors["green"] && $colors["red"] !== $colors["blue"]) {
+                return true;
+            }
+
+        }
+    }
+    return false;
+}
+
+
 for ($x = 10; $x < 500; $x++) {
     for ($y = 10; $y < 470; $y++) {
         $rgb = imagecolorat($im, $x, $y);
@@ -386,7 +403,7 @@ foreach ($arrayResult as $key => $val) {
 $result = array(
     "dist" => $unicom,
     "degree" => $degWind,
-    "isRainy" => 0<sizeof($arrayDist)
+    "isRainy" => isRainyFoo($im)
 
 );
 header('Content-Type: application/json');
