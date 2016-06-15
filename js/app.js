@@ -98,13 +98,14 @@ var app = {
                 el.find('.mask').height(el.height()).fadeTo(222, 1);
                 el.find('.mask').css({
                     position: 'absolute'
-                })
+                });
                 el.find('.svg').css({
                     position: 'absolute',
                     left: el.width() / 2 - 30 + 'px',
                     top: el.height() / 2 - 30 + 'px'
-                })
-            } else {
+                });
+            }
+            else {
                 $('body').append('<div class="mask">' +
                 '<svg width="60" height="60" class="svg">' +
                 '<image xlink:href="img/loader.png" width="60" height="60">' +
@@ -202,4 +203,4 @@ var app = {
 
         }
     }
-}
+};
