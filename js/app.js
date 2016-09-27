@@ -1,6 +1,7 @@
 var app = {
     css: {},
     currentMoule: null,
+    name: null,
     init: function () {
         var s = this;
 
@@ -56,7 +57,8 @@ var app = {
     },
     loadmodulle: function (module) {
         var s = this;
-        s.currentMoule && s.currentMoule.hide()
+        s.currentMoule && s.currentMoule.hide();
+        s.name = module;
         require([
             module,
             'text' + '!' + module + '.html',
@@ -68,14 +70,17 @@ var app = {
                 $('head').append('<style>' + css + '</style>')
                 s.css[module] = true;
             }
-            s.currentMoule = window[module]
-            s.currentMoule && s.currentMoule.show(html)
+            s.currentMoule = window[module];
+            s.currentMoule && s.currentMoule.show(html);
             app.navTabs(s.currentMoule.navTabs)
         })
     },
     navTabs: function (n) {
-        $('.nav.nav-tabs').find('li').removeClass('active')
-        $('.nav.nav-tabs').find('li').eq(n).addClass('active')
+        var s = this;
+
+        $('.nav.nav-tabs').find('li').removeClass('active');
+        var a = $('.nav.nav-tabs').find("li a[href=\'#"+s.name+"\']")
+        a.parent().addClass('active');
     },
     mask: {
         show: function (el) {

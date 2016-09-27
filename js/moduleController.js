@@ -42,15 +42,15 @@ var ModuleController = {
                 s.refresh()
             })
             .on('click', '.glyphicon.glyphicon-step-backward', function () {
-                if (s.btnStepBask.active) return
-                s.btnStepBask.addClass('active')
-                s.btnStepBask.active = true
+                if (s.btnStepBask.active) return;
+                s.btnStepBask.addClass('active');
+                s.btnStepBask.active = true;
                 s.stepBack()
             })
             .on('click', '.glyphicon.glyphicon-step-forward', function () {
-                if (s.btnStepForward.active) return
-                s.btnStepForward.addClass('active')
-                s.btnStepForward.active = true
+                if (s.btnStepForward.active) return;
+                s.btnStepForward.addClass('active');
+                s.btnStepForward.active = true;
                 s.stepForward()
             });
         s.showImg();
@@ -66,13 +66,13 @@ var ModuleController = {
         var imgir = new Image();
         s.imgir = imgir;
         imgir.onload = function () {
-            conteiner.append(imgir)
+            conteiner.append(imgir);
             $(imgir).fadeTo(500, 1, function () {
                 app.mask.remove(mask)
             })
-        }
-        var date = s.getDate()
-        imgir.src = s.baseURI + date + s.afterUrl
+        };
+        var date = s.getDate();
+        imgir.src = s.baseURI + date + s.afterUrl;
         console.log(imgir.src)
     },
 
@@ -82,9 +82,9 @@ var ModuleController = {
         var steps = s.steps;
         var k = 0;
         var offset = 0;
-        s.progressLoader.fadeTo(222, 1)
+        s.progressLoader.fadeTo(222, 1);
         for (var i = 0; i < steps; i++) {
-            offset += s.offset
+            offset += s.offset;
             var date = s.getStepDate(offset);
             var url = s.baseURI + date + s.afterUrl;
             arr[i] = new Image();
@@ -106,7 +106,7 @@ var ModuleController = {
                 width: Math.ceil(k * 100 / steps) + '%'
             });
             if (k == steps) {
-                var _arr = []
+                var _arr = [];
                 for (var i = 0; i < steps; i++) {
                     _arr.push(arr[i])
                 }
@@ -114,23 +114,23 @@ var ModuleController = {
 
                     s.arrimg[steps - i - 1] = _arr[i]
                 }
-                $(s.imgir).remove()
+                $(s.imgir).remove();
                 for (var i = 0; i < steps; i++) {
                   //  console.log(s.arrimg[i].src)
-                    s.container.append(s.arrimg[i])
+                    s.container.append(s.arrimg[i]);
                     $(s.arrimg[i]).css({'opacity': 1})
                 }
                 s.clip = steps - 1;
-                s.progressLoader.fadeTo(222, 0)
+                s.progressLoader.fadeTo(222, 0);
                 success && success.call(s)
             }
         }
     },
     play: function () {
         var s = this;
-        s.btnPlay.addClass('active')
+        s.btnPlay.addClass('active');
         if (!s.arrimg.length) {
-            s.load(s.play)
+            s.load(s.play);
             return
         }
 
@@ -141,18 +141,18 @@ var ModuleController = {
             $(arrimg[i]).fadeTo(400, 0, start)
         }
         function start() {
-            k++
+            k++;
             if (k == steps - 1) {
-                k = 1
+                k = 1;
                 setTimeout(play, 500)
             }
         }
         function play() {
             $(arrimg[k]).fadeTo(200, 0.2, function () {
                 s.clip = k;
-                toFade(k)
+                toFade(k);
                 if (k < steps) {
-                    k++
+                    k++;
                     play()
                 } else {
 
@@ -184,25 +184,25 @@ var ModuleController = {
             })
         }
         setTimeout(function () {
-            s.arrimg = []
-            s.imgir = null
+            s.arrimg = [];
+            s.imgir = null;
             s.showImg();
         }, 300)
     },
     stepBack: function () {
         var s = this;
         if (!s.arrimg.length) {
-            s.load(s.stepBack)
+            s.load(s.stepBack);
             return
         }
         if (s.clip && 0 < s.clip) {
             $(s.arrimg[s.clip]).fadeTo(222, 0, function () {
-                s.clip--
-                s.btnStepBask.active = false
+                s.clip--;
+                s.btnStepBask.active = false;
                 s.btnStepBask.removeClass('active')
             })
         } else {
-            s.btnStepBask.active = false
+            s.btnStepBask.active = false;
             s.btnStepBask.removeClass('active')
         }
     },
@@ -213,31 +213,31 @@ var ModuleController = {
             return
         }
         if (s.clip < s.steps - 1) {
-            s.clip++
+            s.clip++;
             $(s.arrimg[s.clip]).fadeTo(222, 1, function () {
 
-                s.btnStepForward.active = false
+                s.btnStepForward.active = false;
                 s.btnStepForward.removeClass('active')
             })
         } else {
-            s.btnStepForward.active = false
+            s.btnStepForward.active = false;
             s.btnStepForward.removeClass('active')
         }
     },
     getDate: function () {
         var date = mathDate.setParams({mi: 15, ss: 60})(new Date(), {hh: -2, mi: -5})
-        date = DateFormat.format.date(date, 'yyyyMMddHHmm')
+        date = DateFormat.format.date(date, 'yyyyMMddHHmm');
         return date
     },
     getStepDate: function (offset) {
         var date = mathDate.setParams({mi: 15, ss: 60})(new Date(), {hh: -2, mi: -2 - (offset)})
-        date = DateFormat.format.date(date, 'yyyyMMddHHmm')
+        date = DateFormat.format.date(date, 'yyyyMMddHHmm');
         return date
     },
     show: function (html) {
         var s = this;
         if (!s.el) {
-            s.init.call(s,html, s.show)
+            s.init.call(s,html, s.show);
             return
         }
 
@@ -248,16 +248,11 @@ var ModuleController = {
     },
     hide: function () {
         var s = this;
-       /* s.el.css({
-            position: 'absolute',
-            top: 0,
-            left: 0
-        })*/
+       
         s.el.fadeTo(222, 0, function () {
             s.el.css({
                 display: 'none'
             })
         })
     }
-}
-//ModuleController.__proto__ = home
+};
