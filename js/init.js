@@ -39,6 +39,7 @@ require.config({
         meteosat: 'module/meteosat/meteosat',
         iredMet: 'module/iredMet/iredMet',
         text: 'lib/requirejs/text',
+        css: 'lib/requirejs/css.min',
         timer: 'js/timer',
         visible: 'module/visible/visible',
         mouseevent: 'js/ParseDist',
@@ -65,9 +66,26 @@ require.config({
         metrika: 'module/ymetrika/ymetrika',
         tinyscrollbar: 'lib/jquery/tinyscrollbar/tinyscrollbar',
         tinyscrollbarcss: 'lib/jquery/tinyscrollbar/tyny.css.load',
-        image: 'lib/requirejs/image'
+        image: 'lib/requirejs/image',
+        fileupload: 'module/fileupload/fileupload',
+        'jquery.fileupload': 'lib/jquery/jQuery-File-Upload-9.12.5/js/jquery.fileupload'
+    },
+    map: {
+        '*': {
+            'css': 'lib/requirejs/css.min' // or whatever the path to require-css is
+        }
     },
     shim: {
+
+        fileupload: {
+          deps: [
+              'lib/jquery/jQuery-File-Upload-9.12.5/js/vendor/jquery.ui.widget',
+              'css!lib/jquery/jQuery-File-Upload-9.12.5/css/jquery.fileupload.css',
+               'jquery.fileupload'
+
+            
+          ]
+        },
         info: {
             deps: [
                 'informers'
