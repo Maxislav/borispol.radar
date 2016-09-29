@@ -70,6 +70,9 @@ module.exports = function (grunt) {
                     ],
                     "module/forecast/forecast.css": [
                         "module/forecast/forecast.less"
+                    ],
+                    "module/fileupload/fileupload.css": [
+                        "module/fileupload/fileupload.less"
                     ]
                 }
             },
@@ -136,6 +139,7 @@ module.exports = function (grunt) {
             styles: {
                 // Which files to watch (all .less files recursively in the less directory)
                 files: [
+                  "module/**/*.less",
                     "module/home/home.less",
                     "css/borispol.css",
                     "css/main.less",

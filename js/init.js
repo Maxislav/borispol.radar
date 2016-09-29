@@ -29,7 +29,7 @@ Date.prototype.secondsFromStartDay = function () {
 require.config({
     waitSeconds: 60,
     baseUrl: '',
-    urlArgs: "bust=29.05.2016-15:33:48",
+    urlArgs: "bust=29.09.2016-16:23:50",
     paths: {
         jquery: 'lib/jquery/jquery-1.12.4',
         app: 'js/app',
@@ -76,16 +76,6 @@ require.config({
         }
     },
     shim: {
-
-        fileupload: {
-          deps: [
-              'lib/jquery/jQuery-File-Upload-9.12.5/js/vendor/jquery.ui.widget',
-              'css!lib/jquery/jQuery-File-Upload-9.12.5/css/jquery.fileupload.css',
-               'jquery.fileupload'
-
-            
-          ]
-        },
         info: {
             deps: [
                 'informers'

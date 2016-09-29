@@ -1,8 +1,20 @@
-<div class="ired">
-    <span class="btn btn-success fileinput-button">
+<div class="file-upload">
+    <!--<span class="btn btn-success fileinput-button">
         <i class="glyphicon glyphicon-plus"></i>
         <span>Select files...</span>
-        <!-- The file input field used as target for the file upload widget -->
+        &lt;!&ndash; The file input field used as target for the file upload widget &ndash;&gt;
         <input id="fileupload" type="file" name="files[]" multiple>
-    </span>
+    </span>-->
+
+  <!--  <form id="file-form"  enctype="multipart/form-data"  action="php/upload.php" method="POST">
+        <input type="file" id="file-select" name="photos" multiple/>
+        <input type="submit" id="upload-button">Upload</input>
+    </form>-->
+
+    <form id="file-form"  enctype="multipart/form-data" action="php/upload.php" method="POST">
+        <input type="hidden"  name="afile" value="30000" />
+        <input name="afile" id="file-select" type="file" style="visibility: hidden"/>
+        <button>Выбрать файл</button>
+        <button type="submit" id="upload-button" value="Send File" >Отправить</button>
+    </form>
 </div>
