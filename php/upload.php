@@ -4,11 +4,38 @@
 
 $dir = "../img/bg/";
 
+
+$files1 = scandir($dir);
+
+$arrPath = array();
+$arrDate = array();
+
+foreach($files1 as $path){
+    $filename = $dir.$path;
+
+    preg_match('/\d+\./', $path, $matches);
+
+    if(file_exists($filename) && 0<count($matches)){
+
+
+            array_push($arrPath, $filename);
+            array_push($arrDate, filemtime($filename));
+
+        //echo filemtime($filename)."\n";
+    }
+};
+
+
+
+array_multisort($arrDate ,$arrPath);
+
+$replaceImgPath = $arrPath[0];
+
 $uploaddir = $dir;
 $uploadfile = $uploaddir . basename($_FILES['afile']['name']);
 $file_content = file_get_contents($_FILES['afile']['tmp_name']) ;
 
-if (move_uploaded_file($_FILES['afile']['tmp_name'], $dir."1.jpg")) {
+if (move_uploaded_file($_FILES['afile']['tmp_name'], $replaceImgPath)) {
     echo "Ok \n";
 } else {
     echo "Error \n";
@@ -19,16 +46,10 @@ if (move_uploaded_file($_FILES['afile']['tmp_name'], $dir."1.jpg")) {
 
 //print "</pre>";
 
-$files1 = scandir($dir);
-
-foreach($files1 as $path){
-    $filename = $dir.$path;
-    if(file_exists($filename)){
-        echo filemtime($filename)."\n";
-    }
-};
+//print_r($arrDate);
 
 
-print_r($files1);
+
+//print_r($arrDate);
 
 ?>

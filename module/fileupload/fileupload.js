@@ -11,14 +11,19 @@ function FileUpload() {
         var uploadButton = document.getElementById('upload-button');
         var files = null;
         var formData;
+        var fileName = null;
+
 
         fileSelect.addEventListener('change', function (e) {
-            console.log(this.files[0].name)
-            //elFileName.innerHTML = this.files[0].name
-            elSelectFile.innerHTML = this.files[0].name
+            console.log(this.files[0].name);
+            elSelectFile.innerHTML = this.files[0].name;
+            fileName = this.files[0].name;
+            if(!fileName.match(/(\.jpg)|(\.JPG)$/)){
+                alert('Разрешен только jpg')
+            }
 
         });
-        elSelectFile.addEventListener('click', selectFile)
+        elSelectFile.addEventListener('click', selectFile);
         function selectFile(e) {
             e.preventDefault();
             this.parentElement.getElementsByTagName('input')[1].click()
@@ -26,6 +31,11 @@ function FileUpload() {
 
         form.onsubmit = function(event) {
             event.preventDefault();
+            if(!fileName.match(/(\.jpg)|(\.JPG)$/)){
+                alert('Разрешен только jpg')
+                return;
+            }
+
             console.log('send');
 
             files = fileSelect.files;
@@ -54,6 +64,32 @@ function FileUpload() {
             };
             xhr.send(formData);
         }
+
+        var imgContainer =  this.el[0].getElementsByClassName('images-bg-container')[0];
+
+        var i = 1;
+
+        while (i<9){
+
+            (function (i) {
+                var elImg = document.createElement('img');
+                elImg.src = 'img/bg/'+i+'.jpg';
+                elImg.onload = function () {
+                    console.log('load', i)
+                };
+
+                imgContainer.appendChild(elImg)
+
+
+
+            })(i);
+
+            i++;
+        }
+
+
+
+        console.log(imgContainer)
     }
 
 }
