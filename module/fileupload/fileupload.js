@@ -55,6 +55,10 @@ function FileUpload() {
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     console.log(xhr.response);
+                    if(isNumber(xhr.response)){
+                        console.log(xhr.response);
+                        replaceImg(parseInt(xhr.response));
+                    }
                     uploadButton.innerHTML = 'Отправить';
 
                 } else {
@@ -74,7 +78,7 @@ function FileUpload() {
                 var elImg = document.createElement('img');
                 elImg.src = 'img/bg/'+i+'.jpg';
                 elImg.onload = function () {
-                    console.log('load', i)
+                   // console.log('load', i)
                 };
 
                 imgContainer.appendChild(elImg)
@@ -86,9 +90,14 @@ function FileUpload() {
             i++;
         }
 
+        function replaceImg(n) {
+            var img = imgContainer.getElementsByTagName('img')[n];
+            img.src = img.src+'?'+new Date().getTime();
+        }
 
-
-        console.log(imgContainer)
+        function isNumber (o) {
+            return ! isNaN (o-0) && o !== null && o !== "" && o !== false;
+        }
     }
 
 }
