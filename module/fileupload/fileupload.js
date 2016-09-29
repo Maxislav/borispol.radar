@@ -21,7 +21,6 @@ function FileUpload() {
             if(!fileName.match(/(\.jpg)|(\.JPG)$/)){
                 alert('Разрешен только jpg')
             }
-
         });
         elSelectFile.addEventListener('click', selectFile);
         function selectFile(e) {
