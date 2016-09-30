@@ -13,10 +13,13 @@ for($y=0; $y<($scale*2); $y++){
 	
 	for($x=0; $x<($scale*2); $x++){
 			//http://undefined.tile.openweathermap.org/map/clouds/4/10/7.png
-		$images[$x][$y]= imagecreatefrompng("http://a.tile.openweathermap.org/map/clouds/".$scale."/".$x."/".$y.".png");
+		//$images[$x][$y]= imagecreatefrompng("http://a.tile.openweathermap.org/map/clouds/".$scale."/".$x."/".$y.".png");
+		//$images[$x][$y]= imagecreatefrompng("http://tessera12.intellicast.com/201212/en-US/0003/0001/3qAKSzPXfr1BCEI7/0805/0/20160930145000/1/".$scale."/".$x."/".$y."/layer.png");
+		//$images[$x][$y]= imagecreatefrompng("http://tessera12.intellicast.com/201212/en-US/0003/0001/3qAKSzPXfr1BCEI7/0805/0/20160930145000/1/".$scale."/".$x."/".$y."/layer.png");
+		echo "http://tessera12.intellicast.com/201212/en-US/0003/0001/3qAKSzPXfr1BCEI7/0805/0/20160930145000/1/".$scale."/".$x."/".$y."/layer.png"."</br>"
 	};
 };
-print_r($images);
+////print_r($images);
 
  //$image1 = imagecreatefrompng("http://undefined.tile.openweathermap.org/map/precipitation/2/0/0.png"); //create images
 
@@ -26,7 +29,6 @@ $dst = imagecreate($scale*2*$width, $scale*2*$height);
 
 
 for($y=0; $y<($scale*2); $y++){
-	
 	for($x=0; $x<($scale*2); $x++){
 		imagecopyresampled($dst, $images[$x][$y], $x*$width,$y*$height,0,0,256,256,256,256);
 		imagedestroy($images[$x][$y]);
