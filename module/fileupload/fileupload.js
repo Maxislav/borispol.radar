@@ -2,7 +2,9 @@
 function FileUpload() {
     this.navTabs = 8;
     this.el = null;
+    this.elLi = null;
     this._init = function () {
+
         var form = document.getElementById('file-form');
 
         var elSelectFile = form.getElementsByTagName('button')[0];
@@ -76,7 +78,7 @@ function FileUpload() {
 
             (function (i) {
                 var elImg = document.createElement('img');
-                elImg.src = 'img/bg/'+i+'.jpg';
+                elImg.src = 'img/bg/'+i+'.jpg?'+new Date().getTime();
                 elImg.onload = function () {
                    // console.log('load', i)
                 };

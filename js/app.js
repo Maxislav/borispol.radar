@@ -65,22 +65,22 @@ var app = {
             'text' + '!' + module + '.css'
         ], function (m, html, css) {
 
-
             if (!s.css[module]) {
                 $('head').append('<style>' + css + '</style>')
                 s.css[module] = true;
             }
             s.currentMoule = window[module];
-            s.currentMoule && s.currentMoule.show(html);
-            app.navTabs(s.currentMoule.navTabs)
+            s.currentMoule && s.currentMoule.show(html, app.navTabs(s.currentMoule.navTabs));
         })
     },
     navTabs: function (n) {
         var s = this;
-
+        var li;
         $('.nav.nav-tabs').find('li').removeClass('active');
         var a = $('.nav.nav-tabs').find("li a[href=\'#"+s.name+"\']")
-        a.parent().addClass('active');
+         li = a.parent();
+           li.addClass('active');
+        return li
     },
     mask: {
         show: function (el) {

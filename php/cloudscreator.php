@@ -13,10 +13,10 @@ for($y=0; $y<($scale*2); $y++){
 	
 	for($x=0; $x<($scale*2); $x++){
 			//http://undefined.tile.openweathermap.org/map/clouds/4/10/7.png
-		$images[$x][$y]= imagecreatefrompng("http://undefined.tile.openweathermap.org/map/clouds/".$scale."/".$x."/".$y.".png");
+		$images[$x][$y]= imagecreatefrompng("http://a.tile.openweathermap.org/map/clouds/".$scale."/".$x."/".$y.".png");
 	};
 };
-
+print_r($images);
 
  //$image1 = imagecreatefrompng("http://undefined.tile.openweathermap.org/map/precipitation/2/0/0.png"); //create images
 

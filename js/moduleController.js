@@ -19,8 +19,10 @@ var ModuleController = {
     progressBar: null,
     navTabs: 1,
     offset: 15,
-    init: function (html, success) {
+    init: function (html, success, elLi) {
         var s = this;
+        s.elLi = elLi;
+
         s.el = $(document.createElement('div')).html(html).css({
             opacity: 0
         });
@@ -234,17 +236,20 @@ var ModuleController = {
         date = DateFormat.format.date(date, 'yyyyMMddHHmm');
         return date
     },
-    show: function (html) {
+    show: function (html, elLi) {
         var s = this;
         if (!s.el) {
-            s.init.call(s,html, s.show);
+
+            s.init.call(s,html, s.show, elLi);
+            //s.elLi =  s.elLi || elLi;
             return
         }
 
         s.el.css({
             display: 'block'
         });
-        s.el.fadeTo(222, 1)
+        s.el.fadeTo(222, 1);
+
     },
     hide: function () {
         var s = this;
