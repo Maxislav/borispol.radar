@@ -61,7 +61,7 @@ require.config({
         forecast: 'module/forecast/forecast',
         jqueryUi: 'lib/jquery/jquery-ui-1.11.4.custom/jquery-ui.min',
         earth: 'module/earth/earth',
-        threejs: 'lib/three/three.min',
+        threejs: 'lib/three/three',
         cloudsLoader: 'module/earth/clouds-loader',
         metrika: 'module/ymetrika/ymetrika',
         tinyscrollbar: 'lib/jquery/tinyscrollbar/tinyscrollbar',

@@ -95,17 +95,35 @@ var earth = {
          * Облака.
          * @type {THREE.SphereGeometry}
          */
+
+
+
+
+
+
         var cloudsGeometry = new THREE.SphereGeometry(4.05, 32, 32);
         var cloudsMaterial = new THREE.MeshPhongMaterial({
-            map: THREE.ImageUtils.loadTexture('php/cloudscreator.php', { }, function () {
+            //map: new THREE.TextureLoader().load( "img/bg/1.jpg" ),
+           /* map: THREE.ImageUtils.loadTexture('img/bg/1.jpg', { }, function () {
                 scene.add(cloudsMesh);
                 render()
-            }),
+            }),*/
             transparent: true,
             antialias: true,
-            opacity: 0.6
+            opacity: 1
         });
+
         var cloudsMesh = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
+
+        var textureLoader = new THREE.TextureLoader();
+        textureLoader.addEventListener('load', function(event){
+
+            // The actual texture is returned in the event.content
+            cloudsMaterial.material.map = event.content;
+
+        });
+
+
         cloudsMesh.rotation.set(0, s.getRotationAngle().degToRad(), 0);
 
 
