@@ -77,15 +77,23 @@ function FileUpload() {
         while (i<9){
 
             (function (i) {
+                var elContainer = document.createElement('div');
+
+
+
+
+                elContainer.setAttribute('class', 'img-container');
                 var elImg = document.createElement('img');
                 elImg.src = 'img/bg/'+i+'.jpg?'+new Date().getTime();
+                elImg.style.opacity = 0;
                 elImg.onload = function () {
-                   // console.log('load', i)
+                    $(elImg).fadeTo(222, 1);
+                    app.mask.hide($(elContainer));
                 };
+                imgContainer.appendChild(elContainer);
+                elContainer.appendChild(elImg);
 
-                imgContainer.appendChild(elImg)
-
-
+                app.mask.show($(elContainer));
 
             })(i);
 
