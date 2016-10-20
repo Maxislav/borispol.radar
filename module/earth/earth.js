@@ -12,6 +12,7 @@ var earth = {
         y: 5,
         z: 40
     },
+    load: false,
     init: function (html, success) {
         var s = this;
         s.el = $(document.createElement('div')).html(html).css({
@@ -20,16 +21,24 @@ var earth = {
             position: 'relative'
         });
         $('.content').append(s.el);
-
+        s.load = true;
 
         s.el.append('<div style="position: absolute;left: 5px; top: 5px; color: white">В разработке</div>')
 
-        s.render();
+        //s.render();
+        if(window.THREE){
+            s.render(window.THREE);
+        }
         success && success.call(s);
     },
-    render: function () {
+    render: function (THREE) {
+
+       // return;
 
         var s = this;
+        if(!s.el){
+            return;
+        }
         //var mask = app.mask.show(s.el);
         var scene = new THREE.Scene();
         var camera = new THREE.PerspectiveCamera(12, 960 / 560, 0.1, 1000);
@@ -95,36 +104,91 @@ var earth = {
          * Облака.
          * @type {THREE.SphereGeometry}
          */
+        THREE.TextureLoader.crossOrigin = "Access-Control-Allow-Origin";
+        var cloudsMesh;
+        var cloudsMaterial = new THREE.MeshPhongMaterial({
+            //map: new THREE.TextureLoader().load( "img/bg/1.jpg" ),
+             map: new THREE.TextureLoader().load( "img/bg/4.jpg" , function () {
+                 cloudsMesh = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
+                 scene.add(cloudsMesh);
+                 render()
+             }),
+            transparent: true,
+            antialias: true,
+            opacity: 1
+        });
 
+        function createCORSRequest(method, url) {
+            var xhr = new XMLHttpRequest();
+            if ("withCredentials" in xhr) {
+
+                // Check if the XMLHttpRequest object has a "withCredentials" property.
+                // "withCredentials" only exists on XMLHTTPRequest2 objects.
+                xhr.open(method, url, true);
+
+            } else if (typeof XDomainRequest != "undefined") {
+
+                // Otherwise, check if XDomainRequest.
+                // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+                xhr = new XDomainRequest();
+                xhr.open(method, url);
+
+            } else {
+
+                // Otherwise, CORS is not supported by the browser.
+                xhr = null;
+
+            }
+            return xhr;
+        }
+
+
+        /*var url = 'http://borispol.hol.es/img/bg/1.jpg?1476985174500';
+        var image = document.createElement('img');
+        image.crossOrigin = 'anonymous';
+        image.src = url;
+        var texture = new THREE.Texture(image);
+        texture.needsUpdate = true;
+        cloudsMaterial.map = texture;*/
+
+
+         function getImg(url, callback) {
+            var xhr = createCORSRequest("GET",url);
+            xhr.open('GET', url, true);
+            xhr.responseType = 'arraybuffer';
+            xhr.onerror = function(e) {
+                callback(e);
+            };
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 300 && xhr.response) {
+                    callback(null, xhr.response);
+                } else {
+                    callback(new Error(xhr.statusText));
+                }
+            };
+            xhr.send();
+            return xhr;
+        }
+
+        getImg('http://borispol.hol.es/img/bg/1.jpg?1476985174500', function (imgData) {
+            const img = new window.Image();
+
+            const blob = new window.Blob([new Uint8Array(imgData)], { type: 'image/png' });
+
+            img.onload = function() {
+                callback(null, img);
+                (window.URL || window.webkitURL).revokeObjectURL(img.src);
+            };
+
+            img.src = (window.URL || window.webkitURL).createObjectURL(blob);;
+        });
 
 
 
 
 
         var cloudsGeometry = new THREE.SphereGeometry(4.05, 32, 32);
-        var cloudsMaterial = new THREE.MeshPhongMaterial({
-            //map: new THREE.TextureLoader().load( "img/bg/1.jpg" ),
-           /* map: THREE.ImageUtils.loadTexture('img/bg/1.jpg', { }, function () {
-                scene.add(cloudsMesh);
-                render()
-            }),*/
-            transparent: true,
-            antialias: true,
-            opacity: 1
-        });
 
-        var cloudsMesh = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
-
-        var textureLoader = new THREE.TextureLoader();
-        textureLoader.addEventListener('load', function(event){
-
-            // The actual texture is returned in the event.content
-            cloudsMaterial.material.map = event.content;
-
-        });
-
-
-        cloudsMesh.rotation.set(0, s.getRotationAngle().degToRad(), 0);
 
 
 
@@ -259,3 +323,8 @@ var earth = {
     }
 };
 earth.__proto__ = ModuleController;
+
+define(['threejs'], function (THREE) {
+    window.THREE = THREE;
+    earth.render(window.THREE )
+});
