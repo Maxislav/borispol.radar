@@ -105,42 +105,23 @@ var earth = {
          * @type {THREE.SphereGeometry}
          */
         THREE.TextureLoader.crossOrigin = "Access-Control-Allow-Origin";
+        var cloudsGeometry = new THREE.SphereGeometry(4.05, 32, 32);
         var cloudsMesh;
         var cloudsMaterial = new THREE.MeshPhongMaterial({
-            //map: new THREE.TextureLoader().load( "img/bg/1.jpg" ),
-             map: new THREE.TextureLoader().load( "img/bg/4.jpg" , function () {
-                 cloudsMesh = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
-                 scene.add(cloudsMesh);
-                 render()
-             }),
             transparent: true,
             antialias: true,
             opacity: 1
         });
+        cloudsMesh = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
+        s.setTexture()
+          .then(function (image) {
+              var texture = new THREE.Texture(image);
+              texture.needsUpdate = true;
+              cloudsMaterial.map = texture;
+              scene.add(cloudsMesh);
+              render()
+          });
 
-        function createCORSRequest(method, url) {
-            var xhr = new XMLHttpRequest();
-            if ("withCredentials" in xhr) {
-
-                // Check if the XMLHttpRequest object has a "withCredentials" property.
-                // "withCredentials" only exists on XMLHTTPRequest2 objects.
-                xhr.open(method, url, true);
-
-            } else if (typeof XDomainRequest != "undefined") {
-
-                // Otherwise, check if XDomainRequest.
-                // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
-                xhr = new XDomainRequest();
-                xhr.open(method, url);
-
-            } else {
-
-                // Otherwise, CORS is not supported by the browser.
-                xhr = null;
-
-            }
-            return xhr;
-        }
 
 
         /*var url = 'http://borispol.hol.es/img/bg/1.jpg?1476985174500';
@@ -152,42 +133,7 @@ var earth = {
         cloudsMaterial.map = texture;*/
 
 
-         function getImg(url, callback) {
-            var xhr = createCORSRequest("GET",url);
-            xhr.open('GET', url, true);
-            xhr.responseType = 'arraybuffer';
-            xhr.onerror = function(e) {
-                callback(e);
-            };
-            xhr.onload = function() {
-                if (xhr.status >= 200 && xhr.status < 300 && xhr.response) {
-                    callback(null, xhr.response);
-                } else {
-                    callback(new Error(xhr.statusText));
-                }
-            };
-            xhr.send();
-            return xhr;
-        }
 
-        getImg('http://borispol.hol.es/img/bg/1.jpg?1476985174500', function (imgData) {
-            const img = new window.Image();
-
-            const blob = new window.Blob([new Uint8Array(imgData)], { type: 'image/png' });
-
-            img.onload = function() {
-                callback(null, img);
-                (window.URL || window.webkitURL).revokeObjectURL(img.src);
-            };
-
-            img.src = (window.URL || window.webkitURL).createObjectURL(blob);;
-        });
-
-
-
-
-
-        var cloudsGeometry = new THREE.SphereGeometry(4.05, 32, 32);
 
 
 
@@ -290,6 +236,20 @@ var earth = {
         camera.position.z = s.cameraPosition.z; //blue axis
 
     },
+    setTexture: function (url) {
+
+
+
+        //var s = this;
+        return new Promise(function (resolve, reject) {
+            getImg('http://c.tile.openstreetmap.org/12/2396/1380.png', function (err, img) {
+                if(err) reject(err);
+                resolve(img)
+            });
+        })
+
+
+    },
 
     events: function (render, camera, sphere) {
         var s = this;
@@ -326,5 +286,75 @@ earth.__proto__ = ModuleController;
 
 define(['threejs'], function (THREE) {
     window.THREE = THREE;
-    earth.render(window.THREE )
+    if(earth.load){
+        earth.render(window.THREE )
+    }
+
 });
+
+function template(strings, ...keys) {
+    return (function(...values) {
+        var dict = values[values.length - 1] || {};
+        var result = [strings[0]];
+        keys.forEach(function(key, i) {
+            var value = Number.isInteger(key) ? values[key] : dict[key];
+            result.push(value, strings[i + 1]);
+        });
+        return result.join('');
+    });
+}
+
+
+function getImg(_url, callback) {
+
+var appid = '19e738728f18421f2074f369bdb54e81';
+
+    //'http://c.tile.openstreetmap.org/12/2396/1380.png'
+
+    var urlTemplate =  template`http://c.tile.openstreetmap.org/${0}/${1}/${2}.png`;
+
+    var url = urlTemplate(1,0,0);
+    //var url = _url;
+    var xhr = createCORSRequest("GET",url);
+    xhr.open('GET', url, true);
+    xhr.responseType = 'arraybuffer';
+    xhr.onerror = function(e) {
+        callback(e);
+    };
+    xhr.onload = function() {
+        if (xhr.status >= 200 && xhr.status < 300 && xhr.response) {
+            const imgData = xhr.response;
+
+            const img = new window.Image();
+
+            const blob = new window.Blob([new Uint8Array(imgData)], { type: 'image/png' });
+
+            img.onload = function() {
+
+                (window.URL || window.webkitURL).revokeObjectURL(img.src);
+                callback && callback(null, img);
+            };
+
+            img.src = (window.URL || window.webkitURL).createObjectURL(blob);
+
+
+
+        } else {
+            callback(new Error(xhr.statusText));
+        }
+    };
+    xhr.send();
+    return xhr;
+}
+function createCORSRequest(method, url) {
+    var xhr = new XMLHttpRequest();
+    if ("withCredentials" in xhr) {
+        xhr.open(method, url, true);
+    } else if (typeof XDomainRequest != "undefined") {
+        xhr = new XDomainRequest();
+        xhr.open(method, url);
+    } else {
+        xhr = null;
+    }
+    return xhr;
+}
