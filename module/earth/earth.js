@@ -41,7 +41,7 @@ var earth = {
     }
     //var mask = app.mask.show(s.el);
     var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(12, 960 / 560, 0.1, 1000);
+    var camera = new THREE.PerspectiveCamera(16, 960 / 560, 0.1, 1000);
     var renderer = new THREE.WebGLRenderer({antialias: true});
 
 
@@ -55,7 +55,14 @@ var earth = {
     light.position.set(1000, -200, 0);
     light.intensity = 1.4;
     light.exponent = 1000;
-    light.shadowMapWidth = 5;
+    light.shadowMapWidth = 10000;
+
+    var light2 = new THREE.SpotLight("#fff");
+    light2.position.set(-1000, 200, 0);
+    light2.intensity = 1;
+    light2.exponent = 1000;
+
+    var textureLoader =  new THREE.TextureLoader();
 
     //  light.castShadow = true;
     //light.shadowDarkness = 0.1;
@@ -70,6 +77,7 @@ var earth = {
 
 
     scene.add(light);
+    scene.add(light2);
 
 
     var sphereGeometry = new THREE.SphereGeometry(4, 20, 20);
@@ -77,10 +85,12 @@ var earth = {
 
     var sphereMaterial = new THREE.MeshPhongMaterial({
       //map: THREE.ImageUtils.loadTexture('img/three/osm.png', {}, render),
-      map: THREE.ImageUtils.loadTexture('img/three/earth.png', {}, render),
-      bumpMap: THREE.ImageUtils.loadTexture('img/three/earth_bump.png', {}, render),
-      specularMap: THREE.ImageUtils.loadTexture('img/three/earth-specular.jpg', {}, render),
-      emissiveMap: THREE.ImageUtils.loadTexture('img/three/earth_night.jpg', {}, render),
+      //map: THREE.ImageUtils.loadTexture('img/three/earth.png', {}, render),
+      map: textureLoader.load('img/three/earth.png', render),
+      //bumpMap: THREE.ImageUtils.loadTexture('img/three/earth_bump.png', {}, render),
+      bumpMap: textureLoader.load('img/three/earth_bump.png', render),
+      specularMap: textureLoader.load('img/three/earth-specular.jpg', render),
+      emissiveMap: textureLoader.load('img/three/earth_night.jpg',  render),
       emissive: "#FFF",
       specular: "#f2e8b9",
       shininess: 50,
@@ -108,20 +118,92 @@ var earth = {
     var cloudsMesh;
     var cloudsMaterial = new THREE.MeshPhongMaterial({
       transparent: true,
-      antialias: true,
-      opacity: 0.5
+      //antialias: true,
+
+      opacity: 0.7
     });
     cloudsMesh = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
-    s.setTexture()
+    s.getTexture()
       .then(function (image) {
         var texture = new THREE.Texture(image);
         texture.needsUpdate = true;
         cloudsMaterial.map = texture;
-        //cloudsMaterial.emissive = "#FFF";
-        //cloudsMaterial.specularMap = texture;
         scene.add(cloudsMesh);
         render()
       });
+
+
+    var geometry = new THREE.SphereGeometry( 8, 12, 4 );
+    var material = new THREE.MeshPhongMaterial(
+      {
+        shading: THREE.FlatShading,
+       // wireframe: true,
+        transparent: true
+      }  );
+    var redsphere = new THREE.Mesh( geometry, material );
+
+    getImg("module/earth/img/Three-js-examples-images-texture-atlas.jpg", function (err , image) {
+      var texture = new THREE.Texture(image);
+      texture.needsUpdate = true;
+      material.map = texture;
+      scene.add(redsphere);
+
+      var meshGlow = new THREE.Mesh(geometry.clone(), new THREE.MeshPhongMaterial(
+        {
+          shading: THREE.FlatShading,
+          wireframe: true,
+          transparent: true
+        }  ));
+      scene.add(meshGlow);
+
+    });
+    /*s.getTexture()
+      .then(function (image) {
+
+        //render()
+      });*/
+
+
+    var faceVertexUvs = geometry.faceVertexUvs[ 0 ] = [];
+    console.log(faceVertexUvs);
+
+   /* var bricks = [
+      new THREE.Vector2(0, 0),
+      new THREE.Vector2(0, 1),
+      new THREE.Vector2(1, 1),
+      new THREE.Vector2(1, 0)
+    ];
+    faceVertexUvs[4] = [ bricks[2],  bricks[1], bricks[3]];
+    faceVertexUvs[6] = [ bricks[2],  bricks[1], bricks[3]];*/
+
+
+     var bricks = [
+     new THREE.Vector2(0, 0),
+     new THREE.Vector2(1, 0),
+     new THREE.Vector2(1, 1),
+     new THREE.Vector2(0, 1)
+     ];
+     faceVertexUvs[12] = [ bricks[2], bricks[3],  bricks[1]];
+     faceVertexUvs[13] = [ bricks[3], bricks[0],  bricks[1]];
+     //faceVertexUvs[6] = [ bricks[0],  bricks[1], bricks[3]];
+
+    //faceVertexUvs[5] = [ bricks[0],  bricks[3], bricks[2]];
+
+    //faceVertexUvs[1] = [ bricks[1], bricks[2], bricks[3]];
+
+    /*for (let i = 0; i < faceVertexUvs.length; i ++ ) {
+
+      var uvs = faceVertexUvs[ i ];
+      var face = geometry.faces[ i ];
+
+      for ( var j = 0; j < 3; j ++ ) {
+
+        uvs[ j ].x = face.vertexNormals[ j ].x * 0.5 + 0.5;
+        uvs[ j ].y = face.vertexNormals[ j ].y * 0.5 + 0.5;
+
+      }
+
+    }*/
 
 
     /*var url = 'http://borispol.hol.es/img/bg/1.jpg?1476985174500';
@@ -157,8 +239,9 @@ var earth = {
 
     var spriteMaterial = new THREE.SpriteMaterial(
       {
-        map: new THREE.ImageUtils.loadTexture('module/earth/glow.png'),
-        useScreenCoordinates: false,
+        //map: new THREE.ImageUtils.loadTexture('module/earth/glow.png'),
+        map: new THREE.TextureLoader().load("module/earth/glow.png"),
+        //useScreenCoordinates: false,
         color: new THREE.Color(0x5270FB), transparent: false, blending: THREE.AdditiveBlending
       });
 
@@ -220,16 +303,15 @@ var earth = {
 
     var s = this;
     var deg = s.deg;
-    s.cameraPosition.z = Math.cos(deg.degToRad()) * 40;
-    s.cameraPosition.x = Math.sin(deg.degToRad()) * 40;
+    s.cameraPosition.z = Math.cos(deg.degToRad()) * 80;
+    s.cameraPosition.x = Math.sin(deg.degToRad()) * 80;
 
     camera.position.x = s.cameraPosition.x; //red axis
     camera.position.y = s.cameraPosition.y; //green
     camera.position.z = s.cameraPosition.z; //blue axis
 
   },
-  setTexture: function (url) {
-
+  getTexture: function (url) {
     let arr = [
       new Promise(function (resolve, reject) {
         let data = [1, 0, 0];
@@ -308,7 +390,7 @@ var earth = {
     function mouseMove(e) {
 
       dx = e.pageX - px;
-      dDeg = dx / 200;
+      dDeg = dx / 100;
       s.deg -= dDeg;
       s.setCameraPosition(camera);
 
@@ -357,12 +439,16 @@ function getImg(args, callback) {
 
   //var appid = '19e738728f18421f2074f369bdb54e81';
 
-  //'http://c.tile.openstreetmap.org/12/2396/1380.png'
-
   var urlTemplate = template`http://c.tile.openstreetmap.org/${0}/${1}/${2}.png`;
+  var url;
+  if(Array.isArray(args)){
+    url = urlTemplate.apply(null, args);
+  }else{
+    url = args
+  }
 
-  var url = urlTemplate.apply(null, args);
-  //var url = _url;
+
+
   var xhr = createCORSRequest("GET", url);
   xhr.open('GET', url, true);
   xhr.responseType = 'arraybuffer';
