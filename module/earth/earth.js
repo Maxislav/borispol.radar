@@ -59,7 +59,7 @@ var earth = {
 
     var light2 = new THREE.SpotLight("#fff");
     light2.position.set(-1000, 200, 0);
-    light2.intensity = 1;
+    light2.intensity = 0.5;
     light2.exponent = 1000;
 
     var textureLoader =  new THREE.TextureLoader();
@@ -87,7 +87,6 @@ var earth = {
       //map: THREE.ImageUtils.loadTexture('img/three/osm.png', {}, render),
       //map: THREE.ImageUtils.loadTexture('img/three/earth.png', {}, render),
       map: textureLoader.load('img/three/earth.png', render),
-      //bumpMap: THREE.ImageUtils.loadTexture('img/three/earth_bump.png', {}, render),
       bumpMap: textureLoader.load('img/three/earth_bump.png', render),
       specularMap: textureLoader.load('img/three/earth-specular.jpg', render),
       emissiveMap: textureLoader.load('img/three/earth_night.jpg',  render),
@@ -123,7 +122,7 @@ var earth = {
       opacity: 0.7
     });
     cloudsMesh = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
-    s.getTexture()
+    s.getTexture(3)
       .then(function (image) {
         var texture = new THREE.Texture(image);
         texture.needsUpdate = true;
@@ -133,63 +132,47 @@ var earth = {
       });
 
 
-    var geometry = new THREE.SphereGeometry( 8, 12, 4 );
+    var geometry = new THREE.SphereGeometry( 8, 64, 32 );
     var material = new THREE.MeshPhongMaterial(
       {
-        shading: THREE.FlatShading,
+        //shading: THREE.FlatShading,
        // wireframe: true,
         transparent: true
       }  );
     var redsphere = new THREE.Mesh( geometry, material );
 
-    getImg("module/earth/img/Three-js-examples-images-texture-atlas.jpg", function (err , image) {
+    //getImg("module/earth/img/Three-js-examples-images-texture-atlas.jpg", function (err , image) {
+    getImg("module/earth/img/433372.jpg", function (err , image) {
       var texture = new THREE.Texture(image);
       texture.needsUpdate = true;
       material.map = texture;
-      scene.add(redsphere);
+     // scene.add(redsphere);
 
-      var meshGlow = new THREE.Mesh(geometry.clone(), new THREE.MeshPhongMaterial(
-        {
-          shading: THREE.FlatShading,
-          wireframe: true,
-          transparent: true
-        }  ));
-      scene.add(meshGlow);
+
 
     });
-    /*s.getTexture()
-      .then(function (image) {
 
-        //render()
-      });*/
+    geometry.faceVertexUvs[ 0 ] ;
 
-
-    var faceVertexUvs = geometry.faceVertexUvs[ 0 ] = [];
+    var faceVertexUvs =  [];
     console.log(faceVertexUvs);
 
-   /* var bricks = [
-      new THREE.Vector2(0, 0),
-      new THREE.Vector2(0, 1),
-      new THREE.Vector2(1, 1),
-      new THREE.Vector2(1, 0)
-    ];
-    faceVertexUvs[4] = [ bricks[2],  bricks[1], bricks[3]];
-    faceVertexUvs[6] = [ bricks[2],  bricks[1], bricks[3]];*/
+
+    /**
+     *
+      * @param {number}a
+     * @param {number}b
+     * @returns {*|Vector2}
+     */
+    function v2(a,b) {
+      return new THREE.Vector2(a,b)
+    }
+     faceVertexUvs[12] = [ v2(1, 1), v2(0, 1),  v2(1, 0)];
+     faceVertexUvs[13] = [ v2(0,1), v2(0,0), v2(1,0) ];
+     faceVertexUvs[0] = [ v2(0,1), v2(0,0), v2(1,0) ];
 
 
-     var bricks = [
-     new THREE.Vector2(0, 0),
-     new THREE.Vector2(1, 0),
-     new THREE.Vector2(1, 1),
-     new THREE.Vector2(0, 1)
-     ];
-     faceVertexUvs[12] = [ bricks[2], bricks[3],  bricks[1]];
-     faceVertexUvs[13] = [ bricks[3], bricks[0],  bricks[1]];
-     //faceVertexUvs[6] = [ bricks[0],  bricks[1], bricks[3]];
 
-    //faceVertexUvs[5] = [ bricks[0],  bricks[3], bricks[2]];
-
-    //faceVertexUvs[1] = [ bricks[1], bricks[2], bricks[3]];
 
     /*for (let i = 0; i < faceVertexUvs.length; i ++ ) {
 
@@ -303,82 +286,84 @@ var earth = {
 
     var s = this;
     var deg = s.deg;
-    s.cameraPosition.z = Math.cos(deg.degToRad()) * 80;
-    s.cameraPosition.x = Math.sin(deg.degToRad()) * 80;
+    s.cameraPosition.z = Math.cos(deg.degToRad()) * 40;
+    s.cameraPosition.x = Math.sin(deg.degToRad()) * 40;
 
     camera.position.x = s.cameraPosition.x; //red axis
     camera.position.y = s.cameraPosition.y; //green
     camera.position.z = s.cameraPosition.z; //blue axis
 
   },
-  getTexture: function (url) {
-    let arr = [
-      new Promise(function (resolve, reject) {
-        let data = [1, 0, 0];
-        getImg(data, function (err, img) {
-          if (err) reject(err);
-          resolve({
-            data,
-            img
+  getTexture: function (zoom) {
+    zoom = zoom || 1;
+    let arr = [];
+    let n = Math.pow(2,zoom);
+    var myWorker = new Worker("module/earth/worker.js");
+    for(let x =0 ; x<n; x++){
+      for (let y = 0; y<n ; y++){
+        arr.push(
+          new Promise(function (resolve, reject) {
+            let data = [zoom, x, y];
+            getImg(data, function (err, img) {
+              if (err) reject(err);
+              resolve({
+                data,
+                img
+              })
+            });
           })
-        });
-      }),
-      new Promise(function (resolve, reject) {
-        let data = [1, 0, 1];
-        getImg(data, function (err, img) {
-          if (err) reject(err);
-          resolve({
-            data,
-            img
-          })
-        });
-      }),
-      new Promise(function (resolve, reject) {
-        let data = [1, 1, 0];
-        getImg(data, function (err, img) {
-          if (err) reject(err);
-          resolve({
-            data,
-            img
-          })
-        });
-      }),
-      new Promise(function (resolve, reject) {
-        let data = [1, 1, 1];
-        getImg(data, function (err, img) {
-          if (err) reject(err);
-          resolve({
-            data,
-            img
-          })
-        });
-      })
-
-    ];
+        )
+      }
+    }
 
 
-    //var s = this;
     return Promise.all(arr)
       .then(arr=> {
         return new Promise((resolve, reject)=> {
           let elCanvas = document.createElement('canvas');
-          elCanvas.setAttribute('width', 512);
-          elCanvas.setAttribute('height', 512);
+          elCanvas.setAttribute('width', n*256+'');
+          elCanvas.setAttribute('height', n*256+'');
           let context = elCanvas.getContext('2d');
-
           arr.forEach(item=> {
             context.drawImage(item.img, item.data[1] * 256, item.data[2] * 256);
           });
-          var url = elCanvas.toDataURL();
-          let img = new Image();
-          img.onload = function () {
-            resolve(img);
-            document.body.appendChild(img)
+
+          let imageData = context.getImageData(0, 0, elCanvas.width, elCanvas.height).data;
+          myWorker.postMessage({
+            data: imageData,
+            width: elCanvas.width,
+            height: elCanvas.height
+          });
+          let distData;
+          let yStart = null;
+          let yEnd = null;
+
+          myWorker.onmessage = function(e) {
+            distData = window.color = e.data.data;
+            yStart = e.data.yStart;
+            yEnd = e.data.yEnd;
+            var c= document.createElement("canvas");
+            c.width = elCanvas.width;
+            c.height = yEnd - yStart;
+            var ctx=c.getContext("2d");
+            var imgData =ctx.createImageData(elCanvas.width,elCanvas.height);
+            for (var i=0;i<imgData.data.length;i+=4){
+              imgData.data[i+0]=distData[i+0];
+              imgData.data[i+1]=distData[i+1];
+              imgData.data[i+2]=distData[i+2];
+              imgData.data[i+3]=distData[i+3];
+            }
+            ctx.putImageData(imgData,0,(-yStart));
+            var url = c.toDataURL();
+            let img = new Image();
+            img.onload = function () {
+              resolve(img);
+              document.body.appendChild(img)
+            };
+            img.src = url;
           };
-          img.src = url;
         });
       })
-
   },
 
   events: function (render, camera, sphere) {
