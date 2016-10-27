@@ -32,13 +32,15 @@ var earth = {
     success && success.call(s);
   },
   render: function (THREE) {
-
-    // return;
-
     var s = this;
     if (!s.el) {
       return;
     }
+    //console.log(s.el);
+
+    setTimeout(function () {
+      app.mask.show(s.el);
+    }, 1)
     //var mask = app.mask.show(s.el);
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(12, 960 / 560, 0.1, 1000);
@@ -53,7 +55,7 @@ var earth = {
 
     var light = new THREE.SpotLight("#fff");
     light.position.set(1000, -200, 0);
-    light.intensity = 1.2;
+    light.intensity = 1.5;
     light.exponent = 1000;
     light.shadowMapWidth = 10000;
 
@@ -81,8 +83,6 @@ var earth = {
 
 
     var sphereGeometry = new THREE.SphereGeometry(4, 64, 32);
-
-
     var sphereMaterial = new THREE.MeshPhongMaterial({
       //map: THREE.ImageUtils.loadTexture('img/three/osm.png', {}, render),
       //map: THREE.ImageUtils.loadTexture('img/three/earth.png', {}, render),
@@ -94,7 +94,7 @@ var earth = {
      // emissive: "#FFF",
      // specular: "#f2e8b9",
       dynamic: true,
-      shininess: 50,
+      shininess: 50
      // bumpScale: 0.1
     });
 
@@ -109,8 +109,16 @@ var earth = {
     rEarthMesh.rotation.set(0, s.getRotationAngle().degToRad(), 0);
     scene.add(rEarthMesh);
 
-    sphereMaterial
-
+    s.getTexture(3)
+      .then(function (image) {
+        var texture = new THREE.Texture(image);
+        sphereMaterial.map = texture;
+        texture.needsUpdate = true;
+        sphereMaterial.needsUpdate = true;
+        app.mask.hide(s.el);
+        console.log('update');
+        render()
+      });
 
     /**
      * Облака.
@@ -121,22 +129,18 @@ var earth = {
     var cloudsMesh;
     var cloudsMaterial = new THREE.MeshPhongMaterial({
       transparent: true,
-      //antialias: true,
-
-      opacity: 0.7
+      map:textureLoader.load('php/SatelliteImages.php', render),
+      alphaMap: textureLoader.load('php/SatelliteImages.php', render),
+      opacity: 1
     });
     cloudsMesh = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
-    s.getTexture(3)
-      .then(function (image) {
-        var texture = new THREE.Texture(image);
 
-        sphereMaterial.map = texture;
-        texture.needsUpdate = true;
-        sphereMaterial.needsUpdate = true;
 
-        console.log('update');
-        render()
-      });
+    let atmosphereMesh = new THREE.Mesh(cloudsGeometry.clone(), cloudsMaterial);
+    rEarthMesh.add(atmosphereMesh);
+
+
+
 
 
 
@@ -162,17 +166,14 @@ var earth = {
     meshGlow.material.side = THREE.BackSide;
     //scene.add(meshGlow);
 
-
-    /* var map = THREE.ImageUtils.loadTexture( "sprite.png" );
+/*
+     var map = THREE.ImageUtils.loadTexture( "module/earth/glow.png" );
      var material = new THREE.SpriteMaterial( { map: map, color: 0xffffff, fog: true } );
      var sprite = new THREE.Sprite( material );
      scene.add( sprite );*/
 
-    var spriteMaterial = new THREE.SpriteMaterial(
-      {
-        //map: new THREE.ImageUtils.loadTexture('module/earth/glow.png'),
+    var spriteMaterial = new THREE.SpriteMaterial({
         map: new THREE.TextureLoader().load("module/earth/glow.png"),
-        //useScreenCoordinates: false,
         color: new THREE.Color(0x5270FB), transparent: false, blending: THREE.AdditiveBlending
       });
 
@@ -384,8 +385,8 @@ function getImg(args, callback) {
   y = hybrid
    */
 
-  //var urlTemplate = template`http://mt1.google.com/vt/lyrs=s&x=${1}&y=${2}&z=${0}`;
-  var urlTemplate = template`php/loadtile.php?x=${1}&y=${2}&z=${0}`;
+  var urlTemplate = template`http://mt1.google.com/vt/lyrs=s&x=${1}&y=${2}&z=${0}`;
+  //var urlTemplate = template`php/loadtile.php?x=${1}&y=${2}&z=${0}`;
   var url;
   if(Array.isArray(args)){
     url = urlTemplate.apply(null, args);
