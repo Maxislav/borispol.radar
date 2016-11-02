@@ -23,7 +23,7 @@ var earth = {
     $('.content').append(s.el);
     s.load = true;
 
-    s.el.append('<div style="position: absolute;left: 5px; top: 5px; color: white">В разработке</div>');
+  //  s.el.append('<div style="position: absolute;left: 5px; top: 5px; color: white">В разработке</div>');
 
     //s.render();
     if (window.THREE) {
@@ -40,7 +40,7 @@ var earth = {
 
     setTimeout(function () {
       app.mask.show(s.el);
-    }, 1)
+    }, 1);
     //var mask = app.mask.show(s.el);
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(12, 960 / 560, 0.1, 1000);
@@ -55,13 +55,13 @@ var earth = {
 
     var light = new THREE.SpotLight("#fff");
     light.position.set(1000, -200, 0);
-    light.intensity = 1.5;
+    light.intensity = 1.8;
     light.exponent = 1000;
     light.shadowMapWidth = 10000;
 
     var light2 = new THREE.SpotLight("#fff");
     light2.position.set(-1000, 200, 0);
-    light2.intensity = 0.2;
+    light2.intensity = 0.4;
     light2.exponent = 1000;
 
     var textureLoader =  new THREE.TextureLoader();
@@ -97,6 +97,11 @@ var earth = {
       shininess: 50
      // bumpScale: 0.1
     });
+
+
+
+
+
 
     /**
      * Планета с текстурами
@@ -145,6 +150,32 @@ var earth = {
 
 
 
+    var customMateriall = new THREE.ShaderMaterial(
+      {
+        uniforms:
+        {
+          "c":   { type: "f", value: 0.1 },
+          "p":   { type: "f", value: 3 },
+          glowColor: { type: "c", value: new THREE.Color(0xffffFF) },
+          viewVector: { type: "v3", value: camera.position }
+        },
+       // vertexShader:   document.getElementById( 'vertexShader'   ).textContent,
+        vertexShader: "uniform vec3 viewVector;         uniform float c;     uniform float p;     varying float intensity;     void main()     {       vec3 vNormal = normalize( normalMatrix * normal );       vec3 vNormel = normalize( normalMatrix * viewVector );       intensity = pow( c - dot(vNormal, vNormel), p );        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );     }",
+        //fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+        fragmentShader:"uniform vec3 glowColor;         varying float intensity;     void main()     {       vec3 glow = glowColor * intensity;       gl_FragColor = vec4( glow, 1.0 );     }",
+        side: THREE.BackSide,
+        blending: THREE.AdditiveBlending,
+        transparent: true
+      }   );
+
+    var moonGlow = new THREE.Mesh( cloudsGeometry.clone(), customMateriall );
+   // moonGlow.position = moon.position;
+    moonGlow.scale.multiplyScalar(1.1);
+    scene.add( moonGlow );
+
+
+
+
 
 
 
@@ -161,7 +192,7 @@ var earth = {
         //fragmentShader: document.getElementById('fragmentShaderAtmosphere').textContent
         fragmentShader: 'uniform float c; uniform float p; varying vec3 vNormal; void main() { float intensity = pow( c - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) ), p ); gl_FragColor = vec4( 0.7, 0.8, 1.0, 1.0 ) * intensity;}'
       });
-    var meshGlow = new THREE.Mesh(cloudsGeometry.clone(), customMaterialAtmosphere);
+    var meshGlow = new THREE.Mesh(cloudsGeometry.clone(), customMateriall);
     meshGlow.scale.x = meshGlow.scale.y = meshGlow.scale.z = 1.08;
     meshGlow.material.side = THREE.BackSide;
     //scene.add(meshGlow);
@@ -323,7 +354,7 @@ var earth = {
 
     function mouseMove(e) {
 
-      dx = e.pageX - px;
+      dx = (e.pageX || e.originalEvent.changedTouches[0].clientX) - px;
       dDeg = dx / 100;
       s.deg -= dDeg;
       s.setCameraPosition(camera);
@@ -334,14 +365,14 @@ var earth = {
     }
 
     s.el
-      .on('mousedown', function (e) {
-        px = e.pageX;
-        s.el.on('mousemove', mouseMove)
+      .on('mousedown touchstart', function (e) {
+        px = e.pageX || e.originalEvent.changedTouches[0].clientX;
+        s.el.on('mousemove touchmove', mouseMove)
       });
 
     $(document.body)
-      .on('mouseup', function (e) {
-        s.el.off('mousemove', mouseMove);
+      .on('mouseup touchend', function (e) {
+        s.el.off('mousemove touchmove', mouseMove);
       })
 
   }
