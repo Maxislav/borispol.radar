@@ -134,9 +134,10 @@ var earth = {
     var cloudsMesh;
     var cloudsMaterial = new THREE.MeshPhongMaterial({
       transparent: true,
-      map:textureLoader.load('php/SatelliteImages.php', render),
+     // map:textureLoader.load('php/SatelliteImages.php', render),
       alphaMap: textureLoader.load('php/SatelliteImages.php', render),
-      opacity: 1
+      opacity: 1,
+      color: "0хFFFFFF"
     });
     cloudsMesh = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
 
@@ -154,9 +155,9 @@ var earth = {
       {
         uniforms:
         {
-          "c":   { type: "f", value: 0.1 },
+          "c":   { type: "f", value: 0.2 },
           "p":   { type: "f", value: 3 },
-          glowColor: { type: "c", value: new THREE.Color(0xffffFF) },
+          glowColor: { type: "c", value: new THREE.Color(0xd9ddff) },
           viewVector: { type: "v3", value: camera.position }
         },
        // vertexShader:   document.getElementById( 'vertexShader'   ).textContent,
