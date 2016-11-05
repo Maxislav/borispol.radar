@@ -114,7 +114,7 @@ var earth = {
     rEarthMesh.rotation.set(0, s.getRotationAngle().degToRad(), 0);
     scene.add(rEarthMesh);
 
-    s.getTexture(3)
+    s.getTexture(2)
       .then(function (image) {
         var texture = new THREE.Texture(image);
         sphereMaterial.map = texture;
@@ -136,6 +136,8 @@ var earth = {
       transparent: true,
      // map:textureLoader.load('php/SatelliteImages.php', render),
       alphaMap: textureLoader.load('php/SatelliteImages.php', render),
+      bumpMap: textureLoader.load('php/SatelliteImages.php', render),
+      bumpScale: 0.01,
       opacity: 1,
       color: "0хFFFFFF"
     });
@@ -157,7 +159,7 @@ var earth = {
         {
           "c":   { type: "f", value: 0.2 },
           "p":   { type: "f", value: 3 },
-          glowColor: { type: "c", value: new THREE.Color(0xd9ddff) },
+          glowColor: { type: "c", value: new THREE.Color(0x7e8ec0) },
           viewVector: { type: "v3", value: camera.position }
         },
        // vertexShader:   document.getElementById( 'vertexShader'   ).textContent,
@@ -328,12 +330,18 @@ var earth = {
             c.height = yEnd - yStart;
             var ctx=c.getContext("2d");
             var imgData =ctx.createImageData(elCanvas.width,elCanvas.height);
-            for (var i=0;i<imgData.data.length;i+=4){
+            imgData.data = distData;
+            let k = 0;
+            while (k<distData.length){
+              imgData.data[k] = distData[k];
+              k++
+            }
+           /* for (var i=0;i<imgData.data.length;i+=4){
               imgData.data[i+0]=distData[i+0];
               imgData.data[i+1]=distData[i+1];
               imgData.data[i+2]=distData[i+2];
               imgData.data[i+3]=distData[i+3];
-            }
+            }*/
             ctx.putImageData(imgData,0,(-yStart));
             var url = c.toDataURL();
             let img = new Image();
