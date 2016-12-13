@@ -166,11 +166,19 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
     let i = 0;
     while (i<snowflakes.length){
       const snowflake =  snowflakes[i];
+
       if(snowflake.position.y<-140){
         k++;
-        const fail = snowflakes.splice(i, 1)[0]
-        snowFail.push(fail);
-        fail._projection = toScreenXY(fail.position);
+        snowflake._projection = toScreenXY(snowflake.position)
+        snowflake.rotation.x = -1;
+        if(HEIGHT+20<snowflake._projection.y){
+          scene.remove(snowflakes.splice(i, 1)[0])
+        }else{
+          const fail = snowflakes.splice(i, 1)[0];
+          snowFail.push(fail);
+        }
+
+       // fail._projection = toScreenXY(fail.position);
 
       }else{
         snowflake.position.y-=interval*0.05
