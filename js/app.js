@@ -28,7 +28,10 @@ var app = {
         var nMonth = new Date().getMonth();
         if(10<nMonth || nMonth<2){
             require(['snow'], function(){
-                snow(4);
+                //snow(4);
+                require(['./module/screensnow/screensnow.js'], function (d) {
+                    // console.log(d)
+                })
             });
         }
 
