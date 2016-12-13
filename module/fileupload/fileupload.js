@@ -4,6 +4,8 @@ function FileUpload() {
     this.el = null;
     this.elLi = null;
     this._init = function () {
+        var s = this;
+        console.log()
 
         var form = document.getElementById('file-form');
 
@@ -17,6 +19,7 @@ function FileUpload() {
 
 
         fileSelect.addEventListener('change', function (e) {
+            if(!this.files.length) return;
             console.log(this.files[0].name);
             elSelectFile.innerHTML = this.files[0].name;
             fileName = this.files[0].name;
@@ -38,6 +41,7 @@ function FileUpload() {
             }
 
             console.log('send');
+            s.progressLoader.fadeTo(222, 1)
 
             files = fileSelect.files;
             formData = new FormData();
@@ -53,16 +57,24 @@ function FileUpload() {
             var xhr = new XMLHttpRequest();
             xhr.open('POST', form.action, true);
             //xhr.setRequestHeader('Content-Type','image/gif');
+            xhr.upload.onprogress = function (event) {
 
+                s.progressBar.css({
+                    width: (100*event.loaded / event.total) + '%'
+                });
+                //console.log(event.loaded + ' / ' + event.total);
+            };
             xhr.onload = function () {
                 if (xhr.status === 200) {
-                    console.log(xhr.response);
+                    //console.log(xhr.response);
                     if(isNumber(xhr.response)){
                         console.log(xhr.response);
                         replaceImg(parseInt(xhr.response));
+                        fileSelect.value = ''
+                        uploadButton.innerHTML = 'Отправить';
+                        s.progressLoader.fadeTo(222, 0)
+                        elSelectFile.innerHTML = 'Выбрать файл'
                     }
-                    uploadButton.innerHTML = 'Отправить';
-
                 } else {
                     alert('An error occurred!');
                 }
@@ -72,15 +84,17 @@ function FileUpload() {
 
         var imgContainer =  this.el[0].getElementsByClassName('images-bg-container')[0];
 
+        $(imgContainer).on('click', 'img', function () {
+            console.log()
+            $(document.body).css('background-image', 'url(' + $(this).attr('src')+')')
+        })
+
         var i = 1;
 
         while (i<9){
 
             (function (i) {
                 var elContainer = document.createElement('div');
-
-
-
 
                 elContainer.setAttribute('class', 'img-container');
                 var elImg = document.createElement('img');
@@ -101,8 +115,12 @@ function FileUpload() {
         }
 
         function replaceImg(n) {
-            var img = imgContainer.getElementsByTagName('img')[n];
-            img.src = img.src+'?'+new Date().getTime();
+            try {
+                var img = imgContainer.getElementsByTagName('img')[n];
+                img.src = img.src+'?'+new Date().getTime();
+            }catch(err){
+                console.err(n, err)
+            }
         }
 
         function isNumber (o) {
