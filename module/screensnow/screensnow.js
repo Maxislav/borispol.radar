@@ -3,7 +3,14 @@
  */
 define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE, $, snowflake) {
 
+  /**
+   * Стартовое колво снежинок
+   * @type {number}
+   */
+  const snows = 50;
+  const delAreaSize =  50;
 
+  const snowFail = []
 
 
 
@@ -79,8 +86,52 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
 
   $(document.body).on('mousemove', (e)=>{
 
-    wind = (e.clientX - WIDTH/2)/(WIDTH/2)
-    console.log(wind)
+    wind = (e.clientX - WIDTH/2)/(WIDTH/2);
+
+    let i = 0;
+    while (i<snowFail.length){
+      const snow = snowFail[i]
+
+      const xRange = {
+        from: e.clientX -delAreaSize,
+        to: e.clientX +delAreaSize,
+      }
+      const yRange = {
+        from: e.clientY - delAreaSize,
+        to: e.clientY + delAreaSize
+      }
+
+
+      if(xRange.from<snow._projection.x  && snow._projection.x <xRange.to &&    yRange.from<snow._projection.y  && snow._projection.y <yRange.to ){
+        scene.remove(snow);
+        snowFail.splice(i,1)
+      }else{
+        i++
+      }
+
+
+
+    }
+
+    snowFail.forEach((snow, i)=>{
+      const xRange = {
+        from: e.clientX -delAreaSize,
+        to: e.clientX +delAreaSize,
+      }
+      const yRange = {
+        from: e.clientY - delAreaSize,
+        to: e.clientY + delAreaSize
+      }
+
+
+      if(xRange.from<snow._projection.x  && snow._projection.x <xRange.to &&    yRange.from<snow._projection.y  && snow._projection.y <yRange.to ){
+        scene.remove(snow)
+        //snowFail
+      }
+
+    })
+
+    //console.log(wind)
 
   })
 
@@ -88,11 +139,17 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
 
   const snowflakes = [];
 
-  for(var i = 0; i< 50; i++){
-    const sn = snowflake()
-    snowflakes.push(sn);
-    scene.add(sn);
+  function addSnow(k) {
+    for(var i = 0; i< k; i++){
+      const sn = snowflake()
+      snowflakes.unshift(sn);
+      scene.add(sn);
+    }
+    snowflakes.length = snows
   }
+
+  addSnow(snows);
+
 
   
 
@@ -103,17 +160,28 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
   function update () {
     renderer.render(scene, camera);
     const interval = new Date().getTime() - date;
-    date = new Date().getTime()
-    snowflakes.forEach(snowflake=>{
-      snowflake.position.y-=interval*0.01
-      snowflake.rotation.z+=interval*0.0001*snowflake._rotationC;
-      snowflake.position.x +=interval*0.01*wind;
-      if(snowflake.position.y<-100){
-        snowflake.position.y = 100
-        snowflake.position.x =  getRandom(-300, 300, true)
+    date = new Date().getTime();
+    let k = 0;
 
+    let i = 0;
+    while (i<snowflakes.length){
+      const snowflake =  snowflakes[i];
+      if(snowflake.position.y<-140){
+        k++;
+        const fail = snowflakes.splice(i, 1)[0]
+        snowFail.push(fail);
+        fail._projection = toScreenXY(fail.position);
+
+      }else{
+        snowflake.position.y-=interval*0.05
+        snowflake.rotation.z+=interval*0.0001*snowflake._rotationC;
+        snowflake.position.x +=interval*0.01*wind;
+        i++
       }
-    });
+
+    }
+
+    if(k) addSnow(k);
 
     
     //console.log(snowflake.position.y)
@@ -130,6 +198,53 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
       rand = Math.round(rand)
     }
     return rand;
+  }
+
+
+  function toScreenXY( position) {
+    var pos = position.clone();
+    var projScreenMat = new THREE.Matrix4();
+    projScreenMat.multiply( camera.projectionMatrix, camera.matrixWorldInverse );
+    projScreenMat.multiplyVector3( pos );
+
+    var offset = {
+      left: 0,
+      top: 0
+    };
+
+    return { x: ( pos.x + 1 ) * WIDTH / 2 + offset.left,
+      y: ( - pos.y + 1) * HEIGHT / 2 + offset.top };
+
+  }
+  function findOffset(element) {
+    var pos = new Object();
+    pos.left = pos.top = 0;
+    if (element.offsetParent)
+    {
+      do
+      {
+        pos.left += element.offsetLeft;
+        pos.top += element.offsetTop;
+      } while (element = element.offsetParent);
+    }
+    return pos;
+  }
+
+
+
+
+  function createVector(sn ) {
+
+    var  width = WIDTH, height = HEIGHT;
+    var x = sn.position.x, y =sn.position.y, z = sn.position.z
+
+    var p = new THREE.Vector3(x, y, z);
+    var vector = p.project(camera);
+
+    vector.x = (vector.x + 1) / 2 * width;
+    vector.y = -(vector.y - 1) / 2 * height;
+
+    return vector;
   }
 
 

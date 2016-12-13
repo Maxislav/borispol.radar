@@ -28,7 +28,7 @@ define(['threejs'], function (THREE){
       //map:new THREE.TextureLoader().load('img/snow1.gif', ()=>renderer.render(scene, camera)),
       map:new THREE.TextureLoader().load( snow[getRandom(0,2,true)]),
       opacity: 1,
-      color: "0хFFFFFF",
+      //color: "0хFFFFFF",
       side: THREE.DoubleSide
     });
 
@@ -39,7 +39,7 @@ define(['threejs'], function (THREE){
     
     plane.position.z =  getRandom(-600, -200, true)
     plane.position.x =  getRandom(-300, 300, true)
-    plane.position.y = getRandom(-100, 100, true)
+    plane.position.y = getRandom(200, 400, true)
     plane._rotationC = getRandom(-10, +10)
     /*snowflake.position.z = -300;
      snowflake.position.x = 0// -WIDTH/2;
