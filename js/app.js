@@ -25,16 +25,20 @@ var app = {
         //todo листья снег
 
 
-        var nMonth = new Date().getMonth();
-        if(10<nMonth || nMonth<2){
-            require(['snow'], function(){
-                //snow(4);
-                require(['./module/screensnow/screensnow.js'], function (d) {
-                    // console.log(d)
-                })
-            });
-        }
 
+        $.ajax({
+            url: 'http://api.openweathermap.org/data/2.5/weather?id=703448&units=metric&mode=json&APPID=19e738728f18421f2074f369bdb54e81',
+            jsonp: "callback",
+            dataType: "jsonp",
+            success: function( response ) {
+                console.info( response ); // server response
+                if(response.weather && response.weather.length &&response.weather[0].main == 'Snow')    {
+                    require(['./module/screensnow/screensnow.js'], function (d) {
+                        // console.log(d)
+                    })
+                }
+            }
+        });
 
 
         s.loadForecast();
