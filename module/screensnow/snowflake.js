@@ -30,7 +30,7 @@ define(['threejs', 'module/screensnow/FastBlur.js', 'module/screensnow/getImage.
   const snow = [
     'img/snow1.png',
     'img/snow1.gif',
-    'img/snow2.gif'
+    'img/snow2.png'
   ];
   
   return function sn (renderer, camera) {
