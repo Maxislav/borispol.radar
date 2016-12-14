@@ -170,7 +170,7 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
         && -400<snowflake.position.z
         && contentSize.x<snowflake.projection.x
         && snowflake.projection.x < contentSize.x+contentSize.w
-        && contentSize.y + getRandom(0,20,true)< snowflake.projection.y
+        && contentSize.y + getRandom(-10,20,true)< snowflake.projection.y
       ){
         k++;
         snowflake.rotation.z = 0;
