@@ -38,7 +38,7 @@ define(['threejs'], function (THREE){
     
     
     plane.position.z =  getRandom(-600, -200, true)
-    plane.position.x =  getRandom(-300, 300, true)
+    plane.position.x =  getRandom(-500, 500, true)
     plane.position.y = getRandom(200, 400, true)
     plane._rotationC = getRandom(-10, +10)
     /*snowflake.position.z = -300;

@@ -181,7 +181,7 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
        // fail._projection = toScreenXY(fail.position);
 
       }else{
-        snowflake.position.y-=interval*0.05
+        snowflake.position.y-=interval*0.02
         snowflake.rotation.z+=interval*0.0001*snowflake._rotationC;
         snowflake.position.x +=interval*0.01*wind;
         i++
