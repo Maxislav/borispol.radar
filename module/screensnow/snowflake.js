@@ -3,9 +3,6 @@
  */
 define(['threejs', 'module/screensnow/FastBlur.js'], function (THREE, fastBlur){
 
-  console.log(fastBlur)
-
-
   function getRandom(min, max, int) {
     var rand = min + Math.random() * (max - min);
     if(int){
