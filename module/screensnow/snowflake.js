@@ -79,7 +79,7 @@ define(['threejs', 'module/screensnow/FastBlur.js'], function (THREE, fastBlur){
  
   
   return function () {
-    const planeGeometry = new THREE.PlaneGeometry( 5, 5, 32 );
+    const planeGeometry = new THREE.PlaneGeometry( 5, 5, 4 );
     //const material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
 
     const material = new THREE.MeshPhongMaterial({
