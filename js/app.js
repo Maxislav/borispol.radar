@@ -32,7 +32,7 @@ var app = {
             dataType: "jsonp",
             success: function( response ) {
                 console.info( response.weather[0].main ); // server response
-                if(response.weather && response.weather.length &&response.weather[0].main )    {
+                if(response.weather && response.weather.length && response.weather[0].main =='Snow' )    {
                     require(['./module/screensnow/screensnow.js'], function (d) {
                         // console.log(d)
                     })
