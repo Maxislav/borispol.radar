@@ -29,7 +29,7 @@ define(['module/ymetrika/permits.js'], function (permits) {
 
       (w[c] = w[c] || []).push(function () {
         try {
-          w['yaCounter'+23847604] = new Ya.Metrika({id: permits.id,
+          w['yaCounter'+permits.id] = new Ya.Metrika({id: permits.id,
             clickmap: true,
             trackLinks: true,
             accurateTrackBounce: true,
