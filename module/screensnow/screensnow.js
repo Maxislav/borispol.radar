@@ -167,7 +167,7 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
     while (i<snowflakes.length){
       const snowflake =  snowflakes[i];
       snowflake._projection = toScreenXY(snowflake)
-      if(snowflake.position.y<-140 || HEIGHT-20<snowflake._projection.y){
+      if(snowflake.position.y<-140 || HEIGHT-getRandom(2,20, true)<snowflake._projection.y){
         k++;
 
         snowflake.rotation.x = -1;
