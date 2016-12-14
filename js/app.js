@@ -18,9 +18,7 @@ var app = {
         }
 
 
-        require(['jqueryUi'], function(){
-            $('.m-container').draggable({handle: ".header"})
-        });
+
 
         //todo листья снег
 
@@ -31,11 +29,15 @@ var app = {
             jsonp: "callback",
             dataType: "jsonp",
             success: function( response ) {
-                console.info( response.weather[0].main ); // server response
+               // console.info( response.weather[0].main ); // server response
                 if(response.weather && response.weather.length && response.weather[0].main =='Snow' )    {
-                    require(['./module/screensnow/screensnow.js'], function (d) {
+                    require(['screensnow'], function (d) {
                         // console.log(d)
                     })
+                }else{
+                    require(['jqueryUi'], function(){
+                        $('.m-container').draggable({handle: ".header"})
+                    });
                 }
             }
         });

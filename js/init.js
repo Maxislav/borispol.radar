@@ -66,6 +66,7 @@ require.config({
         metrika: 'module/ymetrika/ymetrika',
         tinyscrollbar: 'lib/jquery/tinyscrollbar/tinyscrollbar',
         tinyscrollbarcss: 'lib/jquery/tinyscrollbar/tyny.css.load',
+        screensnow: './module/screensnow/screensnow',
         image: 'lib/requirejs/image',
         fileupload: 'module/fileupload/fileupload',
         'jquery.fileupload': 'lib/jquery/jQuery-File-Upload-9.12.5/js/jquery.fileupload'
@@ -126,6 +127,11 @@ require.config({
         build: {
             deps: [
                 'jquery'
+            ]
+        },
+        screensnow: {
+            deps: [
+                'jqueryUi'
             ]
         }
     }

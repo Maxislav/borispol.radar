@@ -8,12 +8,36 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
    *Контейнер за крышу которого можно зацепится
    */
   const mContainer = $('.m-container')
+
   const contentSize = {
     x: mContainer.position().left,
     y: mContainer.position().top,
     w: mContainer[0].offsetWidth,
     h: mContainer[0].offsetHeight
-  }
+  };
+
+  const snowRoof = [];
+
+  mContainer.draggable(
+    {
+      handle: ".header",
+      drag: function (e, ui) {
+        contentSize.x = mContainer.position().left;
+        contentSize.y = mContainer.position().top;
+        let i = 0;
+        while (i<snowFail.length){
+          const sn = snowFail[i]
+          if(sn._roof){
+
+            snowflakes.unshift( snowFail.splice(i,1)[0])
+          }else{
+            i++
+          }
+        }
+      }
+    }
+  );
+
   //console.log(contentSize)
 
   /**  ----------------  */
@@ -144,7 +168,7 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
       snowflakes.unshift(sn);
       scene.add(sn);
     }
-    snowflakes.length = snows
+    //snowflakes.length = snows
   }
 
   addSnow(snows);
@@ -166,7 +190,9 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
       snowflake.projection = toScreenXY(snowflake);
 
       if(
-        snowflake.position.z<-300
+
+        snowflake.position.z<-250
+        && !snowflake._roof
         && -400<snowflake.position.z
         && contentSize.x<snowflake.projection.x
         && snowflake.projection.x < contentSize.x+contentSize.w
@@ -175,10 +201,10 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
         k++;
         snowflake.rotation.z = 0;
         const fail = snowflakes.splice(i, 1)[0];
+        fail._roof = true;
         snowFail.push(fail);
-
       }else if (snowflake.position.y < -140 || HEIGHT - getRandom(2, 20, true) < snowflake.projection.y) {
-        k++;
+        if(!snowflake._roof) k++;
         snowflake.rotation.x = -1;
         snowflake.rotation.z = 0;
         const fail = snowflakes.splice(i, 1)[0];
@@ -186,7 +212,6 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
 
       } else {
         snowflake.position.y -= interval * 0.02
-
         snowflake.position.x += interval * 0.01 * wind;
         snowflake.rotation.z += interval * 0.0004 * snowflake._rotationC;
         i++
