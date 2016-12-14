@@ -2,6 +2,9 @@
  * Created by maxislav on 14.12.16.
  */
 define(function () {
+
+  const images = {};
+
   function createCORSRequest(method, url) {
     var xhr = new XMLHttpRequest();
     if ("withCredentials" in xhr) {
@@ -16,8 +19,15 @@ define(function () {
   }
 
 
-  function getImage(url) {
+  function getImage(url, cache) {
+    
     return new Promise((resolve, reject)=>{
+      if(cache && images[url]){
+        resolve(images[url]);
+        return
+      }
+
+
       var xhr = createCORSRequest("GET", url);
       xhr.open('GET', url, true);
       xhr.responseType = 'arraybuffer';
@@ -36,6 +46,7 @@ define(function () {
           img.onload = function () {
 
             (window.URL || window.webkitURL).revokeObjectURL(img.src);
+            images[url] = img;
             resolve(img);
             //callback && callback(null, img);
           };

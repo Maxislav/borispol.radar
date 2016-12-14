@@ -3,6 +3,7 @@
  */
 define(['threejs', 'module/screensnow/FastBlur.js', 'module/screensnow/getImage.js'], function (THREE, fastBlur, getImage){
 
+  
   function getRandom(min, max, int) {
     var rand = min + Math.random() * (max - min);
     if(int){
@@ -11,13 +12,28 @@ define(['threejs', 'module/screensnow/FastBlur.js', 'module/screensnow/getImage.
     return rand;
   }
 
+  function toScreenXY(obj, renderer, camera) {
+    var vector = new THREE.Vector3();
+    var widthHalf = 0.5*renderer.context.canvas.width;
+    var heightHalf = 0.5*renderer.context.canvas.height;
+    obj.updateMatrixWorld();
+    vector.setFromMatrixPosition(obj.matrixWorld);
+    vector.project(camera);
+    vector.x = ( vector.x * widthHalf ) + widthHalf;
+    vector.y = - ( vector.y * heightHalf ) + heightHalf;
+    return {
+      x: vector.x,
+      y: vector.y
+    };
+  }
+
   const snow = [
     'img/snow1.png',
     'img/snow1.gif',
     'img/snow2.gif'
   ];
   
-  return function () {
+  return function sn (renderer, camera) {
     const planeGeometry = new THREE.PlaneGeometry( 5, 5, 4 );
     //const material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
 
@@ -31,7 +47,7 @@ define(['threejs', 'module/screensnow/FastBlur.js', 'module/screensnow/getImage.
 
 
 
-    getImage(snow[getRandom(0,2,true)])
+    getImage(snow[getRandom(0,2,true)], true)
       .then(image=>{
         const blur = 5*Math.abs(position.z+250)/200;
         var c = document.createElement('canvas');
@@ -55,16 +71,19 @@ define(['threejs', 'module/screensnow/FastBlur.js', 'module/screensnow/getImage.
         material.needsUpdate = true;
       });
 
-    const plane = new THREE.Mesh( planeGeometry, material );
-    
-    
-    
+    let plane = new THREE.Mesh( planeGeometry, material );
     plane.position.z =  position.z;
     plane.position.x =  getRandom(-500, 500, true);
     plane.position.y = getRandom(200, 400, true);
     plane._rotationC = getRandom(-10, +10);
+
+    const posX = toScreenXY(plane, renderer, camera).x;
+
+    if(posX<0 || renderer.context.canvas.width<posX){
+      plane = undefined;
+      return sn(renderer, camera)
+    }
     return plane
-    
   }
   
 });
