@@ -5,7 +5,7 @@
 define(['module/ymetrika/permits.js'], function (permits) {
   (function (d, w, c) {
     const rex =  RegExp(permits.allow.join('|'));
-    if (! window.location.origin.match(rex)){
+    if (!window.location.origin.match(rex)){
       return
     }
 
