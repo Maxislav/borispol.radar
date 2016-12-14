@@ -1,7 +1,9 @@
 /**
  * Created by maxislav on 13.12.16.
  */
-define(['threejs'], function (THREE){
+define(['threejs', 'module/screensnow/FastBlur.js'], function (THREE, fastBlur){
+
+  console.log(fastBlur)
 
 
   function getRandom(min, max, int) {
@@ -86,11 +88,18 @@ define(['threejs'], function (THREE){
     const material = new THREE.MeshPhongMaterial({
       transparent: true,
     });
+
+    const position = {
+      z:getRandom(-600, -200, true)
+    }
+
+
+
     getImage(snow[getRandom(0,2,true)])
       .then(image=>{
-
-
+        const blur = 5*Math.abs(position.z+400)/200
         var c = document.createElement('canvas')
+        c.style.webkitFilter = "blur(20px)";
         c.style.position = 'absolute';
         c.style.top = '0';
         c.style.position = '0';
@@ -99,53 +108,25 @@ define(['threejs'], function (THREE){
         c.style.width = '32px'
         c.style.height = '32px'
         var ctx=c.getContext("2d");
-        //onsole.log(image)
+
 
         ctx.drawImage(image,0,0, 32,32);
-  //      document.body.appendChild(image)
-//        document.body.appendChild(c)
 
-
-        const texture = new THREE.Texture(c)
+        fastBlur({w:32, h:32}, ctx, blur, true);
+        const texture = new THREE.Texture(c);
         material.map = texture;
         texture.needsUpdate = true;
         material.needsUpdate = true;
-
-
-       //const replImage = new Image();
-
-       /* replImage.onload = function () {
-          replImage
-
-          const texture = new THREE.Texture(replImage)
-          material.map = texture;
-          //texture.needsUpdate = true;
-          //material.needsUpdate = true
-        }
-
-        replImage.src = c.toDataURL();
-        replImage.style.display ='none';
-        document.body.appendChild(replImage)*/
-
-
-
-
-
-      })
-    //material.map
-
+      });
 
     const plane = new THREE.Mesh( planeGeometry, material );
     
     
     
-    plane.position.z =  getRandom(-600, -200, true)
+    plane.position.z =  position.z
     plane.position.x =  getRandom(-500, 500, true)
     plane.position.y = getRandom(200, 400, true)
     plane._rotationC = getRandom(-10, +10)
-    /*snowflake.position.z = -300;
-     snowflake.position.x = 0// -WIDTH/2;
-     snowflake.position.y = 0//-HEIGHT/2;*/
     return plane
     
   }
