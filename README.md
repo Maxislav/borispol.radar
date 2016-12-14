@@ -8,7 +8,7 @@ cd borispol.radar
 
 crontab -e 
 add line
-0 * * * * [yuu domain]/php/saveimgs.php
+0 * * * * /you domain/php/saveimgs.php
 
 npm i
 
