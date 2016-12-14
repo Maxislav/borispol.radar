@@ -112,7 +112,7 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
         from: e.clientY - delAreaSize,
         to: e.clientY + delAreaSize
       };
-      if (xRange.from < snow._projection.x && snow._projection.x < xRange.to && yRange.from < snow._projection.y && snow._projection.y < yRange.to) {
+      if (xRange.from < snow.projection.x && snow.projection.x < xRange.to && yRange.from < snow.projection.y && snow.projection.y < yRange.to) {
         scene.remove(snow);
         snowFail.splice(i, 1)
       } else {
@@ -129,7 +129,7 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
         from: e.clientY - delAreaSize,
         to: e.clientY + delAreaSize
       };
-      if (xRange.from < snow._projection.x && snow._projection.x < xRange.to && yRange.from < snow._projection.y && snow._projection.y < yRange.to) {
+      if (xRange.from < snow.projection.x && snow.projection.x < xRange.to && yRange.from < snow.projection.y && snow.projection.y < yRange.to) {
         scene.remove(snow);
       }
     });
@@ -163,21 +163,21 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
     let i = 0;
     while (i < snowflakes.length) {
       const snowflake = snowflakes[i];
-      snowflake._projection = toScreenXY(snowflake);
+      snowflake.projection = toScreenXY(snowflake);
 
       if(
         snowflake.position.z<-300
         && -400<snowflake.position.z
-        && contentSize.x<snowflake._projection.x
-        && snowflake._projection.x < contentSize.x+contentSize.w
-        && contentSize.y + getRandom(0,20,true)< snowflake._projection.y
+        && contentSize.x<snowflake.projection.x
+        && snowflake.projection.x < contentSize.x+contentSize.w
+        && contentSize.y + getRandom(0,20,true)< snowflake.projection.y
       ){
         k++;
         snowflake.rotation.z = 0;
         const fail = snowflakes.splice(i, 1)[0];
         snowFail.push(fail);
 
-      }else if (snowflake.position.y < -140 || HEIGHT - getRandom(2, 20, true) < snowflake._projection.y) {
+      }else if (snowflake.position.y < -140 || HEIGHT - getRandom(2, 20, true) < snowflake.projection.y) {
         k++;
         snowflake.rotation.x = -1;
         snowflake.rotation.z = 0;

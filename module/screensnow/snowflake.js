@@ -35,12 +35,9 @@ define(['threejs', 'module/screensnow/FastBlur.js', 'module/screensnow/getImage.
   
   return function sn (renderer, camera) {
     const planeGeometry = new THREE.PlaneGeometry( 5, 5, 4 );
-    //const material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
-
     const material = new THREE.MeshPhongMaterial({
       transparent: true
     });
-
     const position = {
       z:getRandom(-600, -200, true)
     };
@@ -71,13 +68,23 @@ define(['threejs', 'module/screensnow/FastBlur.js', 'module/screensnow/getImage.
         material.needsUpdate = true;
       });
 
-    let plane = new THREE.Mesh( planeGeometry, material );
+    class Plane extends THREE.Mesh{
+      constructor(a,b,  renderer, camera){
+        super(a,b);
+        this.renderer = renderer;
+        this.camera = camera
+      }
+      get projection(){
+        return  toScreenXY(this, this.renderer, this.camera)
+      }
+    }
+    let plane = new Plane(planeGeometry, material,  renderer, camera );
+
     plane.position.z =  position.z;
     plane.position.x =  getRandom(-500, 500, true);
     plane.position.y = getRandom(200, 400, true);
     plane._rotationC = getRandom(-10, +10);
-
-    const posX = toScreenXY(plane, renderer, camera).x;
+    const posX = plane.projection.x;
 
     if(posX<0 || renderer.context.canvas.width<posX){
       plane = undefined;
