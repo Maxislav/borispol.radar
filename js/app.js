@@ -31,8 +31,8 @@ var app = {
             jsonp: "callback",
             dataType: "jsonp",
             success: function( response ) {
-                console.info( response ); // server response
-                if(response.weather && response.weather.length &&response.weather[0].main == 'Snow')    {
+                console.info( response.weather[0].main ); // server response
+                if(response.weather && response.weather.length &&response.weather[0].main )    {
                     require(['./module/screensnow/screensnow.js'], function (d) {
                         // console.log(d)
                     })

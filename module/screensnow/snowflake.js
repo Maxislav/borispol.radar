@@ -17,6 +17,66 @@ define(['threejs'], function (THREE){
     'img/snow1.gif',
     'img/snow2.gif'
   ]
+
+
+
+  /*getImage(snow[0])
+    .then(d=>{
+      console.log(d)
+      //debugger
+    })*/
+
+  function createCORSRequest(method, url) {
+    var xhr = new XMLHttpRequest();
+    if ("withCredentials" in xhr) {
+      xhr.open(method, url, true);
+    } else if (typeof XDomainRequest != "undefined") {
+      xhr = new XDomainRequest();
+      xhr.open(method, url);
+    } else {
+      xhr = null;
+    }
+    return xhr;
+  }
+
+
+  function getImage(url) {
+    return new Promise((resolve, reject)=>{
+      var xhr = createCORSRequest("GET", url);
+      xhr.open('GET', url, true);
+      xhr.responseType = 'arraybuffer';
+      xhr.onerror = function (e) {
+        reject(e);
+      };
+
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300 && xhr.response) {
+          const imgData = xhr.response;
+
+          const img = new window.Image();
+
+          const blob = new window.Blob([new Uint8Array(imgData)], {type: 'image/png'});
+
+          img.onload = function () {
+
+            (window.URL || window.webkitURL).revokeObjectURL(img.src);
+            resolve(img);
+            //callback && callback(null, img);
+          };
+
+          img.src = (window.URL || window.webkitURL).createObjectURL(blob);
+
+
+        } else {
+          reject(new Error(xhr.statusText));
+        }
+      };
+      xhr.send();
+
+
+
+    })
+  }
  
   
   return function () {
@@ -25,12 +85,54 @@ define(['threejs'], function (THREE){
 
     const material = new THREE.MeshPhongMaterial({
       transparent: true,
-      //map:new THREE.TextureLoader().load('img/snow1.gif', ()=>renderer.render(scene, camera)),
-      map:new THREE.TextureLoader().load( snow[getRandom(0,2,true)]),
-      opacity: 1,
-      //color: "0хFFFFFF",
-      side: THREE.DoubleSide
     });
+    getImage(snow[getRandom(0,2,true)])
+      .then(image=>{
+
+
+        var c = document.createElement('canvas')
+        c.style.position = 'absolute';
+        c.style.top = '0';
+        c.style.position = '0';
+        c.setAttribute('width', 32+'');
+        c.setAttribute('height', 32+'');
+        c.style.width = '32px'
+        c.style.height = '32px'
+        var ctx=c.getContext("2d");
+        //onsole.log(image)
+
+        ctx.drawImage(image,0,0, 32,32);
+  //      document.body.appendChild(image)
+//        document.body.appendChild(c)
+
+
+        const texture = new THREE.Texture(c)
+        material.map = texture;
+        texture.needsUpdate = true;
+        material.needsUpdate = true;
+
+
+       //const replImage = new Image();
+
+       /* replImage.onload = function () {
+          replImage
+
+          const texture = new THREE.Texture(replImage)
+          material.map = texture;
+          //texture.needsUpdate = true;
+          //material.needsUpdate = true
+        }
+
+        replImage.src = c.toDataURL();
+        replImage.style.display ='none';
+        document.body.appendChild(replImage)*/
+
+
+
+
+
+      })
+    //material.map
 
 
     const plane = new THREE.Mesh( planeGeometry, material );

@@ -166,33 +166,27 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
     let i = 0;
     while (i<snowflakes.length){
       const snowflake =  snowflakes[i];
-
-      if(snowflake.position.y<-140){
+      snowflake._projection = toScreenXY(snowflake)
+      if(snowflake.position.y<-140 || HEIGHT-20<snowflake._projection.y){
         k++;
-        snowflake._projection = toScreenXY(snowflake.position)
+
         snowflake.rotation.x = -1;
-        if(HEIGHT+20<snowflake._projection.y){
-          scene.remove(snowflakes.splice(i, 1)[0])
-        }else{
+        snowflake.rotation.z = 0;
+
           const fail = snowflakes.splice(i, 1)[0];
           snowFail.push(fail);
-        }
-
-       // fail._projection = toScreenXY(fail.position);
 
       }else{
         snowflake.position.y-=interval*0.02
-        snowflake.rotation.z+=interval*0.0001*snowflake._rotationC;
+
         snowflake.position.x +=interval*0.01*wind;
+        snowflake.rotation.z+=interval*0.0004*snowflake._rotationC;
         i++
       }
 
     }
 
     if(k) addSnow(k);
-
-    
-    //console.log(snowflake.position.y)
     requestAnimationFrame(update);
   }
 
@@ -209,52 +203,19 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
   }
 
 
-  function toScreenXY( position) {
-    var pos = position.clone();
-    var projScreenMat = new THREE.Matrix4();
-    projScreenMat.multiply( camera.projectionMatrix, camera.matrixWorldInverse );
-    projScreenMat.multiplyVector3( pos );
-
-    var offset = {
-      left: 0,
-      top: 0
+  function toScreenXY(obj) {
+    var vector = new THREE.Vector3();
+    var widthHalf = 0.5*renderer.context.canvas.width;
+    var heightHalf = 0.5*renderer.context.canvas.height;
+    obj.updateMatrixWorld();
+    vector.setFromMatrixPosition(obj.matrixWorld);
+    vector.project(camera);
+    vector.x = ( vector.x * widthHalf ) + widthHalf;
+    vector.y = - ( vector.y * heightHalf ) + heightHalf;
+    return {
+      x: vector.x,
+      y: vector.y
     };
-
-    return { x: ( pos.x + 1 ) * WIDTH / 2 + offset.left,
-      y: ( - pos.y + 1) * HEIGHT / 2 + offset.top };
-
   }
-  function findOffset(element) {
-    var pos = new Object();
-    pos.left = pos.top = 0;
-    if (element.offsetParent)
-    {
-      do
-      {
-        pos.left += element.offsetLeft;
-        pos.top += element.offsetTop;
-      } while (element = element.offsetParent);
-    }
-    return pos;
-  }
-
-
-
-
-  function createVector(sn ) {
-
-    var  width = WIDTH, height = HEIGHT;
-    var x = sn.position.x, y =sn.position.y, z = sn.position.z
-
-    var p = new THREE.Vector3(x, y, z);
-    var vector = p.project(camera);
-
-    vector.x = (vector.x + 1) / 2 * width;
-    vector.y = -(vector.y - 1) / 2 * height;
-
-    return vector;
-  }
-
-
   return THREE
 });
