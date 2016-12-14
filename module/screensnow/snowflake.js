@@ -94,7 +94,7 @@ define(['threejs', 'module/screensnow/FastBlur.js'], function (THREE, fastBlur){
 
     getImage(snow[getRandom(0,2,true)])
       .then(image=>{
-        const blur = 5*Math.abs(position.z+400)/200
+        const blur = 5*Math.abs(position.z+250)/200
         var c = document.createElement('canvas')
         c.style.webkitFilter = "blur(20px)";
         c.style.position = 'absolute';
