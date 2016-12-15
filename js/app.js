@@ -15,7 +15,14 @@ var app = {
         if (window.location.hash.replace('#', '')) {
             s.loadmodulle(window.location.hash.replace('#', ''))
         } else {
-            window.location.hash = 'home'
+            try{
+                history.replaceState(undefined, undefined, "#home");
+                s.loadmodulle('home')
+            }catch (err){
+                console.log(err)
+            }
+
+            //window.location.hash = 'home'
         }
 
 
@@ -30,8 +37,13 @@ var app = {
             jsonp: "callback",
             dataType: "jsonp",
             success: function( response ) {
-               // console.info( response.weather[0].main ); // server response
-                if(response.weather && response.weather.length && response.weather[0].main =='Snow' )    {
+                try{
+                    console.info( response.weather[0].main ); // server response
+                }catch (err){
+                    console.log(err)
+                }
+
+                if(response.weather && response.weather.length && response.weather[0].main =='Snow' ){
                     require(['screensnow'], function (d) {
                         // console.log(d)
                     })

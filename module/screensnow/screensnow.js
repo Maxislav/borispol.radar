@@ -1,6 +1,5 @@
-/**
- * Created by maxislav on 13.12.16.
- */
+'use strict';
+
 define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE, $, snowflake) {
 
 
@@ -16,7 +15,7 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
     h: mContainer[0].offsetHeight
   };
 
-  const snowRoof = [];
+  
 
   mContainer.draggable(
     {
@@ -24,19 +23,23 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
       drag: function (e, ui) {
         contentSize.x = mContainer.position().left;
         contentSize.y = mContainer.position().top;
-        let i = 0;
-        while (i<snowFail.length){
-          const sn = snowFail[i]
-          if(sn._roof){
-
-            snowflakes.unshift( snowFail.splice(i,1)[0])
-          }else{
-            i++
-          }
-        }
+        shake();
       }
     }
   );
+  $(window).on('hashchange', shake);
+  function shake() {
+    let i = 0;
+    while (i<snowFail.length){
+      const sn = snowFail[i];
+      if(sn._roof){
+
+        snowflakes.unshift( snowFail.splice(i,1)[0])
+      }else{
+        i++
+      }
+    }
+  }
 
   //console.log(contentSize)
 
@@ -187,7 +190,7 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
     let i = 0;
     while (i < snowflakes.length) {
       const snowflake = snowflakes[i];
-      snowflake.projection = toScreenXY(snowflake);
+      //snowflake.projection = toScreenXY(snowflake);
 
       if(
 

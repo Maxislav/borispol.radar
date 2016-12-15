@@ -34,13 +34,15 @@ define(['threejs', 'module/screensnow/FastBlur.js', 'module/screensnow/getImage.
   ];
   
   return function sn (renderer, camera) {
-    const planeGeometry = new THREE.PlaneGeometry( 5, 5, 4 );
-    const material = new THREE.MeshPhongMaterial({
-      transparent: true
-    });
     const position = {
       z:getRandom(-600, -200, true)
     };
+    const planeGeometry = new THREE.PlaneGeometry( 5, 5, 4 );
+    const material = new THREE.MeshPhongMaterial({
+      transparent: true,
+      opacity: 1 - 0.6*Math.abs(position.z+200)/400
+    });
+
 
 
 
