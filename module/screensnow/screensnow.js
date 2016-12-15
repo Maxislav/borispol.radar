@@ -194,9 +194,9 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
 
       if(
 
-        snowflake.position.z<-250
+        snowflake.position.z<-300
         && !snowflake._roof
-        && -400<snowflake.position.z
+        && -600<snowflake.position.z
         && contentSize.x<snowflake.projection.x
         && snowflake.projection.x < contentSize.x+contentSize.w
         && contentSize.y + getRandom(-10,20,true)< snowflake.projection.y
