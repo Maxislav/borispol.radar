@@ -109,10 +109,10 @@ home = {
         imgukbb.s = 'http://meteoinfo.by/radar/UKBB/UKBB_latest.png?v=' + ((Math.random() * 1000).toFixed(0));
 
 
-        var imgir_s = 'http://www.sat24.com/image2.ashx?region=eu&ir=true&m=' + ((Math.random() * 1000).toFixed(0));
+        var imgir_s = 'http://en.sat24.com/image?type=infraPolair&region=eu&m=' + ((Math.random() * 1000).toFixed(0));
         s.imgir_s = imgir_s;
 
-        var imgvi_s = 'http://sat24.com/image2.ashx?region=eu&ir=false&m=' + ((Math.random() * 1000).toFixed(0))
+        var imgvi_s = 'http://en.sat24.com/image?type=visual&region=eu&m=' + ((Math.random() * 1000).toFixed(0))
         s.imgvi_s = imgvi_s;
 
         onload(imgukbb, s.el.find('.ukbb-content'), imgukbb.s);

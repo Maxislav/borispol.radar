@@ -1,3 +1,4 @@
+'use strict';
 var app = {
     css: {},
     currentMoule: null,
@@ -161,7 +162,6 @@ var app = {
         },
         remove: function (el) {
             el.remove()
-            delete el
         }
 
 
