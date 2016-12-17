@@ -1,13 +1,16 @@
-define(['threejs', 'module/earth/get-img.js'], function (THREE, getImg) {
-  window.earth = {
+define(['threejs', 'module/earth/get-tile.js', 'js/moduleController.js', 'getimage'], function (THREE, getTile, prototype, getImg) {
+  
+  
+  
+  var _earth = {
     navTabs: 8,
     angle: 180,
-    deg: (function () {
-      return 45
-    }()),
+    deg: {
+      y: 45
+    },
     cameraPosition: {
       x: 0,
-      y: 5,
+      y: 10,
       z: 40
     },
     load: false,
@@ -23,13 +26,6 @@ define(['threejs', 'module/earth/get-img.js'], function (THREE, getImg) {
       });
       $('.content').append(s.el);
       s.load = true;
-
-      //  s.el.append('<div style="position: absolute;left: 5px; top: 5px; color: white">В разработке</div>');
-
-      //s.render();
-      /* if (window.THREE) {
-       s.render(window.THREE);
-       }*/
       s.render(this.THREE);
       success && success.call(s);
     },
@@ -109,11 +105,12 @@ define(['threejs', 'module/earth/get-img.js'], function (THREE, getImg) {
       rEarthMesh.position.x = 0;
       rEarthMesh.position.y = 0;
       rEarthMesh.position.z = 0;
-      rEarthMesh.rotation.set(0, s.getRotationAngle().degToRad(), 0);
+      //rEarthMesh.rotation.set(0, s.getRotationAngle().degToRad(), 0);
       scene.add(rEarthMesh);
 
       s.getTexture(2)
         .then(function (image) {
+
           var texture = new THREE.Texture(image);
           sphereMaterial.map = texture;
           texture.needsUpdate = true;
@@ -132,21 +129,36 @@ define(['threejs', 'module/earth/get-img.js'], function (THREE, getImg) {
 
       var cloudsMaterial = new THREE.MeshPhongMaterial({
         transparent: true,
-        // map:textureLoader.load('php/SatelliteImages.php', render),
-        alphaMap: textureLoader.load('php/SatelliteImages.php', render),
-        bumpMap: textureLoader.load('php/SatelliteImages.php', render),
+         //map:textureLoader.load('php/SatelliteImages.php', render),
+        //alphaMap: textureLoader.load('php/SatelliteImages.php', render),
+        //bumpMap: textureLoader.load('php/SatelliteImages.php', render),
         bumpScale: 0.01,
         opacity: 1.4,
         emissive: '0xffffff',
         //side: THREE.DoubleSide,
         color: "#FFFFFF"
       });
+
+      getImg('php/SatelliteImages.php', true)
+        .then(function (_img) {
+          var img = _img.toCanvas(2048, 1024, 2048, 924, 0,50 );
+          var texture = new THREE.Texture(img);
+          texture.needsUpdate = true;
+          cloudsMaterial.alphaMap = texture;
+          cloudsMaterial.bumpMap = texture;
+
+          cloudsMaterial.needsUpdate = true;
+          render()
+        })
+
+
+
       var cloudsMesh;
       cloudsMesh = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
 
 
-      let atmosphereMesh = new THREE.Mesh(cloudsGeometry.clone(), cloudsMaterial);
-      rEarthMesh.add(atmosphereMesh);
+      //let atmosphereMesh = new THREE.Mesh(cloudsGeometry.clone(), cloudsMaterial);
+      rEarthMesh.add(cloudsMesh);
 
 
       var customMaterial = new THREE.ShaderMaterial(
@@ -205,7 +217,7 @@ define(['threejs', 'module/earth/get-img.js'], function (THREE, getImg) {
       var meshGlow = new THREE.Mesh(cloudsGeometry.clone(), customMaterialAtmosphere);
       meshGlow.scale.x = meshGlow.scale.y = meshGlow.scale.z = 1.2;
       meshGlow.material.side = THREE.BackSide;
-      atmosphereMesh.add(meshGlow);
+      cloudsMesh.add(meshGlow);
 
       /*
        var map = THREE.ImageUtils.loadTexture( "module/earth/glow.png" );
@@ -227,7 +239,7 @@ define(['threejs', 'module/earth/get-img.js'], function (THREE, getImg) {
       //rEarthMesh.add(sprite); // this centers the glow at the mesh
 
 
-      s.deg = s.getRotationAngle() - 230;
+      s.deg.y = s.getRotationAngle() - 230;
       s.setCameraPosition(camera);
       camera.lookAt(rEarthMesh.position);
 
@@ -253,7 +265,7 @@ define(['threejs', 'module/earth/get-img.js'], function (THREE, getImg) {
       function rotate() {
         setTimeout(function () {
           sphere.rotation.set(0, s.getRotationAngle().degToRad(), 0);
-          cloudsMesh.rotation.set(0, s.getRotationAngle().degToRad(), 0);
+         // cloudsMesh.rotation.set(0, s.getRotationAngle().degToRad(), 0);
           render();
           rotate()
         }, 1000)
@@ -275,7 +287,7 @@ define(['threejs', 'module/earth/get-img.js'], function (THREE, getImg) {
     setCameraPosition: function (camera) {
 
       var s = this;
-      var deg = s.deg;
+      var deg = s.deg.y;
       s.cameraPosition.z = Math.cos(deg.degToRad()) * 40;
       s.cameraPosition.x = Math.sin(deg.degToRad()) * 40;
 
@@ -293,16 +305,13 @@ define(['threejs', 'module/earth/get-img.js'], function (THREE, getImg) {
       for (let x = 0; x < n; x++) {
         for (let y = 0; y < n; y++) {
           arr.push(
-            new Promise(function (resolve, reject) {
-              let data = [zoom, x, y];
-              getImg(data, function (err, img) {
-                if (err) reject(err);
-                resolve({
-                  data,
+            getTile( [zoom, x, y] )
+              .then(img=>{
+                return {
+                  data: [zoom, x, y],
                   img
-                })
-              });
-            })
+                }
+              })
           )
         }
       }
@@ -339,16 +348,7 @@ define(['threejs', 'module/earth/get-img.js'], function (THREE, getImg) {
               let k = 0;
               imgData.data.set(distData);
               ctx.putImageData(imgData, 0, (-yStart));
-              //ctx.drawImage(c, 0, 0 ,2048,1024 );
-
-
               resolve(resize(c));
-
-              /* let img = new Image();
-               img.onload = function () {
-               resolve(img);
-               };
-               img.src = url;*/
             };
 
             function resize(canvas) {
@@ -366,38 +366,41 @@ define(['threejs', 'module/earth/get-img.js'], function (THREE, getImg) {
 
     events: function (render, camera, sphere) {
       var s = this;
-      var dx = 0;
-      var dDeg;
-      var t
+      var dx = 0, px=0;
+      var dDeg, sDeg;
 
 
-    function mouseMove(e) {
-
-      dx = (e.pageX || e.originalEvent.changedTouches[0].clientX) - px;
-      dDeg = dx / 100;
-      s.deg -= dDeg;
-      console.log(dx)
-      s.setCameraPosition(camera);
-
+      function mouseMove(e) {
+        dx = (e.pageX || e.originalEvent.changedTouches[0].clientX) - px;
+        dDeg = dx / 5;
+        s.deg.y = sDeg - dDeg;
+        s.setCameraPosition(camera);
         camera.lookAt(sphere.position);
         render()
       }
 
       s.el
         .on('mousedown touchstart', function (e) {
+          sDeg = s.deg.y;
           px = e.pageX || e.originalEvent.changedTouches[0].clientX;
           s.el.on('mousemove touchmove', mouseMove)
         });
 
       $(document.body)
         .on('mouseup touchend', function (e) {
-          t = 0
           s.el.off('mousemove touchmove', mouseMove);
         })
 
     }
   };
-  window.earth.__proto__ = ModuleController;
+  Earth.prototype = prototype;
+  function Earth() {
+    for(var opt in _earth){
+      this[opt] = _earth[opt]
+    }
+  }
 
-  window.earth.setTree(THREE);
+  var earth = new Earth();
+  earth.setTree(THREE);
+  return earth
 });

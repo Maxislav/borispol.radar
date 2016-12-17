@@ -1,9 +1,27 @@
-/**
- * Created by maxislav on 14.12.16.
- */
+"use strict";
 define(function () {
 
+  class MyImage extends window.Image{
+
+    toCanvas(w, h, w1, h1, x, y){
+      const canvas =  document.createElement('canvas');
+      canvas.width = w ? w : this.width;
+      canvas.height = h ? h : this.height;
+      const ctx = canvas.getContext('2d')
+      if(!w1 && !h1){
+        ctx.drawImage(this,0, 0, canvas.width, canvas.height)
+      }else{
+        ctx.drawImage(this,0, 0, this.width, this.height, x || 0, y || 0, w1, h1)
+      }
+      //ctx.drawImage(this,0, 0, canvas.width, canvas.height, x || 0, y || 0, w1 || canvas.width , h1 || canvas.height);
+      //ctx.drawImage(this,0, 0, canvas.width, canvas.height, x || 0, y || 0, w1 || canvas.width , h1 || canvas.height);
+      return canvas
+    }
+
+
+  }
   const images = {};
+
 
   function createCORSRequest(method, url) {
     var xhr = new XMLHttpRequest();
@@ -32,7 +50,7 @@ define(function () {
         if (xhr.status >= 200 && xhr.status < 300 && xhr.response) {
           const imgData = xhr.response;
 
-          const img = new window.Image();
+          const img = new MyImage();
 
           const blob = new window.Blob([new Uint8Array(imgData)], {type: 'image/png'});
 
@@ -50,9 +68,7 @@ define(function () {
     });
   }
 
-
   function getImage(url, cache) {
-
     if(cache){
       if(!images[url]){
         images[url] = loadPromise(url)
@@ -61,8 +77,6 @@ define(function () {
     }else{
       return loadPromise(url)
     }
-
-
   }
   return getImage
 })

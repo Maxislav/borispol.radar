@@ -1,7 +1,7 @@
 /**
  * Created by maxislav on 13.12.16.
  */
-define(['threejs', 'module/screensnow/FastBlur.js', 'module/screensnow/getImage.js'], function (THREE, fastBlur, getImage){
+define(['threejs', 'module/screensnow/FastBlur.js', 'getimage'], function (THREE, fastBlur, getImage){
 
   
   function getRandom(min, max, int) {

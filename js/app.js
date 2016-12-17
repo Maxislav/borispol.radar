@@ -91,7 +91,7 @@ var app = {
                 $('head').append('<style>' + css + '</style>')
                 s.css[module] = true;
             }
-            s.currentMoule = window[module];
+            s.currentMoule = m || window[module];
             s.currentMoule && s.currentMoule.show(html, app.navTabs(s.currentMoule.navTabs));
         })
     },

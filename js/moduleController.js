@@ -1,3 +1,5 @@
+
+
 var ModuleController = {
     el: null,
     elpanel: null,
@@ -261,3 +263,7 @@ var ModuleController = {
         })
     }
 };
+
+define(function () {
+    return ModuleController
+})
