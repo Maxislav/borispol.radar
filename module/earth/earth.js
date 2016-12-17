@@ -55,7 +55,7 @@ define(['threejs', 'module/earth/get-tile.js', 'js/moduleController.js', 'getima
       light.position.set(1000, -200, 0);
       light.intensity = 1.8;
       light.exponent = 1000;
-      light.shadowMapWidth = 10000;
+      //light.shadowMapWidth = 10000;
 
       var light2 = new THREE.SpotLight("#fff");
       light2.position.set(-1000, 200, 0);
@@ -134,7 +134,7 @@ define(['threejs', 'module/earth/get-tile.js', 'js/moduleController.js', 'getima
         //bumpMap: textureLoader.load('php/SatelliteImages.php', render),
         bumpScale: 0.01,
         opacity: 1.4,
-        emissive: '0xffffff',
+       // emissive: "#FFFFFF",
         //side: THREE.DoubleSide,
         color: "#FFFFFF"
       });
