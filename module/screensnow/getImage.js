@@ -19,15 +19,8 @@ define(function () {
   }
 
 
-  function getImage(url, cache) {
-    
+  function loadPromise(url) {
     return new Promise((resolve, reject)=>{
-      if(cache && images[url]){
-        resolve(images[url]);
-        return
-      }
-
-
       var xhr = createCORSRequest("GET", url);
       xhr.open('GET', url, true);
       xhr.responseType = 'arraybuffer';
@@ -46,23 +39,30 @@ define(function () {
           img.onload = function () {
 
             (window.URL || window.webkitURL).revokeObjectURL(img.src);
-            images[url] = img;
             resolve(img);
-            //callback && callback(null, img);
           };
-
           img.src = (window.URL || window.webkitURL).createObjectURL(blob);
-
-
         } else {
           reject(new Error(xhr.statusText));
         }
       };
       xhr.send();
+    });
+  }
 
 
+  function getImage(url, cache) {
 
-    })
+    if(cache){
+      if(!images[url]){
+        images[url] = loadPromise(url)
+      }
+      return images[url]
+    }else{
+      return loadPromise(url)
+    }
+
+
   }
   return getImage
 })

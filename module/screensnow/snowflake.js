@@ -68,7 +68,7 @@ define(['threejs', 'module/screensnow/FastBlur.js', 'module/screensnow/getImage.
         material.map = texture;
         texture.needsUpdate = true;
         material.needsUpdate = true;
-      });
+      }, (err)=>console.log(err));
 
     class Plane extends THREE.Mesh{
       constructor(a,b,  renderer, camera){
