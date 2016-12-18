@@ -77,7 +77,13 @@ var ModuleController = {
             s.errLoadI++;
             console.error('Error load: ' + src, e)
             if(s.errLoadI<3){
-                s.showImg(s.errSrc)
+                s.showImg(s.errSrc);
+                $.ajax({
+                    url: 'php/saveimgs.php',
+                    success: function (img) {
+                        console.log(img)
+                    }
+                })
             }
         };
         imgir.onload = function () {
