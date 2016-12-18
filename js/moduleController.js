@@ -11,6 +11,7 @@ var ModuleController = {
     btnStepBask: null,
     btnStepForward: null,
     moduleName: 'ired',
+    errSrc: '', 
     baseURI: 'http://www.sat24.com/image2.ashx?region=eu&time=',
     active: false,
     afterUrl: '&ir=true',
@@ -21,6 +22,7 @@ var ModuleController = {
     progressBar: null,
     navTabs: 1,
     offset: 15,
+    errLoadI: 0,
     init: function (html, success, elLi) {
         var s = this;
         s.elLi = elLi;
@@ -63,20 +65,29 @@ var ModuleController = {
         success && success.call(s);
 
     },
-    showImg: function () {
+    showImg: function (errSrc) {
         var s = this;
         var conteiner = s.container = s.el.find('.container-imgs-ir');
         var mask = app.mask.show(conteiner);
+        var date = s.getDate();
+        var src = s.baseURI + date + s.afterUrl;
         var imgir = new Image();
         s.imgir = imgir;
+        imgir.onerror = function (e) {
+            s.errLoadI++;
+            console.error('Error load: ' + src, e)
+            if(s.errLoadI<3){
+                s.showImg(s.errSrc)
+            }
+        };
         imgir.onload = function () {
             conteiner.append(imgir);
             $(imgir).fadeTo(500, 1, function () {
                 app.mask.remove(mask)
             })
         };
-        var date = s.getDate();
-        imgir.src = s.baseURI + date + s.afterUrl;
+
+        imgir.src = errSrc || src;
         console.log(imgir.src)
     },
 

@@ -1,6 +1,6 @@
 <?php
 date_default_timezone_set("UTC");
-sleep(60);
+sleep(20);
 
 echo (date("Y/m/d-H:i")).'<br/>';
 
