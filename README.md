@@ -1,16 +1,35 @@
 # borispol.radar
 Борисполь метеорадар
 
-## Install
+###Required
+
+php
+
+### Install
 git clone https://github.com/Maxislav/borispol.radar
 
 cd borispol.radar
 
-crontab -e <br />
-add line <br />
-0 * * * * /you domain/php/saveimgs.php
-
 npm i
+### Start
+
+Edit cron.sh <br/>
+
+```
+#!/usr/bin/env bash
+cd ~/www/borispol.radar/php
+php saveimgs.php
+```
+
+
+
+crontab -e <br/>
+add line <br />
+```
+0 * * * * sh ~www/borispol.radar/cron.sh
+```
+
+
 
 ### dev
 grunt 
@@ -19,3 +38,4 @@ grunt
 
 grunt prod
 
+[Борисполь радар](http://borispol.hol.es/)
