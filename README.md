@@ -23,7 +23,7 @@ php saveimgs.php
 
 
 
-crontab -e <br/>
+~$ crontab -e <br/>
 add line <br />
 ```
 0 * * * * sh ~www/borispol.radar/cron.sh
