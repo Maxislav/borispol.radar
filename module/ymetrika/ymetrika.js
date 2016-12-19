@@ -2,7 +2,30 @@
  * Created by mars on 12.01.16.
  */
 
-define(['module/ymetrika/permits.js'], function (permits) {
+define(['module/ymetrika/permits.js', 'jquery', 'module/ymetrika/local-starage.js'], function (permits, $, LocalStorage) {
+  "use strict";
+  const  localStorage = new LocalStorage();
+  let hash = localStorage.hash
+ // console.log(hash)
+
+  $.ajax({
+    url: 'php/users.php',
+    method:'POST',
+    data: {id: hash},
+    success: function (msg) {
+      if(msg){
+        localStorage.hash = msg;
+      }
+    },
+    error: function (e) {
+      console.error(e)
+    }
+
+  });
+
+
+
+
   (function (d, w, c) {
     const rex =  RegExp(permits.allow.join('|'));
     if (!window.location.origin.match(rex)){
