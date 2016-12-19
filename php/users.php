@@ -58,7 +58,7 @@ if(!$hash || !$hashOperation->checkExist($hash, $json)){
     ));
 
     $fp = fopen('users.json', 'w');
-    fwrite($fp, json_encode($json, JSON_PRETTY_PRINT));
+    fwrite($fp, json_encode($json));
     fclose($fp);
     echo $hash;// json_encode($json);
 }else{
