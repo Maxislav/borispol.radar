@@ -33,7 +33,9 @@ define(['threejs', 'module/screensnow/FastBlur.js', 'getimage'], function (THREE
     'img/snow2.png'
   ];
   
-  return function sn (renderer, camera) {
+  return function sn (renderer, camera, scene) {
+
+
     const position = {
       z:getRandom(-600, -200, true)
     };
@@ -70,33 +72,56 @@ define(['threejs', 'module/screensnow/FastBlur.js', 'getimage'], function (THREE
         material.needsUpdate = true;
       }, (err)=>console.log(err));
 
-    class Plane extends THREE.Mesh{
-      constructor(a,b,  renderer, camera){
+    class FlakeMesh extends THREE.Mesh{
+      constructor(a,b,  renderer, camera, scene){
         super(a,b);
         this.renderer = renderer;
         this.camera = camera;
+        this.scene = scene;
+       // console.log(renderer.domElement)
         this.events = {
           'click' : []
         };
+       
+
+       // console.log(this.delete)
+        //debugger
       }
       get projection(){
         return  toScreenXY(this, this.renderer, this.camera)
       }
 
-    }
-    let plane = new Plane(planeGeometry, material,  renderer, camera );
+      on(name, f){
+        this._f = f.bind(this);
+        this.renderer.on(name, this._f);
+        return this
+      }
+      
+      off(name){
+        this.renderer.off(name || 'click', this._f)
+        return this
+      }
+      del(){
+        this.off()
+        this.scene.remove(this)
+      }
 
-    plane.position.z =  position.z;
-    plane.position.x =  getRandom(-500, 500, true);
-    plane.position.y = getRandom(200, 400, true);
-    plane._rotationC = getRandom(-10, +10);
-    const posX = plane.projection.x;
+    }
+    let flakeMesh = new FlakeMesh(planeGeometry, material,  renderer, camera, scene );
+
+    flakeMesh.position.z =  position.z;
+    flakeMesh.position.x =  getRandom(-500, 500, true);
+    flakeMesh.position.y = getRandom(200, 400, true);
+    flakeMesh._rotationC = getRandom(-10, +10);
+    const posX = flakeMesh.projection.x;
 
     if(posX<0 || renderer.context.canvas.width<posX){
-      plane = undefined;
-      return sn(renderer, camera)
+      flakeMesh = undefined;
+      return sn(renderer, camera, scene)
     }
-    return plane
+
+    
+    return flakeMesh
   }
   
 });

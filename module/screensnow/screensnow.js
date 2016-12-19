@@ -73,10 +73,32 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
   const FAR = 10000;
   const container = $container[0]
 
+  'use strict';
+  class MyRenderer extends THREE.WebGLRenderer{
+    constructor(a,b,c,d){
+      super(a,b,c,d)
+      
+      this._event = {
+        'click': []
+      };
+      $container[0].parentNode.addEventListener('click', (e)=>{
+        this._event['click'].forEach(f=>f(e))
+      })
+    }
+    on(name, f){
+      this._event[name].push(f)
+    }
+    off(name, f){
+      let index = this._event[name].indexOf(f)
+      if(-1<index){
+        this._event[name].splice(index, 1)
+      }
+    }
+  }
 
-  const renderer = new THREE.WebGLRenderer({alpha: true});
-  const camera =
-    new THREE.PerspectiveCamera(
+
+  const renderer = new MyRenderer({alpha: true});
+  const camera =   new THREE.PerspectiveCamera(
       VIEW_ANGLE,
       ASPECT,
       NEAR,
@@ -84,6 +106,7 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
     );
 
   const scene = new THREE.Scene();
+
 
 // Add the camera to the scene.
   scene.add(camera);
@@ -140,7 +163,7 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
         to: e.clientY + delAreaSize
       };
       if (xRange.from < snow.projection.x && snow.projection.x < xRange.to && yRange.from < snow.projection.y && snow.projection.y < yRange.to) {
-        scene.remove(snow);
+        snow.del();
         snowFail.splice(i, 1)
       } else {
         i++
@@ -157,7 +180,8 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
         to: e.clientY + delAreaSize
       };
       if (xRange.from < snow.projection.x && snow.projection.x < xRange.to && yRange.from < snow.projection.y && snow.projection.y < yRange.to) {
-        scene.remove(snow);
+        //scene.remove(snow.off('click'));
+        snow.del();
       }
     });
   });
@@ -167,7 +191,19 @@ define(['threejs', 'jquery', 'module/screensnow/snowflake.js'], function (THREE,
 
   function addSnow(k) {
     for (var i = 0; i < k; i++) {
-      const sn = snowflake(renderer, camera);
+      const sn = snowflake(renderer, camera, scene);
+
+      sn.on('click', function (e) {
+        const   projection = this.projection;
+        if(projection.x-40<e.clientX && e.clientX<projection.x+40 && projection.y-40<e.clientY && e.clientY<projection.y+40 ){
+
+          const index = snowflakes.indexOf(this)
+          if(-1<index){
+            snowflakes.splice(index, 1)
+          }
+          this.del()
+        }
+      });
       snowflakes.unshift(sn);
       scene.add(sn);
     }

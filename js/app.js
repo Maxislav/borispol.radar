@@ -43,7 +43,7 @@ var app = {
                     console.log(err)
                 }
 
-                if(response.weather && response.weather.length && response.weather[0].main =='Snow' ){
+                if(response.weather && response.weather.length && response.weather[0].main  ){
                     require(['screensnow'], function (d) {
                         // console.log(d)
                     })
