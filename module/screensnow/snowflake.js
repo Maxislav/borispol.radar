@@ -74,11 +74,15 @@ define(['threejs', 'module/screensnow/FastBlur.js', 'getimage'], function (THREE
       constructor(a,b,  renderer, camera){
         super(a,b);
         this.renderer = renderer;
-        this.camera = camera
+        this.camera = camera;
+        this.events = {
+          'click' : []
+        };
       }
       get projection(){
         return  toScreenXY(this, this.renderer, this.camera)
       }
+
     }
     let plane = new Plane(planeGeometry, material,  renderer, camera );
 
