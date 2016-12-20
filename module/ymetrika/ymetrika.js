@@ -11,7 +11,7 @@ define(['module/ymetrika/permits.js', 'jquery', 'module/ymetrika/local-starage.j
   $.ajax({
     url: 'php/users.php',
     method:'POST',
-    data: {id: hash},
+    data: {id: hash, need: true},
     success: function (msg) {
       if(msg){
         localStorage.hash = msg;
