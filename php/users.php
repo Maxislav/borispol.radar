@@ -1,8 +1,11 @@
 <?php
+require_once "HashOperation.php";
 $hash = $_POST['id'];
 if(!$_POST['need']){
     return;
 }
+
+
 
 
 
@@ -24,62 +27,6 @@ foreach( $json as  $item){
      $resp = $resp.$item['hash'];
 };
 
-
-class HashOperation{
-
-
-    public function checkExist($h, $json){
-        foreach( $json as  $item){
-            if($item['hash'] === $h){
-                return true;
-            }
-        };
-        return false;
-    }
-
-    public function getArrId($h, $json){
-            foreach( $json as  $item){
-                if($item['hash'] === $h){
-                    return $item;
-                }
-            };
-            return false;
-
-    }
-
-    public function updateIp($h, $json, $ip){
-        $item = $this ->  getArrId($h, $json);
-        $array =$item["ip"];
-        if( in_array($ip, $array) ){
-            return false;
-        }else{
-            array_push($array, $ip);
-            $i= 0;
-            for($i = 0; $i<count($json); $i++){
-                if($json[$i]['hash'] === $h){
-                     $json[$i]['ip'] = $array;
-                }
-            }
-            return $json;
-        }
-    }
-
-
-    public function makeid($json){
-         $possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-         $arr1 = str_split($possible);
-         $h = '';
-
-         for($i=0; $i<20; $i++){
-            $h=$h.''.$arr1[rand(0, 62)];
-         };
-         if($this->checkExist($h, $json)){
-             return $this->makeid($json);
-         }
-         return $h;
-    }
-
-};
 
 $hashOperation = new HashOperation();
 

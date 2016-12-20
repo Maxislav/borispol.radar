@@ -1,5 +1,5 @@
 "use strict";
-define(['js/moduleController.js'], function (ModuleController) {
+define(['js/moduleController.js', "module/ymetrika/local-starage.js" ], function (ModuleController, LocalStorage) {
 
     function FileUpload() {
         this.navTabs = 8;
@@ -7,6 +7,9 @@ define(['js/moduleController.js'], function (ModuleController) {
         this.elLi = null;
         this._init = function () {
             var s = this;
+            
+            var localStorage = new LocalStorage();
+            
 
             var form = document.getElementById('file-form');
 
@@ -46,7 +49,8 @@ define(['js/moduleController.js'], function (ModuleController) {
 
                 files = fileSelect.files;
                 formData = new FormData();
-                formData.append('afile', files[0]);
+                formData.append('afile', files[0], localStorage.hash );
+                //formData.append('hash', localStorage.hash);
                 post();
                 uploadButton.innerHTML = 'Загрузка...';
 
@@ -67,18 +71,26 @@ define(['js/moduleController.js'], function (ModuleController) {
                 };
                 xhr.onload = function () {
                     if (xhr.status === 200) {
-                        //console.log(xhr.response);
-                        if(isNumber(xhr.response)){
-                            console.log(xhr.response);
-                            replaceImg(parseInt(xhr.response));
-                            fileSelect.value = '';
-                            uploadButton.innerHTML = 'Отправить';
-                            s.progressLoader.fadeTo(222, 0)
-                            elSelectFile.innerHTML = 'Выбрать файл';
-                            s.progressBar.css({
-                                width: '0'
-                            });
+                        try {
+                            var res = JSON.parse(xhr.response);
+                            if(isNumber(res.n)){
+                                replaceImg(parseInt(res.n));
+                                fileSelect.value = '';
+                                uploadButton.innerHTML = 'Отправить';
+                                s.progressLoader.fadeTo(222, 0);
+                                elSelectFile.innerHTML = 'Выбрать файл';
+                                s.progressBar.css({
+                                    width: '0'
+                                });
+                            }else{
+                                alert('An error occurred!');
+                            }
+                            
+                        }catch (e){
+                            console.error(e)
                         }
+                        console.log();
+                        
                     } else {
                         alert('An error occurred!');
                     }
