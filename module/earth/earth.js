@@ -59,7 +59,7 @@ define(['threejs', 'module/earth/get-tile.js', 'js/moduleController.js', 'getima
 
       var light2 = new THREE.SpotLight("#fff");
       light2.position.set(-1000, 200, 0);
-      light2.intensity = 0.4;
+      light2.intensity = 0.2;
       light2.exponent = 1000;
 
       var textureLoader = new THREE.TextureLoader();
@@ -89,11 +89,11 @@ define(['threejs', 'module/earth/get-tile.js', 'js/moduleController.js', 'getima
         needsUpdate: true,
         //specularMap: textureLoader.load('img/three/earth-specular.jpg', render),
         //emissiveMap: textureLoader.load('img/three/earth_night.jpg',  render),
-        // emissive: "#FFF",
-        // specular: "#f2e8b9",
-        // dynamic: true,
-        shininess: 50
-        // bumpScale: 0.1
+        emissive : "#FFF",
+        specular: "#f2e8b9",
+        //dynamic: true,
+        shininess: 50,
+        bumpScale: 0.1
       });
 
 
@@ -108,9 +108,8 @@ define(['threejs', 'module/earth/get-tile.js', 'js/moduleController.js', 'getima
       //rEarthMesh.rotation.set(0, s.getRotationAngle().degToRad(), 0);
       scene.add(rEarthMesh);
 
-      s.getTexture(2)
+     /* s.getTexture(2)
         .then(function (image) {
-
           var texture = new THREE.Texture(image);
           sphereMaterial.map = texture;
           texture.needsUpdate = true;
@@ -118,47 +117,82 @@ define(['threejs', 'module/earth/get-tile.js', 'js/moduleController.js', 'getima
           app.mask.hide(s.el);
           console.log('update');
           render()
+        });*/
+
+      Promise.all([
+        getImg('img/three/earth.png', true),
+        getImg('img/three/earth_bump.png', true),
+        getImg('img/three/earth-specular.jpg', true),
+        getImg('img/three/earth_night.jpg', true)
+      ])
+        .then(function (arr) {
+          var map = new THREE.Texture(arr[0].toCanvas(2048, 1024));
+          map.needsUpdate = true;
+          sphereMaterial.needsUpdate = true;
+          var bumpMap = new THREE.Texture(arr[1].toCanvas(2048, 1024));
+          bumpMap.needsUpdate = true;
+          var specularMap = new THREE.Texture(arr[2].toCanvas(2048, 1024));
+          specularMap.needsUpdate = true;
+          var emissiveMap = new THREE.Texture(arr[3].toCanvas(2048, 1024));
+          emissiveMap.needsUpdate = true;
+          sphereMaterial.map = map;
+          sphereMaterial.bumpMap = bumpMap;
+          sphereMaterial.specularMap = specularMap;
+          //sphereMaterial.emissive = "#FFF"
+          sphereMaterial.emissiveMap = emissiveMap;
+          //;
+          render();
+          app.mask.hide(s.el);
+        })
+        .catch(function (err) {
+          console.error(err)
         });
+
+
 
       /**
        * Облака.
        * @type {THREE.SphereGeometry}
        */
-      THREE.TextureLoader.crossOrigin = "Access-Control-Allow-Origin";
+     //THREE.TextureLoader.crossOrigin = "Access-Control-Allow-Origin";
       var cloudsGeometry = new THREE.SphereGeometry(4.05, 32, 32);
 
       var cloudsMaterial = new THREE.MeshPhongMaterial({
         transparent: true,
-         //map:textureLoader.load('php/SatelliteImages.php', render),
+       // map:textureLoader.load('php/SatelliteImages.php', render),
         //alphaMap: textureLoader.load('php/SatelliteImages.php', render),
         //bumpMap: textureLoader.load('php/SatelliteImages.php', render),
         bumpScale: 0.01,
-        opacity: 1.4,
+        opacity: 1.2,
        // emissive: "#FFFFFF",
         //side: THREE.DoubleSide,
         color: "#FFFFFF"
       });
+      var cloudsMesh;
+      cloudsMesh = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
 
       getImg('php/SatelliteImages.php', true)
         .then(function (_img) {
-          var img = _img.toCanvas(2048, 1024, 2048, 924, 0,50 );
+         // console.log(_img)
+          var img =  _img.toCanvas(2048, 1024, 2048, 924, 0,20 );
+
           var texture = new THREE.Texture(img);
           texture.needsUpdate = true;
           cloudsMaterial.alphaMap = texture;
           cloudsMaterial.bumpMap = texture;
 
           cloudsMaterial.needsUpdate = true;
+          rEarthMesh.add(cloudsMesh);
           render()
-        })
+        }, function (err) {
+          console.error("Error load texture", err)
+        });
 
 
-
-      var cloudsMesh;
-      cloudsMesh = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
 
 
       //let atmosphereMesh = new THREE.Mesh(cloudsGeometry.clone(), cloudsMaterial);
-      rEarthMesh.add(cloudsMesh);
+     //rEarthMesh.add(cloudsMesh);
 
 
       var customMaterial = new THREE.ShaderMaterial(
