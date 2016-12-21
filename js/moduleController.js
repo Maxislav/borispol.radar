@@ -1,5 +1,4 @@
 
-
 var ModuleController = {
     el: null,
     elpanel: null,
@@ -94,7 +93,6 @@ var ModuleController = {
         };
 
         imgir.src = errSrc || src;
-        console.log(imgir.src)
     },
 
     load: function (success) {
@@ -283,4 +281,4 @@ var ModuleController = {
 
 define(function () {
     return ModuleController
-})
+});
