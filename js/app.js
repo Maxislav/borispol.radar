@@ -145,7 +145,6 @@ define(['js/tornado-img.js', 'jquery'],function (tornadoLoader, $) {
                 el.remove()
             }
 
-
         },
         getBrr: function () {
             $.ajax({
