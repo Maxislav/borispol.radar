@@ -162,7 +162,7 @@ define(['js/tornado-img.js', 'jquery'],function (tornadoLoader, $) {
 
         },
         setBg: function () {
-
+            $('.background-image').css('opacity', '0');
             function getRandomArbitary(min, max) {
                 return Math.random() * (max - min) + min;
             }
@@ -192,10 +192,11 @@ define(['js/tornado-img.js', 'jquery'],function (tornadoLoader, $) {
 
 
             function setImg() {
-                document.body.style.backgroundImage = "url(" + url + ")";
-                document.body.style.backgroundSize = '100% auto';
+                $('.background-image')
+                  .css('background-image',  "url(" + url + ")" )
+                  .fadeTo(1000,1)
 
             }
         }
     }
-})
+});

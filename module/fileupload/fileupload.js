@@ -101,9 +101,12 @@ define(['js/moduleController.js', "module/ymetrika/local-starage.js" ], function
             var imgContainer =  this.el[0].getElementsByClassName('images-bg-container')[0];
 
             $(imgContainer).on('click', 'img', function () {
-                console.log()
-                $(document.body).css('background-image', 'url(' + $(this).attr('src')+')')
-            })
+                var attrSrc = $(this).attr('src');
+                $('.background-image').fadeTo(222,0, function () {
+                    $(this).css('background-image', 'url(' + attrSrc+')');
+                    $(this).fadeTo(222,1)
+                });
+            });
 
             var i = 1;
 
