@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <style>
+        body{
+            background: grey;
+            font-family: Arial;
+        }
+        div{
+            margin: 5px 10px;
+        }
+        body>div>div{
+            border-bottom: 1px solid gray;
+        }
+        body>div>div{
+            padding: 8px;
+            background: #FFF;
+        }
+        body>div>div>div>div{
+            color: red;
+        }
+        body>div>div>div>div>div{
+            color: black;
+        }
+        body>div>div>div>div{
+
+        }
+        body>div>div>div:hover{
+            background: #fdffb9;
+        }
+    </style>
+</head>
+<body>
+
+</body>
+<script>
+
+    
+    ajax('php/users.json', function (d) {
+        try{
+            d = JSON.parse(d);
+
+        }catch (err){
+
+            console.error(err);
+            throw err;
+        }
+        draw(d)
+
+    });
+
+    "use strict";
+    function draw(d, p) {
+
+        var parentEl = document.createElement('div');
+        if(p){
+            p.appendChild(parentEl)
+        }else{
+            document.body.appendChild(parentEl)
+        }
+        if(Array.isArray(d)){
+            d.forEach(function (it) {
+                draw(it, parentEl)
+            })
+        }else if(typeof d ==='object'){
+            for(var opt in d){
+                draw(d[opt], parentEl)
+            }
+        }else{
+            var spanEl = document.createElement('span');
+            spanEl.innerHTML = d;
+            parentEl.appendChild(spanEl)
+
+        }
+
+    }
+
+    function ajax(url, callback, data, x) {
+        try {
+            x = new(this.XMLHttpRequest || ActiveXObject)('MSXML2.XMLHTTP.3.0');
+            x.open(data ? 'POST' : 'GET', url, 1);
+            x.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            x.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            x.onreadystatechange = function () {
+                x.readyState > 3 && callback && callback(x.responseText, x);
+            };
+            x.send(data)
+        } catch (e) {
+            window.console && console.log(e);
+        }
+    };
+
+</script>
+</html>
