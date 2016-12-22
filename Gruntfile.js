@@ -87,7 +87,7 @@ module.exports = function (grunt) {
                      sourceMapRootpath: '../'*/
                 },
                 files: {
-                    "css/css.css": [
+                    "css/borispol.css": [
                         "lib/bootstrap/dist/css/bootstrap.min.css",
                         "css/borispol.less"
 

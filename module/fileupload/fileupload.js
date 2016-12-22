@@ -77,11 +77,13 @@ define(['js/moduleController.js', "module/ymetrika/local-starage.js" ], function
                                 replaceImg(parseInt(res.n));
                                 fileSelect.value = '';
                                 uploadButton.innerHTML = 'Отправить';
-                                s.progressLoader.fadeTo(222, 0);
-                                elSelectFile.innerHTML = 'Выбрать файл';
-                                s.progressBar.css({
-                                    width: '0'
+                                s.progressLoader.fadeTo(222, 0, function () {
+                                    s.progressBar.css({
+                                        width: '0'
+                                    });
                                 });
+                                elSelectFile.innerHTML = 'Выбрать файл';
+
                             }else{
                                 alert('An error occurred!');
                             }
