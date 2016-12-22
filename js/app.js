@@ -162,11 +162,16 @@ define(['js/tornado-img.js', 'jquery'],function (tornadoLoader, $) {
         },
         setBg: function () {
             $('.background-image').css('opacity', '0');
-            function getRandomArbitary(min, max) {
-                return Math.random() * (max - min) + min;
+
+            function getRandom(min, max, int) {
+                var rand = min + Math.random() * (max - min);
+                if(int){
+                    rand = Math.round(rand)
+                }
+                return rand;
             }
 
-            var x = Math.floor(getRandomArbitary(1, 9.99))
+            var x = getRandom(1,8, true);
 
             var url = 'img/bg/' + x + '.jpg?b=' + new Date().getSeconds()
             var img;
