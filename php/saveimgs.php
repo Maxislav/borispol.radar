@@ -4,8 +4,9 @@ sleep(20);
 
 echo (date("Y/m/d-H:i")).'<br/>';
 
-load_ir('../img/sat/', 'http://www.sat24.com/image2.ashx?region=eu&ir=true');
-load_ir('../img/vis/', 'http://www.sat24.com/image2.ashx?region=eu&ir=false');
+//load_ir('../img/sat/', 'http://www.sat24.com/image2.ashx?region=eu&ir=true');
+load_ir('../img/sat/', 'http://www.sat24.com/image.ashx?country=eu&type=zoom');
+load_ir('../img/vis/', 'http://http://en.sat24.com/image?type=visual&region=eu');
 
 function load_ir($dir, $url){
 

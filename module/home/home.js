@@ -112,7 +112,7 @@ define(['js/moduleController.js'], function (prototype) {
 
 
             //var imgir_s = 'http://www.sat24.com/image2.ashx?region=eu&ir=true&m=' + ((Math.random() * 1000).toFixed(0));
-            var imgir_s = 'http://www.sat24.com/image.ashx?country=eu&m=' + ((Math.random() * 1000).toFixed(0));
+            var imgir_s = 'http://www.sat24.com/image.ashx?country=eu&type=zoom&m=' + ((Math.random() * 1000).toFixed(0));
             s.imgir_s = imgir_s;
 
             //var imgvi_s = 'http://sat24.com/image2.ashx?region=eu&ir=false&m=' + ((Math.random() * 1000).toFixed(0))
