@@ -1,4 +1,5 @@
 <?php
+ini_set('date.timezone', 'UTC');
 date_default_timezone_set("UTC");
 sleep(20);
 

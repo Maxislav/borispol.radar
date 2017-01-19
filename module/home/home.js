@@ -7,6 +7,9 @@ define(['js/moduleController.js'], function (prototype) {
         irState: {},
         viState: {},
         navTabs: 0,
+        setState: function (val) {
+            this.state = val
+        },
         init: function (html, success) {
             var s = this;
             s.el = $(document.createElement('div')).html(html).css({
@@ -31,7 +34,8 @@ define(['js/moduleController.js'], function (prototype) {
                     if (!s.irState.play) {
                         s.irState.plat = true;
                         $(this).addClass('active');
-                        require(['ir'], function (r) {
+                        require(['ir'], function (ir) {
+                            ir.setState(home.irState)
                             ir.play();
                         })
                     }
@@ -40,20 +44,20 @@ define(['js/moduleController.js'], function (prototype) {
                 function () {
                     $(this).addClass('active')
                     s.irState.back = true;
-                    require(['ir'], function (r) {
+                    require(['ir'], function (ir) {
                         ir.back();
                     })
                 }).on('click', '.glyphicon-step-forward', function () {
                 $(this).addClass('active')
                 s.irState.forward = true;
-                require(['ir'], function (r) {
+                require(['ir'], function (ir) {
                     ir.forward();
                 })
             }).on('click', '.glyphicon-refresh', function () {
 
                 $(this).addClass('active');
                 app.mask.show($('.small-images.ir'))
-                require(['ir'], function () {
+                require(['ir'], function (ir) {
                     ir.refresh();
                 })
             })
@@ -66,7 +70,8 @@ define(['js/moduleController.js'], function (prototype) {
                     if (!s.irState.play) {
                         s.viState.plat = true;
                         $(this).addClass('active');
-                        require(['vi'], function (r) {
+                        require(['vi'], function (vi) {
+                            vi.setState(home.viState)
                             vi.play();
                         })
                     }
@@ -75,7 +80,7 @@ define(['js/moduleController.js'], function (prototype) {
                 function () {
                     $(this).addClass('active')
                     s.viState.back = true;
-                    require(['vi'], function (r) {
+                    require(['vi'], function (vi) {
                         vi.back();
                     })
                 })
@@ -112,7 +117,8 @@ define(['js/moduleController.js'], function (prototype) {
 
 
             //var imgir_s = 'http://www.sat24.com/image2.ashx?region=eu&ir=true&m=' + ((Math.random() * 1000).toFixed(0));
-            var imgir_s = 'http://www.sat24.com/image.ashx?country=eu&type=zoom&m=' + ((Math.random() * 1000).toFixed(0));
+           // var imgir_s = 'http://www.sat24.com/image.ashx?country=eu&type=zoom&m=' + ((Math.random() * 1000).toFixed(0));
+            var imgir_s = 'http://en.sat24.com/image?type=infraPolair&region=eu&m=' + ((Math.random() * 1000).toFixed(0));
             s.imgir_s = imgir_s;
 
             //var imgvi_s = 'http://sat24.com/image2.ashx?region=eu&ir=false&m=' + ((Math.random() * 1000).toFixed(0))
