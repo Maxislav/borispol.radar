@@ -7,7 +7,8 @@ echo (date("Y/m/d-H:i")).'<br/>';
 
 //load_ir('../img/sat/', 'http://www.sat24.com/image2.ashx?region=eu&ir=true');
 //load_ir('../img/sat/', 'http://www.sat24.com/image.ashx?country=eu&type=zoom');
-load_ir('../img/sat/', 'http://en.sat24.com/image?type=infraPolair&region=eu');
+//load_ir('../img/sat/', 'http://en.sat24.com/image?type=infraPolair&region=eu');
+load_ir('../img/sat/', 'http://www.sat24.com/image2.ashx?region=eu&ir=true');
 load_ir('../img/vis/', 'http://en.sat24.com/image?type=visual&region=eu');
 
 function load_ir($dir, $url){
