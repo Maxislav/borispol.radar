@@ -1,5 +1,6 @@
 "use strict";
 define(['js/moduleController.js'], function (prototype) {
+    
 
     var ired24 = {
         baseURI: 'img/sat/',
@@ -14,7 +15,6 @@ define(['js/moduleController.js'], function (prototype) {
         el: null,
         gmt: new Date().getTimezoneOffset()/60,
         getDate: function(){
-
             var date = mathDate.setParams({mi: 60, ss: 60})(new Date(), {hh: this.gmt, mi: -5})
             date = DateFormat.format.date(date, 'yyyyMMddHHmm');
             return date

@@ -8,4 +8,5 @@ onmessage = (e)=>{
     }
   }
   postMessage([arrData]);
+  close()
 };

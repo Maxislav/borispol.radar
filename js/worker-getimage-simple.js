@@ -33,6 +33,7 @@ define(function () {
           const imgData = xhr.response;
           const blob = new Blob([imgData], {type: 'image/png'});
           resolve(xhr.response);
+          
         } else {
           reject(new Error(xhr.statusText));
         }
@@ -59,5 +60,10 @@ onmessage = (e)=>{
   loadImage(e.data[0])
     .then(arrayBuffer=>{
       postMessage(arrayBuffer, [arrayBuffer])
+      close()
+    })
+    .catch(err=>{
+      postMessage(null);
+      close()
     })
 };

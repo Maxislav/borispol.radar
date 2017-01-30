@@ -20,7 +20,7 @@ module.exports = function (grunt) {
                         'js/timer.js',
                         'js/main.js',
                         'lib/jquery/dateFormat.js',
-                        'js/moduleController.js',
+                        //'js/moduleController.js',
                         'js/MathDate.js'
                     ]
                 }
@@ -37,7 +37,7 @@ module.exports = function (grunt) {
                         'js/timer.js',
                         'js/main.js',
                         'lib/jquery/dateFormat.js',
-                        'js/moduleController.js',
+                        //'js/moduleController.js',
                         'js/MathDate.js'
                     ]
                 }
