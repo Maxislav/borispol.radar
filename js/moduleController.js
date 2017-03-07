@@ -176,16 +176,19 @@ define(['getimage-src'],
         arrPromises.push(this.loadImage(url)
           .then((img)=> {
             progress(++k);
-            return img
+            return img || new Image()
           })
         )
       }
       Promise.all(arrPromises)
         .then(imgs=> {
+
+
           s.progressLoader.fadeTo(222, 0);
           imgs.reverse();
           $(s.imgir).remove();
           imgs.forEach(img=> {
+
             s.container.append(img);
             $(img).css({'opacity': 1})
           });

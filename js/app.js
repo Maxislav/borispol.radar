@@ -147,17 +147,25 @@ define(['js/tornado-img.js', 'jquery'],function (tornadoLoader, $) {
 
         },
         getBrr: function () {
-            $.ajax({
-                url: 'Browser.php',
-                success: function (d) {
 
-                    brr = d;
-                    app.setBg()
-                },
-                error: function (a, b) {
-
+            function detectmob() {
+                if( navigator.userAgent.match(/Android/i)
+                  || navigator.userAgent.match(/webOS/i)
+                  || navigator.userAgent.match(/iPhone/i)
+                  || navigator.userAgent.match(/iPad/i)
+                  || navigator.userAgent.match(/iPod/i)
+                  || navigator.userAgent.match(/BlackBerry/i)
+                  || navigator.userAgent.match(/Windows Phone/i)
+                ){
+                    return true;
                 }
-            })
+                else {
+                    return false;
+                }
+            }
+            if(!detectmob()){
+                this.setBg()
+            }
 
         },
         setBg: function () {
@@ -177,7 +185,7 @@ define(['js/tornado-img.js', 'jquery'],function (tornadoLoader, $) {
             var img;
             var beforeTime = new Date().getTime()
             var afterTime
-            var difTime
+            var difTime;
 
             var loaderImg = new Image()
 
@@ -198,7 +206,7 @@ define(['js/tornado-img.js', 'jquery'],function (tornadoLoader, $) {
             function setImg() {
                 $('.background-image')
                   .css('background-image',  "url(" + url + ")" )
-                  .fadeTo(1000,1)
+                  .fadeTo(500,1)
 
             }
         }

@@ -29,7 +29,7 @@ Date.prototype.secondsFromStartDay = function () {
 require.config({
     waitSeconds: 60,
     baseUrl: '',
-    urlArgs: "bust=30.01.2017-19:17:02",
+    urlArgs: "bust=07.03.2017-11:23:34",
     paths: {
         getimage: 'js/getImage',
         'getimage-src': 'js/getimage-src',
