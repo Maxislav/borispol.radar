@@ -183,24 +183,13 @@ define(['js/tornado-img.js', 'jquery'],function (tornadoLoader, $) {
 
             var url = 'img/bg/' + x + '.jpg?b=' + new Date().getSeconds()
             var img;
-            var beforeTime = new Date().getTime()
-            var afterTime
-            var difTime;
 
-            var loaderImg = new Image()
 
-            loaderImg.onload = speadLoading
-            loaderImg.src = 'img/loader.png?b=' + new Date().getTime()
-            function speadLoading() {
-                afterTime = new Date().getTime()
-                difTime = afterTime - beforeTime
-                if (difTime < 2000) {
-                    img = new Image()
-                    img.onload = setImg
-                    img.src = url
-                }
-                console.log(difTime)
-            }
+
+
+	        img = new Image()
+	        img.onload = setImg
+	        img.src = url
 
 
             function setImg() {
